@@ -1,0 +1,68 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: FinalBossMaterial
+  m_Shader: {fileID: -6465566751694194690, guid: d761e5f95f035c243a7d7b26edffd7be, type: 3}
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Normal_Tex:
+        m_Texture: {fileID: 2800000, guid: 00c9616a8be44c8458b5aa0d9d0ae482, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _Damaged: 0
+    - _Density: 10
+    - _Float: 0.973
+    - _Float_1: 0
+    - _Float_2: 72.98
+    - _Float_3: 10
+    - _Float_4: 50
+    - _Normal_Strenght: 4.14
+    - _Offset: 0
+    - _Pixel_Factor: 5
+    - _Second_Density: 40
+    - _Second_Pixel_Factor: 8
+    - _Spherize: 0
+    - _Step: 1
+    m_Colors:
+    - _Color: {r: 0.7490196, g: 0.28235295, b: 0.11372549, a: 1}
+    - _Color_1: {r: 0.8509804, g: 0.49411765, b: 0.08627451, a: 1}
+    - _DamageColor: {r: 1.0680628, g: 1.0680628, b: 1.0680628, a: 1}
+    - _Darker_Color: {r: 0.7490196, g: 0.282353, b: 0.1137255, a: 1}
+    - _DmageColor: {r: 0, g: 0, b: 0, a: 0}
+    - _Main_Color: {r: 0.8509804, g: 0.4941176, b: 0.08627451, a: 1}
+    - _Tilling: {r: 1, g: 1, b: 0, a: 0}
+    - _tilling: {r: 8, g: 1, b: 0, a: 0}
+  m_BuildTextureStacks: []

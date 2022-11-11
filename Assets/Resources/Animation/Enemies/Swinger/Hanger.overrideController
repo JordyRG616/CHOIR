@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Hanger
+  m_Controller: {fileID: 9100000, guid: 0dc1a2f9b79459e488658237d5977453, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: c9b69acea085ce24ea38b2c1cc7f6c86, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 5627498a1dbb752489ca2cd9c70c5a4b, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: fd55e94e50a7b044caa84b7031abd1d7, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 0e42bac6af98047419a32c071ee4b994, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 437f6224567f42b4cb4a8eaff4edf5df, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 4415d6045a0367c4eae754e83c7d8fe3, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: d20a4a7263aed9a4b9fdbe6e5f93d568, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 76cc1126091872e4382669f6e092beab, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 0767791e30781ab46af342e06af88410, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: a83bac8693d9abb4d9a8f08a12ebf788, type: 2}

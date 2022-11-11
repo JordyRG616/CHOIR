@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Floater_Death
+  m_Controller: {fileID: 9100000, guid: 616d9c43faf706a4eaeafb628ef55390, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: d20a4a7263aed9a4b9fdbe6e5f93d568, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 5c510132305400d46a1b363ce9549892, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 0767791e30781ab46af342e06af88410, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: b0c15bd8f025efd4aa8331f6870fba44, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 437f6224567f42b4cb4a8eaff4edf5df, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 9cba9f2e2a28d1542856ca3f855a3711, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: fd55e94e50a7b044caa84b7031abd1d7, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 324e0d099bb0e5642a854627ef0de360, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: c9b69acea085ce24ea38b2c1cc7f6c86, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 3dbe25d6fe75d884cb01403cdbf1d6d2, type: 2}

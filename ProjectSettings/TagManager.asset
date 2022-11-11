@@ -1,0 +1,74 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Reseter
+  - NodeBox
+  - EmptyNode
+  - FilledNode
+  - BottomEnemy
+  - MiddleEnemy
+  - TopEnemy
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - Ground
+  - Enemies
+  - Crystal
+  - Jelyfish
+  - Beholder
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Background
+    uniqueID: 59765345
+    locked: 0
+  - name: RoundFlamer
+    uniqueID: 3123206127
+    locked: 0
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: BeholderMist
+    uniqueID: 2942987777
+    locked: 0
+  - name: Enemies
+    uniqueID: 3900362201
+    locked: 0
+  - name: Foreground
+    uniqueID: 3139934333
+    locked: 0
+  - name: Shots
+    uniqueID: 2213220671
+    locked: 0
+  - name: Final Boss
+    uniqueID: 1742788981
+    locked: 0
+  - name: UI
+    uniqueID: 532641367
+    locked: 0

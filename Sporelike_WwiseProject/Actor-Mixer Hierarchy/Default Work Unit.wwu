@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{A08FE6C1-7602-478C-9742-A024726EB2DF}" SchemaVersion="110">
+	<AudioObjects>
+		<WorkUnit Name="Default Work Unit" ID="{A08FE6C1-7602-478C-9742-A024726EB2DF}" PersistMode="Standalone">
+			<ChildrenList>
+				<Sound Name="CA_Shoot" ID="{725EED51-51FF-4E95-BD7D-B1EC12BE99D5}" ShortID="336516368">
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{E180D6C4-2998-4520-ADA5-54EF75AC7F72}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{37507216-4941-40DD-AE4C-A2714FFC1DB3}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="CA_Shoot" ID="{B31177F7-EBDB-4C1A-BDF2-AEA39CE6802F}">
+							<Language>SFX</Language>
+							<AudioFile>CA_Shoot.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="571078253"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ActiveSourceList>
+						<ActiveSource Name="CA_Shoot" ID="{B31177F7-EBDB-4C1A-BDF2-AEA39CE6802F}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+				<Sound Name="CT_Shoot" ID="{198C8BDF-2A21-48A6-96A3-865990CED844}" ShortID="621373706">
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{E180D6C4-2998-4520-ADA5-54EF75AC7F72}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{37507216-4941-40DD-AE4C-A2714FFC1DB3}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="CT_Shoot" ID="{DF950F78-4F3D-449A-878F-FD38B7990AC7}">
+							<Language>SFX</Language>
+							<AudioFile>CT_Shoot.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="559096769"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ActiveSourceList>
+						<ActiveSource Name="CT_Shoot" ID="{DF950F78-4F3D-449A-878F-FD38B7990AC7}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+				<Sound Name="GT_Shoot" ID="{6046F528-E8C1-4D27-AB35-5CB685B9461A}" ShortID="865490848">
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{E180D6C4-2998-4520-ADA5-54EF75AC7F72}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{37507216-4941-40DD-AE4C-A2714FFC1DB3}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="GT_Shoot" ID="{32E605FC-3A0E-49D9-A30B-614FADAE3320}">
+							<Language>SFX</Language>
+							<AudioFile>GT_Shoot.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="578203268"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ActiveSourceList>
+						<ActiveSource Name="GT_Shoot" ID="{32E605FC-3A0E-49D9-A30B-614FADAE3320}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+			</ChildrenList>
+		</WorkUnit>
+	</AudioObjects>
+</WwiseDocument>
