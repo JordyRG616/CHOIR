@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c3748629ecfd274eb829481858ae3bc, type: 3}
+  m_Name: Database
+  m_EditorClassIdentifier: 
+  Upgrades:
+  - name: Multishot
+    icon: {fileID: 1324663268, guid: 81ec44af7ca945e4a825b0e0395458f2, type: 3}
+    cost: 0
+    description: Applies Multishot to the chosen weapon
+    tag: 1
+    amount: 0
+  - name: Explosive
+    icon: {fileID: -1000684094, guid: 81ec44af7ca945e4a825b0e0395458f2, type: 3}
+    cost: 0
+    description: Applies Explosive to the chosen weapon
+    tag: 2
+    amount: 0
+  - name: Unstable
+    icon: {fileID: -461407374, guid: 81ec44af7ca945e4a825b0e0395458f2, type: 3}
+    cost: 0
+    description: Doubles the maximum damage of the weapon. Set it's minimum damage
+      to 0
+    tag: 4
+    amount: 0
+  - name: Reliable
+    icon: {fileID: -1547091118, guid: 81ec44af7ca945e4a825b0e0395458f2, type: 3}
+    cost: 0
+    description: Set the maximum and minimum damage of the weapon to the average
+      value of both
+    tag: 3
+    amount: 0
+  Mutations:
+  - {fileID: 11400000, guid: 44a3f336484b6b445ae8fc81e477d608, type: 2}
+  - {fileID: 11400000, guid: 80ded299c8377a24c829badeee92ffc9, type: 2}
+  - {fileID: 11400000, guid: a5574a7288536854cae518e91aec3207, type: 2}
+  - {fileID: 11400000, guid: 322a178c38467264299e8296de4151d1, type: 2}
+  - {fileID: 11400000, guid: 6b55d99b7dc44344db4ed0f18b97720a, type: 2}

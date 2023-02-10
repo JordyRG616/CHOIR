@@ -7,12 +7,12 @@ public class UpgradeSpawnerDamage : BaseSpawnerUpgrade
 {
     public override void ApplyUpgrade(EnemySpawner spawner)
     {
-        spawner.EnhanceSpawnedEnemy += EnhanceDamage;
+        //spawner.EnhanceSpawnedEnemy += EnhanceDamage;
         spawner.infoUI.ReceiveIncrement(SpawnerStat.Damage, increment);
     }
 
     private void EnhanceDamage(GameObject enemy)
     {
-        enemy.GetComponent<EnemyDamageController>().damage += Mathf.RoundToInt(increment);
+        enemy.GetComponent<EnemyDamageModule>().damage += Mathf.RoundToInt(increment);
     }
 }

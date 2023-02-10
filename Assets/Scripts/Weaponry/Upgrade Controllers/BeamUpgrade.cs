@@ -108,7 +108,7 @@ public class BeamUpgrade : WeaponUpgradeController
         damageUI.text = weapon.damageRange.x.ToString("0.0") + "-" + weapon.damageRange.y.ToString("0.0");
         sizeUI.text = size.ToString("0.0");
         var march = weapon.GetComponent<WeaponMarch>();
-        speedUI.text = march.speedModifier.ToString("0.0");
+        //speedUI.text = march.speedModifier.ToString("0.0");
     }
 
     public override void DoPreview()

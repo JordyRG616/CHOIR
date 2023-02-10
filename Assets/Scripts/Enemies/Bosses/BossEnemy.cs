@@ -8,7 +8,7 @@ public class BossEnemy : MonoBehaviour
     public int bossOrder;
     [SerializeField] private GameObject associatedSpawner;
     private Vector3 originalSpawnerPosition;
-    private EnemyHealthController healthController;
+    private EnemyHealthModule healthController;
 
     [Header("UI")]
     [SerializeField] private RectTransform bar;
@@ -18,7 +18,7 @@ public class BossEnemy : MonoBehaviour
 
     private void Awake()
     {
-        healthController = GetComponent<EnemyHealthController>();
+        healthController = GetComponent<EnemyHealthModule>();
         healthController.onEnemyDeath += BossDeath;
         healthController.onDamageTaken += UpdateHealthbar;
 
@@ -29,7 +29,7 @@ public class BossEnemy : MonoBehaviour
         UpdateHealthbar(1);
     }
 
-    private void BossDeath(EnemyHealthController healthController, bool destroy)
+    private void BossDeath(EnemyHealthModule healthController, bool destroy)
     {
         FindObjectOfType<CameraManager>().GoToBossCamera(Vector2.zero);
 

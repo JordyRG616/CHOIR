@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using FMODUnity;
-using System.Linq;
+using UnityEngine.Rendering.Universal;
 
 public class CrystalManager : MonoBehaviour
 {
@@ -27,124 +27,124 @@ public class CrystalManager : MonoBehaviour
 
     [Header("Health")]
     [SerializeField] private int maxHealth;
-    [SerializeField] private TextMeshProUGUI currentValue, maxValue;
-    [SerializeField] private Gradient healthColors;
+    [SerializeField] private TextMeshProUGUI currentValue;
     public int currentHealth { get; private set; }
 
     [Header("Experience Information")]
     [SerializeField] private float requiredExperience;
     [SerializeField] private AnimationCurve increment;
-    [SerializeField] private ParticleSystem gainExpVFX;
+    //[SerializeField] private ParticleSystem gainExpVFX;
     [SerializeField] private StudioEventEmitter gainExpSFX;
     public int level { get; private set; } = 0;
-    private float currentExperience;
+    private int currentExperience;
+    private int experienceHolder;
+    [field: SerializeField] public int buildPoints { get; private set; }
 
-    [Header("Levels List")]
-    [SerializeField] private List<int> patternUpgradeLevels;
-    [SerializeField] private List<int> bossLevels;
     [Header("UI")]
-    [SerializeField] private RectTransform expbar;
-    [SerializeField] private Vector2 sizeBoundaries;
-    [SerializeField] private Image rewardIcon;
-    [SerializeField] private Sprite patternUpgradeIcon;
-    [SerializeField] private TextMeshProUGUI levelUI;
+    [SerializeField] private List<Vector2> barSizes;
+    [SerializeField] private ParticleSystem levelVFX;
+    [SerializeField] private List<Light2D> lights;
 
-    [Header("Final Boss")]
-    [SerializeField] private GameObject leftMass;
-    [SerializeField] private GameObject rightMass;
+    [Header("Cash UI")]
+    [SerializeField] private TextMeshProUGUI points;
+    [SerializeField] private RectTransform expbar;
+    [SerializeField] private Image cashIcon;
+
+    public delegate void LevelUpEvent(int level);
+    public LevelUpEvent onLevelUp;
+    private bool blinkingCash;
+    private bool blinkingHealth = false;
+    private bool waitingLevelUp;
 
     private void Start()
     {
         anim = GetComponent<Animator>();
         currentHealth = maxHealth;
         currentExperience = 0;
-        maxValue.text = maxHealth.ToString();
         SetHealthValue();
         SetExpBarSize();
+        points.text = buildPoints.ToString();
     }
 
     private void OnParticleCollision(GameObject other)
     {
-        currentExperience += 1;
+        if(!waitingLevelUp) currentExperience += 1;
+        else experienceHolder += 1;
         gainExpSFX.Play();
-
-        TutorialManager.Main.DoTutorialStep("Leveling Up", true);
 
         if(currentExperience >= requiredExperience)
         {
-            if (patternUpgradeLevels.Contains(level)) PatternUpgradeManager.Main.InitiateSelection();
-            else RewardManager.Main.OpenReward(RewardManager.Main.defaultCards);
-
-            SetNextLevelInfo();
+            EnqueueLevelUp();
             currentExperience = 0;
-            if (bossLevels.Contains(level)) ToBossLevel();
-            if (level == 50) StartFinalBoss();
-
-            Time.timeScale = 0;
         }
 
-        gainExpVFX.Play();
+        //gainExpVFX.Play();
         SetExpBarSize();
     }
 
-    private void StartFinalBoss()
+    public void BlinkCost()
     {
-        foreach (var enemy in FindObjectsOfType<EnemyHealthController>())
-        {
-            enemy.Die(false);
-        }
-
-        foreach (var spawner in FindObjectsOfType<EnemySpawner>())
-        {
-            spawner.active = false;
-        }
-
-        rightMass.SetActive(true);
-        leftMass.SetActive(true);
-
-        cameraManager.GoToFinalCamera();
+        if (blinkingCash) return;
+        StartCoroutine(BlinkCash());
     }
 
-    private void ToBossLevel()
+    private IEnumerator BlinkCash()
     {
-        var direction = (level == bossLevels[0]) ? Vector3.left : Vector3.right;
-        cameraManager.GoToBossCamera(direction);
+        blinkingCash = true;
+        var ogTextColor = points.color;
+        var ogImageColor = cashIcon.color;
 
-        foreach (var enemy in FindObjectsOfType<EnemyHealthController>())
-        {
-            enemy.Die(false);
-        }
+        points.color = Color.red;
+        cashIcon.color = Color.red;
+        expbar.GetComponent<Image>().color = Color.red;
 
-        var position = (level == bossLevels[0]) ? EnemySpawner.SpawnerPosition.Right : EnemySpawner.SpawnerPosition.Left;
-        var spawners = FindObjectsOfType<EnemySpawner>().ToList();
-        var spawner = spawners.Find(x => x.position == position);
-        spawner.active = false;
+        yield return new WaitForSeconds(0.1f);
 
-        var order = (level == bossLevels[0]) ? 0 : 1;
-        var boss = FindObjectsOfType<BossEnemy>(true).ToList().Find(x => x.bossOrder == order);
-        boss.gameObject.SetActive(true);
+        points.color = ogTextColor;
+        cashIcon.color = ogImageColor;
+        expbar.GetComponent<Image>().color = ogImageColor;
+        blinkingCash = false;
     }
 
     private void SetExpBarSize()
     {
         var percentage = currentExperience / requiredExperience;
-        var sizeX = sizeBoundaries.x + ((sizeBoundaries.y - sizeBoundaries.x) * percentage);
-        expbar.sizeDelta = new Vector2(sizeX, expbar.sizeDelta.y);
+        expbar.sizeDelta = Vector2.Lerp(barSizes[0], barSizes[1], percentage);
     }
 
-    private void SetNextLevelInfo()
+    public void ExpendBuildPoints(int value)
     {
+        buildPoints -= value;
+
+        points.text = buildPoints.ToString();
+    }
+
+    private void EnqueueLevelUp()
+    {
+        waitingLevelUp = true;
+        ActionMarker.Main.OnBeat += LevelUp;
+    }
+
+    private void LevelUp()
+    {
+        ActionMarker.Main.OnBeat -= LevelUp;
+
         requiredExperience += increment.Evaluate(level);
         level++;
+        buildPoints++;
+        levelVFX.Play();
+        points.text = buildPoints.ToString();
 
-        levelUI.text = "LVL " + level;
-        if (patternUpgradeLevels.Contains(level)) rewardIcon.overrideSprite = patternUpgradeIcon;
-        else rewardIcon.overrideSprite = null;
+        onLevelUp?.Invoke(level);
+
+        waitingLevelUp = false;
+        currentExperience += experienceHolder;
+        experienceHolder = 0;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.TryGetComponent<EnemyDamageController>(out var damageController))
+        if(collision.TryGetComponent<EnemyDamageModule>(out var damageController))
         {
 
             currentHealth -= damageController.damage;
@@ -153,11 +153,10 @@ public class CrystalManager : MonoBehaviour
                 currentHealth = 0;
                 EndGameLog.Main.TriggerEndgame(false);
             }
-            anim.SetTrigger("Damaged");
-            cameraManager.DoShake();
+
             SetHealthValue();
-            collision.GetComponent<EnemyHealthController>().Die(false);
-            TutorialManager.Main.DoTutorialStep("Taking Damage", true);
+            if (!blinkingHealth) StartCoroutine(BlinkDamage());
+            collision.GetComponent<EnemyHealthModule>().Die(false);
         }
     }
 
@@ -167,16 +166,30 @@ public class CrystalManager : MonoBehaviour
         SetHealthValue();
     }
 
+    private IEnumerator BlinkDamage()
+    {
+        blinkingHealth = true;
+        var ogTextColor = points.color;
+        var OgLightColor = lights[0].color;
+
+        currentValue.color = Color.red;
+        lights.ForEach(x => x.color = Color.red);
+
+        yield return new WaitForSeconds(0.1f);
+
+        currentValue.color = ogTextColor;
+        lights.ForEach(x => x.color = OgLightColor);
+        blinkingHealth = false;
+    }
+
     private void SetHealthValue()
     {
         currentValue.text = currentHealth.ToString();
-        currentValue.color = healthColors.Evaluate(1 - ((float)currentHealth / maxHealth));
     }
 
     public void RaiseMaxHealth(int value)
     {
         maxHealth += value;
-        maxValue.text = maxHealth.ToString();
 
         currentHealth += value;
 

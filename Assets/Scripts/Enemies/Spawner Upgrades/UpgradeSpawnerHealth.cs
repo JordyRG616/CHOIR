@@ -8,13 +8,13 @@ public class UpgradeSpawnerHealth : BaseSpawnerUpgrade
 {
     public override void ApplyUpgrade(EnemySpawner spawner)
     {
-        spawner.EnhanceSpawnedEnemy += EnhanceHealth;
+        //spawner.EnhanceSpawnedEnemy += EnhanceHealth;
         spawner.infoUI.ReceiveIncrement(SpawnerStat.Health, increment);
     }
 
     private void EnhanceHealth(GameObject enemy)
     {
-        enemy.GetComponent<EnemyHealthController>().RaiseMaxHealth(increment);
+        enemy.GetComponent<EnemyHealthModule>().RaiseMaxHealth(increment);
         EnlargeEnemy(enemy);
     }
 

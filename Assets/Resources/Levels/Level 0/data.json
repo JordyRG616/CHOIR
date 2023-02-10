@@ -1,0 +1,151 @@
+{
+    "x": 96,
+    "y": 64,
+    "width": 976,
+    "height": 496,
+    "iid": "9898b8e0-7820-11ed-bfaf-215dc485b96d",
+    "layers": [
+        "Background.png",
+        "Foreground.png",
+        "Fade.png"
+    ],
+    "Enemy_Spawner": [
+        {
+            "id": "Enemy_Spawner",
+            "iid": "6f2a10b0-7820-11ed-ba65-e1c520f85244",
+            "layer": "Entities",
+            "x": 41,
+            "y": 224,
+            "width": 16,
+            "height": 80,
+            "color": 15363951,
+            "customFields": {}
+        },
+        {
+            "id": "Enemy_Spawner",
+            "iid": "75d510e0-7820-11ed-ba65-df0c1a3e4180",
+            "layer": "Entities",
+            "x": 935,
+            "y": 352,
+            "width": 16,
+            "height": 80,
+            "color": 15363951,
+            "customFields": {}
+        }
+    ],
+    "Crystal_Position": [
+        {
+            "id": "Crystal_Position",
+            "iid": "993130a0-7820-11ed-ba65-5d95de3cd5a6",
+            "layer": "Entities",
+            "x": 488,
+            "y": 352,
+            "width": 32,
+            "height": 64,
+            "color": 9755059,
+            "customFields": {}
+        }
+    ],
+    "Weapon_Slot": [
+        {
+            "id": "Weapon_Slot",
+            "iid": "e49e45a0-7820-11ed-ba65-01bf50274f18",
+            "layer": "Entities",
+            "x": 424,
+            "y": 352,
+            "width": 32,
+            "height": 32,
+            "color": 9755059,
+            "Directions": [
+                1,
+                2
+            ]
+        },
+        {
+            "id": "Weapon_Slot",
+            "iid": "e6645fa0-7820-11ed-ba65-b17ebf7d677c",
+            "layer": "Entities",
+            "x": 552,
+            "y": 224,
+            "width": 32,
+            "height": 32,
+            "color": 9755059,
+            "Directions": [
+                7,
+                6
+            ]
+        },
+        {
+            "id": "Weapon_Slot",
+            "iid": "e8b9c150-7820-11ed-ba65-c9d76c6827c9",
+            "layer": "Entities",
+            "x": 488,
+            "y": 272,
+            "width": 32,
+            "height": 32,
+            "color": 9755059,
+            "Directions": [
+                3,
+                7
+            ]
+        },
+        {
+            "id": "Weapon_Slot",
+            "iid": "d2e3bd30-7820-11ed-ba65-e907f34193d7",
+            "layer": "Entities",
+            "x": 424,
+            "y": 304,
+            "width": 32,
+            "height": 32,
+            "color": 9755059,
+            "Directions": [
+                2,
+                3
+            ]
+        },
+        {
+            "id": "Weapon_Slot",
+            "iid": "d39c85e0-7820-11ed-ba65-9b2a608b5e00",
+            "layer": "Entities",
+            "x": 552,
+            "y": 176,
+            "width": 32,
+            "height": 32,
+            "color": 9755059,
+            "Directions": [
+                5,
+                6
+            ]
+        },
+        {
+            "id": "Weapon_Slot",
+            "iid": "ce70d4e0-7820-11ed-ba65-517336c88220",
+            "layer": "Entities",
+            "x": 744,
+            "y": 288,
+            "width": 32,
+            "height": 32,
+            "color": 9755059,
+            "Directions": [
+                3,
+                4,
+                5
+            ]
+        },
+        {
+            "id": "Weapon_Slot",
+            "iid": "d7fd9840-7820-11ed-ba65-a1f38bdd87e0",
+            "layer": "Entities",
+            "x": 232,
+            "y": 160,
+            "width": 32,
+            "height": 32,
+            "color": 9755059,
+            "Directions": [
+                3,
+                4,
+                5
+            ]
+        }
+    ]
+}

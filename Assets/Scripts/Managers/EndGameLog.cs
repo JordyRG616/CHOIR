@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class EndGameLog : MonoBehaviour
 {
@@ -65,5 +66,23 @@ public class EndGameLog : MonoBehaviour
         score += enemies;
         score += CrystalManager.Main.currentHealth * 3;
         return score;
+    }
+
+    public void ToMainMenu()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene(1);
+    }
+
+    public void Quit()
+    {
+        Application.Quit();
+    }
+
+    public void PlayAgain()
+    {
+        Time.timeScale = 1;
+        var i = SceneManager.GetActiveScene().buildIndex;
+        SceneManager.LoadScene(i);
     }
 }

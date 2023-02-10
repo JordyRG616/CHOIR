@@ -1,0 +1,271 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2769373848126601810
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2769373848126601836}
+  - component: {fileID: 2769373848126601811}
+  - component: {fileID: 2769373848126601832}
+  - component: {fileID: 2769373848126601833}
+  - component: {fileID: 2769373848126601834}
+  - component: {fileID: 2769373848126601835}
+  - component: {fileID: 2769373848126601828}
+  - component: {fileID: 442181324}
+  - component: {fileID: 627387215}
+  m_Layer: 0
+  m_Name: Game Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2769373848126601836
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2769373848126601810}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.7025702, y: -2.8737078, z: 75}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2769373848126601811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2769373848126601810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c6bf26ef1f538f46aaaab7e97cf88f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentWeaponCard: {fileID: 0}
+  currentTileInstance: {fileID: 0}
+  currentHoveredBox: {fileID: 0}
+  IsOverTrash: 0
+  currentSupportCard: {fileID: 0}
+  currentSupportTile: {fileID: 0}
+  waitingForSlot: 0
+  draggingWeapon: 0
+  weaponDragged: {fileID: 0}
+  hoveredSlot: {fileID: 0}
+  selectingUpgrade: 0
+  selectedSlot: {fileID: 0}
+  weaponToPlace: {fileID: 0}
+  showUIKey: 120
+  animators:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+--- !u!114 &2769373848126601832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2769373848126601810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8f47a49d956fbb44bbc398ce1a9ffa0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemies: 0
+  panel: {fileID: 0}
+  title: {fileID: 0}
+  values: {fileID: 0}
+  finalScore: {fileID: 0}
+--- !u!114 &2769373848126601833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2769373848126601810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 466b29cf850a11749a75a8d50050e4ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  channels:
+  - channelName: Master
+    busPath: bus:/
+    initialVolume: 1
+  - channelName: BGM
+    busPath: bus:/Chords
+    initialVolume: 1
+  - channelName: SFX
+    busPath: bus:/SFX
+    initialVolume: 1
+  - channelName: Weapons
+    busPath: bus:/SFX/Weapons
+    initialVolume: 1
+  - channelName: General
+    busPath: bus:/SFX/General
+    initialVolume: 1
+  masterValue: {fileID: 0}
+  sfxValue: {fileID: 0}
+  bgmValue: {fileID: 0}
+  weaponsValue: {fileID: 0}
+  generalValue: {fileID: 0}
+--- !u!114 &2769373848126601834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2769373848126601810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b1fb16397dbabb4f9e009caf4483cfe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animators:
+  - {fileID: 0}
+  - {fileID: 0}
+  fpsMonitor: {fileID: 0}
+--- !u!114 &2769373848126601835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2769373848126601810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a97701b158175e4e97f144ef95dd00e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initialKitIndex: 3
+  classInfo:
+  - _class: 1
+    weapons: []
+    buffs:
+    - requiredLevel: 1
+      buffValue: 1
+      infoUI: {fileID: 0}
+    - requiredLevel: 3
+      buffValue: 3
+      infoUI: {fileID: 0}
+    - requiredLevel: 5
+      buffValue: 6
+      infoUI: {fileID: 0}
+    levelUI: {fileID: 0}
+  - _class: 2
+    weapons: []
+    buffs:
+    - requiredLevel: 2
+      buffValue: 0.1
+      infoUI: {fileID: 0}
+    - requiredLevel: 5
+      buffValue: 0.25
+      infoUI: {fileID: 0}
+    levelUI: {fileID: 0}
+  - _class: 4
+    weapons: []
+    buffs:
+    - requiredLevel: 2
+      buffValue: 0.2
+      infoUI: {fileID: 0}
+    - requiredLevel: 4
+      buffValue: 0.4
+      infoUI: {fileID: 0}
+    - requiredLevel: 6
+      buffValue: 0.8
+      infoUI: {fileID: 0}
+    levelUI: {fileID: 0}
+  - _class: 8
+    weapons: []
+    buffs:
+    - requiredLevel: 3
+      buffValue: 0.2
+      infoUI: {fileID: 0}
+    - requiredLevel: 6
+      buffValue: 0.6
+      infoUI: {fileID: 0}
+    levelUI: {fileID: 0}
+  burnDPS: 0
+  burnTick: 0
+  shockDuration: 0
+  exposedMultiplier: 0
+  heatIncrement: 0.5
+  heatDecaying: 1.5
+  raisingHeat: 0
+  potencyIncrement: 1
+  overloadThreshold: 10
+  raisingPotency: 0
+  heatBar: {fileID: 0}
+  heatSizes:
+  - {x: 24, y: 0}
+  - {x: 24, y: 24}
+  heatColors:
+  - {r: 0.9490196, g: 0.90588236, b: 0.28627452, a: 1}
+  - {r: 0.8980392, g: 0.74509805, b: 0.13333334, a: 1}
+  - {r: 0.8509804, g: 0.49411765, b: 0.08627451, a: 1}
+  - {r: 0.7490196, g: 0.28235295, b: 0.11372549, a: 1}
+  - {r: 0.6, g: 0.15686275, b: 0.09019608, a: 1}
+  potencyBar: {fileID: 0}
+  potencySizes:
+  - {x: 0, y: 10}
+  - {x: 38, y: 10}
+--- !u!114 &2769373848126601828
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2769373848126601810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a18623081fce2b43b33a3589e782019, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponPanel: {fileID: 0}
+  upgradePanel: {fileID: 0}
+  weaponBox: {fileID: 2252494847351049595, guid: 6d931c197c8cd4640a7d749e1a6f8ca2, type: 3}
+  upgradeBox: {fileID: 1967739428726533637, guid: 5af5ea8c26cd7824b96e6857b37b2e39, type: 3}
+--- !u!114 &442181324
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2769373848126601810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ee874808292f854aab34a20d7542e6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownedWeapons:
+  - {fileID: 300729188613039477, guid: 6ff7c5ed83676d34483616c32cb0f61a, type: 3}
+  - {fileID: 6860717028632198114, guid: d4455e048e944204982ee5ce0d0456af, type: 3}
+  - {fileID: 7010819176685251824, guid: 4f0b1d7e330625b41846cef3bd71392a, type: 3}
+  - {fileID: 6422405914037013302, guid: 373ea3617fac0f541887fe113d33cf19, type: 3}
+  - {fileID: 3699652990655043070, guid: 209f13fcb22009046933a9b427727627, type: 3}
+  - {fileID: 6750947037888810302, guid: 86b454ebb160df24e98f5fcc2489ba74, type: 3}
+  - {fileID: 3243512912285616120, guid: 361cf556e775217419fab3bf3fef198a, type: 3}
+  - {fileID: 6287976724556135258, guid: d89920cead8790146b02479fed85e196, type: 3}
+  ownedUpgrades: []
+--- !u!114 &627387215
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2769373848126601810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 547a46add2d65cc4a85db0f4b5418dab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

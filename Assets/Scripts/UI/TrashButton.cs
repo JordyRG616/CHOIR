@@ -39,7 +39,7 @@ public class TrashButton : MonoBehaviour
             Time.timeScale = 0;
             recycleCost++;
 
-            RewardManager.Main.OpenReward(RewardManager.Main.defaultCards);
+            //RewardManager.Main.OpenReward(RewardManager.Main.defaultCards);
         }
 
         bar.sizeDelta = new Vector2(size, bar.sizeDelta.y);

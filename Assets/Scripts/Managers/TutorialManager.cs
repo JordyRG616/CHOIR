@@ -18,64 +18,56 @@ public class TutorialManager : MonoBehaviour
     }
     #endregion
 
-    public RectTransform tutorialBox;
-    public TMPro.TextMeshProUGUI tutorialText;
-    public GameObject panel;
-    [Space]
-    public List<TutorialStep> tutorialSteps;
-    public bool tutorialOn;
-    public bool paused;
+    [SerializeField] private GameObject panel;
+    [SerializeField] private List<GameObject> pages;
+    private List<int> usedIndexes = new List<int>();
+    private bool skipTutorial;
 
-    public void DoTutorialStep(string key, bool pause = false)
+
+    private void Start()
     {
-        if (tutorialSteps.Count == 0) return;
-
-        if (PlayerPrefs.GetInt("TutorialTaken") == -1)
-        {
-            tutorialSteps.Clear();
-            return;
-        }
-
-        var step = tutorialSteps.Find(x => x.tutorialKey == key);
-        if (step == null) return;
-        if (pause)
-        {
-            Time.timeScale = 0;
-            paused = true;
-        }
-        tutorialBox.anchoredPosition = step.boxPosition;
-        tutorialText.text = step.text;
-
-        panel.SetActive(true);
-        tutorialBox.gameObject.SetActive(true);
-        tutorialOn = true;
-
-        tutorialSteps.Remove(step);
+        pages[0].SetActive(true);
+        usedIndexes.Add(0);
     }
 
-    public void CloseTutorialPanel()
+    public void RequestTutorialPage(int pageIndex, int steps = 1, bool cursorPosition = false)
     {
-        if(paused)
+        if (skipTutorial || usedIndexes.Contains(pageIndex)) return;
+
+        panel.SetActive(true);
+        StartCoroutine(OpenPage(pageIndex, steps, cursorPosition));
+        
+    }
+
+    private IEnumerator OpenPage(int index, int steps, bool cursorPosition = false)
+    {
+        Vector2 pos = GlobalFunctions.CalculatePointerPosition();
+
+        for (int i = 0; i < steps; i++)
         {
-            Time.timeScale = 1;
-            paused = false;
+            yield return new WaitForSeconds(0.05f);
+
+            var page = pages[index + i];
+            page.SetActive(true);
+
+            if ((cursorPosition))
+            {
+                page.GetComponent<RectTransform>().anchoredPosition = pos;
+            }
+
+            yield return new WaitUntil(() => Input.anyKeyDown == true);
+
+            usedIndexes.Add(index + i);
+            page.SetActive(false);
         }
 
         panel.SetActive(false);
-        tutorialBox.gameObject.SetActive(false);
-        tutorialOn = false;
-
-        if(tutorialSteps.Count == 0)
-        {
-            PlayerPrefs.SetInt("TutorialTaken", -1);
-        }
     }
-}
 
-[System.Serializable]
-public class TutorialStep
-{
-    public string tutorialKey;
-    public Vector2 boxPosition;
-    [TextArea] public string text;
+    public void SkipTutorial(bool skip)
+    {
+        skipTutorial = skip;
+
+        if (!skip) RequestTutorialPage(1, 3);
+    }
 }

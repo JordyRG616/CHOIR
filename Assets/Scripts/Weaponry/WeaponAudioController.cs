@@ -34,7 +34,8 @@ public class WeaponAudioController : MonoBehaviour
 
     public void ChangeKey(WeaponKey key)
     {
-        emitter.Params[1].Value = (int)key;
+        if(emitter.Params.Length == 0) return;
+        emitter.Params[0].Value = (int)key;
     }
 }
 

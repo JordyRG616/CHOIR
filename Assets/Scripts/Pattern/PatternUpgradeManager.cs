@@ -58,8 +58,6 @@ public class PatternUpgradeManager : MonoBehaviour
 
     public void InitiateSelection()
     {
-        if(doTutorial) StartCoroutine(ShowTutorials());
-
         AudioManager.Main.PauseAudio();
         addIndex++;
         if (addIndex > adds.Count) addIndex = adds.Count;
@@ -90,16 +88,6 @@ public class PatternUpgradeManager : MonoBehaviour
         upgradePanel.SetActive(true);
 
         SetAdds();
-    }
-
-    private IEnumerator ShowTutorials()
-    {
-        TutorialManager.Main.DoTutorialStep("Sequencer Upgrade");
-
-        yield return new WaitUntil(() => TutorialManager.Main.tutorialOn == false);
-
-        TutorialManager.Main.DoTutorialStep("Enemy Pools");
-        doTutorial = false;
     }
 
     private void SetAdds()

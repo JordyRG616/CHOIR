@@ -93,8 +93,8 @@ public class ScarabUpgrade : WeaponUpgradeController
 
     private void UpgradeBurning()
     {
-        effects.ForEach(x => x.RaiseDamage(burningIncrement));
-        burning = effects[0].RaiseDamage(0);
+        //effects.ForEach(x => x.RaiseDamage(burningIncrement));
+        //burning = effects[0].RaiseDamage(0);
     }
 
     public override void UnlockFirstRare()
@@ -114,7 +114,7 @@ public class ScarabUpgrade : WeaponUpgradeController
         rangeUI.text = range.ToString("0");
         spreadUI.text = spread.ToString("0.0");
         densityUI.text = density.ToString("0");
-        burnUI.text = effects[0].GetDPS().ToString("0.0");
+        //burnUI.text = effects[0].GetDPS().ToString("0.0");
     }
 
     public override void DoPreview()

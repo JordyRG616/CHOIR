@@ -22,7 +22,7 @@ public class Beholder : MonoBehaviour
         if (!activeCone && counter >= timer)
         {
             visionCone.SetActive(true);
-            GetComponent<EnemyHealthController>().immune = true;
+            GetComponent<EnemyHealthModule>().immune = true;
             activeCone = true;
             timer = Random.Range(coneDurationLimits.x, coneDurationLimits.y);
             counter = 0;
@@ -31,7 +31,7 @@ public class Beholder : MonoBehaviour
         if (activeCone && counter >= timer)
         {
             visionCone.SetActive(false);
-            GetComponent<EnemyHealthController>().immune = false;
+            GetComponent<EnemyHealthModule>().immune = false;
             activeCone = false;
             timer = Random.Range(triggerTimeLimits.x, triggerTimeLimits.y);
             counter = 0;

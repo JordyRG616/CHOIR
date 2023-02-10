@@ -11,6 +11,8 @@ TagManager:
   - BottomEnemy
   - MiddleEnemy
   - TopEnemy
+  - MainUI
+  - UpgradeCursor
   layers:
   - Default
   - TransparentFX
@@ -21,11 +23,11 @@ TagManager:
   - Ground
   - Enemies
   - Crystal
-  - Jelyfish
+  - Chest
   - Beholder
-  - 
-  - 
-  - 
+  - Slots
+  - LightUI
+  - MainUI
   - 
   - 
   - 
@@ -63,11 +65,20 @@ TagManager:
   - name: Foreground
     uniqueID: 3139934333
     locked: 0
+  - name: Tank
+    uniqueID: 1881322749
+    locked: 0
+  - name: Upper Tank
+    uniqueID: 2867186647
+    locked: 0
   - name: Shots
     uniqueID: 2213220671
     locked: 0
   - name: Final Boss
     uniqueID: 1742788981
+    locked: 0
+  - name: Chest
+    uniqueID: 4026289505
     locked: 0
   - name: UI
     uniqueID: 532641367

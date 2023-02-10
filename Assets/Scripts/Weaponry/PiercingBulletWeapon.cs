@@ -18,7 +18,7 @@ public class PiercingBulletWeapon : MonoBehaviour
 
     private void GetActiveColliders()
     {
-        foreach (var enemy in FindObjectsOfType<EnemyHealthController>())
+        foreach (var enemy in FindObjectsOfType<EnemyHealthModule>())
         {
             ReceiveCollider(enemy.GetComponent<Collider2D>());
         }
@@ -57,22 +57,22 @@ public class PiercingBulletWeapon : MonoBehaviour
                 {
                     trigger.RemoveCollider(j);
                 }
-                else if (col.TryGetComponent<EnemyHealthController>(out var healthController))
+                else if (col.TryGetComponent<EnemyHealthModule>(out var healthController))
                 {
                     if (!healthController.triggerCooldown)
                     {
-                        healthController.TakeDamage(damageDealer.Damage);
+                        healthController.TakeDamage(damageDealer.Damage, damageDealer.damageMultiplier);
                         healthController.SetTriggerCooldown();
-                        damageDealer.ApplyWeaponEffects(healthController.gameObject);
+                        damageDealer.ApplyWeaponEffects(healthController.statusHandler);
                     }
                 }
-                else if(col.transform.parent.TryGetComponent<EnemyHealthController>(out var parentHealth))
+                else if(col.transform.parent.TryGetComponent<EnemyHealthModule>(out var parentHealth))
                 {
                     if (!parentHealth.triggerCooldown)
                     {
-                        parentHealth.TakeDamage(damageDealer.Damage);
+                        parentHealth.TakeDamage(damageDealer.Damage, damageDealer.damageMultiplier);
                         parentHealth.SetTriggerCooldown();
-                        damageDealer.ApplyWeaponEffects(parentHealth.gameObject);
+                        damageDealer.ApplyWeaponEffects(parentHealth.statusHandler);
                     }
                 }
             }

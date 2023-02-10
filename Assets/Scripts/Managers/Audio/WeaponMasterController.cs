@@ -24,11 +24,61 @@ public class WeaponMasterController : MonoBehaviour
     [Space]
     [SerializeField] private List<WeaponClassInfo> classInfo;
 
-    public float globalBurnBuff, globalElectricBuff, globalBulletBuff, globalLaserBuff;
+    [Header("Status Parameters")]
+    public float burnDPS;
+    public float burnTick;
+    [Space]
+    public float shockDuration;
+    [Space]
+    public float exposedMultiplier;
+
+    [Header("Ballistics")]
+    public int ammo;
+    public int ammoGeneration = 0;
+
+    [Header("Heat")]
+    public int heatLevel = 0;
+
+    [Header("Potency")]
+    [SerializeField] private float overloadThreshold = 1;
+    public float currentPotency = 0;
+    public bool onOverload => currentPotency > overloadThreshold;
+    public float potencyPercentage
+    {
+        get => currentPotency / overloadThreshold;
+    }
+
+    [Header("Static")]
+    private int _propagation;
+    public int propagationChance
+    {
+        get => _propagation;
+        set
+        {
+            _propagation = value;
+            if (_propagation < 0) _propagation = 0;
+            if (_propagation > 100) _propagation = 100;
+
+            OnPropagationChange?.Invoke(_propagation / 100f);
+        }
+    }
+
+    [Header("UI")]
+    [SerializeField] private TextMeshProUGUI ammoUI;
+    [SerializeField] private TextMeshProUGUI ammoGenerationUI;
+    [SerializeField] private TextMeshProUGUI heatUI;
+    [SerializeField] private TextMeshProUGUI energyUI;
+    [SerializeField] private TextMeshProUGUI propagationUI;
+
+    public delegate void PropagationUpdate(float percentage);
+    public PropagationUpdate OnPropagationChange;
+
 
     private void Start()
     {
         RuntimeManager.StudioSystem.setParameterByName("Kit", initialKitIndex);
+
+        ActionMarker.Main.OnReset += () => ammo += ammoGeneration;
     }
 
     public void RegisterWeaponClass(WeaponBase weapon)
@@ -43,18 +93,27 @@ public class WeaponMasterController : MonoBehaviour
             {
                 var info = classInfo.Find(x => x._class == _c);
                 info.weapons.Add(weapon);
-                UpdateBuffs(info);
+                //UpdateBuffs(info);
             }
         }
 
         classInfo.ForEach(x => x.UpdateUI());
     }
 
+    private void Update()
+    {
+        ammoUI.text = ammo + " ammo";
+        ammoGenerationUI.text = "+" + ammoGeneration + " per reset";
+        heatUI.text = "Heat level:\n" + heatLevel;
+        energyUI.text = "Energy reserve in:\n" + (potencyPercentage *100) + "%";
+        propagationUI.text = "Propagation chance:\n" + propagationChance + "%";
+    }
+
     public void RegisterWeaponClass(WeaponClass weaponClass, WeaponBase weapon)
     {
         var info = classInfo.Find(x => x._class == weaponClass);
         info.weapons.Add(weapon);
-        UpdateBuffs(info);
+        //UpdateBuffs(info);
 
         classInfo.ForEach(x => x.UpdateUI());
     }
@@ -64,16 +123,16 @@ public class WeaponMasterController : MonoBehaviour
         switch (classInfo._class)
         {
             case WeaponClass.Ballistic:
-                globalBulletBuff = classInfo.GetBuffValue();
+                //globalBulletBuff = classInfo.GetBuffValue();
                 break;
             case WeaponClass.Laser:
-                globalLaserBuff = classInfo.GetBuffValue();
+                exposedMultiplier = classInfo.GetBuffValue();
                 break;
             case WeaponClass.Flame:
-                globalBurnBuff = classInfo.GetBuffValue();
+                burnDPS = classInfo.GetBuffValue();
                 break;
             case WeaponClass.Electric:
-                globalElectricBuff = classInfo.GetBuffValue();
+                shockDuration = classInfo.GetBuffValue();
                 break;
         }
     }
@@ -113,7 +172,7 @@ public class WeaponClassInfo
 
     public void UpdateUI()
     {
-        levelUI.text = classLevel.ToString();
+        //levelUI.text = classLevel.ToString();
     }
 }
 
@@ -126,7 +185,7 @@ public class ClassBuffs
 
     public void SetInfoUI(bool active)
     {
-        if (active) infoUI.alpha = 1f;
-        else infoUI.alpha = 0.4f;
+        //if (active) infoUI.alpha = 1f;
+        //else infoUI.alpha = 0.4f;
     }
 }

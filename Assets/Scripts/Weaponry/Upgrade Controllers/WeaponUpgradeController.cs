@@ -57,7 +57,7 @@ public abstract class WeaponUpgradeController : MonoBehaviour
         {
             if (level == card.levelToUnlock)
             {
-                RewardManager.Main.ReceiveCard(card.card);
+                //RewardManager.Main.ReceiveCard(card.card);
             }
         }
     }

@@ -16,16 +16,16 @@ public class ElectricEffect : WeaponEffect
 
     protected override void Effect(GameObject enemy)
     {
-        var enemyMarch = enemy.GetComponent<EnemyMarch>();
+        var enemyMarch = enemy.GetComponent<EnemyMarchModule>();
         if (enemyMarch.frozen) return;
 
-        var globalIncrement = WeaponMasterController.Main.globalElectricBuff;
+        var globalIncrement = WeaponMasterController.Main.shockDuration;
         effectTime = new WaitForSeconds(effectDuration + globalIncrement);
 
         StartCoroutine(FreezeEnemy(enemyMarch));
     }
 
-    private IEnumerator FreezeEnemy(EnemyMarch enemyMarch)
+    private IEnumerator FreezeEnemy(EnemyMarchModule enemyMarch)
     {
         enemyMarch.SetFrozen(true);
 

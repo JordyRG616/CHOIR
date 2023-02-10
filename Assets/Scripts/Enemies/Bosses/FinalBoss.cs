@@ -5,16 +5,16 @@ using UnityEngine;
 
 public class FinalBoss : MonoBehaviour
 {
-    private EnemyHealthController healthController;
+    private EnemyHealthModule healthController;
     private static int bossesDefeated;
 
     private void Awake()
     {
-        healthController = GetComponent<EnemyHealthController>();
+        healthController = GetComponent<EnemyHealthModule>();
         healthController.onEnemyDeath += BossDeath;
     }
 
-    private void BossDeath(EnemyHealthController healthController, bool destroy)
+    private void BossDeath(EnemyHealthModule healthController, bool destroy)
     {
         Destroy(gameObject);
         bossesDefeated++;

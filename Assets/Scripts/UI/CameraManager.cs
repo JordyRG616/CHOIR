@@ -16,7 +16,41 @@ public class CameraManager : MonoBehaviour
     private WaitForSeconds wait = new WaitForSeconds(0.01f);
     private bool onBossCamera;
 
+    [SerializeField] private LevelGenerator levelGenerator;
+    [SerializeField] private float cameraSpeed;
+    private Vector2 cameraBoundaries;
 
+    private float _px = 0.5f;
+    private float posX
+    {
+        get => _px;
+        set
+        {
+            if (value < 0) _px = 0;
+            else if (value > 1) _px = 1;
+            else _px = value;
+        }
+    }
+
+    private float _py = 0.5f;
+    private float posY
+    {
+        get => _py;
+        set
+        {
+            if (value < 0) _py = 0;
+            else if (value > 1) _py = 1;
+            else _py = value;
+        }
+    }
+    private Camera cam;
+
+
+    private void Start()
+    {
+        cam = GetComponent<Camera>();
+        SetCameraBoundaries(levelGenerator.loadedData.LevelSize);
+    }
 
     public void DoShake()
     {
@@ -87,5 +121,33 @@ public class CameraManager : MonoBehaviour
             step += 0.01f;
             yield return wait;
         }
+    }
+
+    private void Update()
+    {
+        MoveCamera();
+
+        if(Input.GetKeyDown(KeyCode.F))
+        {
+            transform.position = origin;
+        }
+    }
+
+    private void MoveCamera()
+    {
+        posX += Time.deltaTime * cameraSpeed * Input.GetAxis("Horizontal");
+        posY += Time.deltaTime * cameraSpeed * Input.GetAxis("Vertical");
+
+        var _x = Mathf.Lerp(-cameraBoundaries.x, cameraBoundaries.x, posX);
+        var _y = Mathf.Lerp(-cameraBoundaries.y, cameraBoundaries.y, posY);
+
+        transform.position = new Vector3(_x, _y, -10);
+    }
+
+    public void SetCameraBoundaries(Vector2 levelSize)
+    {
+        levelSize /= 32;
+        var diff = levelSize - new Vector2(cam.orthographicSize * 16 / 9, cam.orthographicSize);
+        cameraBoundaries = diff;
     }
 }

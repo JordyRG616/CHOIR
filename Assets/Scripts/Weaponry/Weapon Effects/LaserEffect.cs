@@ -17,16 +17,16 @@ public class LaserEffect : WeaponEffect
 
     protected override void Effect(GameObject enemy)
     {
-        var healthController = enemy.GetComponent<EnemyHealthController>();
+        var healthController = enemy.GetComponent<EnemyHealthModule>();
         if (healthController.exposedMultiplier > 0) return;
 
 
         StartCoroutine(FreezeEnemy(healthController));
     }
 
-    private IEnumerator FreezeEnemy(EnemyHealthController healthController)
+    private IEnumerator FreezeEnemy(EnemyHealthModule healthController)
     {
-        healthController.exposedMultiplier = multiplier + WeaponMasterController.Main.globalLaserBuff;
+        healthController.exposedMultiplier = multiplier + WeaponMasterController.Main.exposedMultiplier;
 
         yield return effectTime;
 

@@ -8,36 +8,42 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private float spawnFrequency;
     public float chanceForExtraEnemy = 0;
     [SerializeField] private int directionModifier;
-    [SerializeField] private List<GameObject> initialEnemyModels;
+    [SerializeField] private GameObject initialEnemyModel;
     [SerializeField] private int initialEnemyWeight;
     private Dictionary<GameObject, int> enemiesMatrix = new Dictionary<GameObject, int>();
     private List<GameObject> enemyPool = new List<GameObject>();
     [field: SerializeField] public SpawnerInfo infoUI { get; private set; }
     private float timeCounter;
 
+    private List<MutationBase> mutations = new List<MutationBase>();
+
     public enum SpawnerPosition { Left, Right, Both, None}
     public SpawnerPosition position;
 
-    public delegate void EnemyEnhancement(GameObject enemy);
-    public EnemyEnhancement EnhanceSpawnedEnemy;
     [HideInInspector] public bool active = false;
 
 
-    private IEnumerator Start()
+    private void Start()
     {
-        var rdm = Random.Range(0, initialEnemyModels.Count);
-        var initialEnemyModel = initialEnemyModels[rdm];
-        
         enemiesMatrix.Add(initialEnemyModel, initialEnemyWeight);
+    }
 
-        infoUI.SetEnemieInfo(GetEnemiesPercentages());
-        var lane = initialEnemyModel.tag + position.ToString();
-        RewardManager.Main.initialLanes.Add(lane);
-
-        yield return new WaitUntil(() => ActionMarker.Main.On == true);
-
+    public void Activate()
+    {
         active = true;
         SpawnEnemy();
+    }
+
+    public void Deactivate()
+    {
+        active = false;
+        timeCounter = 0;
+    }
+
+    public void RaiseParameters(int tankLevel)
+    {
+        spawnFrequency -= tankLevel / 10;
+        chanceForExtraEnemy += tankLevel / 10;
     }
 
     private void SpawnEnemy()
@@ -54,15 +60,27 @@ public class EnemySpawner : MonoBehaviour
             enemy.SetActive(true);
         }
 
-        enemy.GetComponent<EnemyHealthController>().onEnemyDeath += AddEnemyToPool;
-        enemy.GetComponent<EnemyMarch>().SetDirection(directionModifier);
+        enemy.GetComponent<EnemyHealthModule>().onEnemyDeath += AddEnemyToPool;
+        enemy.GetComponent<EnemyMarchModule>().SetDirection(directionModifier);
         enemy.transform.position = transform.position;
         enemy.transform.localScale = new Vector3
             (Mathf.Abs(enemy.transform.localScale.x) * directionModifier,
             enemy.transform.localScale.y, 1);
+        ApplyMutations(enemy);
     }
 
-    private void AddEnemyToPool(EnemyHealthController healthController, bool destroy)
+    private void ApplyMutations(GameObject enemy)
+    {
+        var manager = enemy.GetComponent<EnemyManager>();
+
+        manager.SetStats();
+
+        mutations.ForEach(x => x.ApplyMutation(manager.currentStats));
+
+        manager.SetStats(false);
+    }
+
+    private void AddEnemyToPool(EnemyHealthModule healthController, bool destroy)
     {
         healthController.onEnemyDeath -= AddEnemyToPool;
         if (destroy) Destroy(healthController.gameObject);
@@ -73,9 +91,8 @@ public class EnemySpawner : MonoBehaviour
 
     private GameObject CreateNewEnemy(GameObject enemy)
     {
-        var baby = Instantiate(enemy, transform.position, Quaternion.identity);
+        var baby = Instantiate(enemy, transform.position, enemy.transform.rotation);
         baby.name = enemy.name;
-        EnhanceSpawnedEnemy?.Invoke(baby);
         return baby;
     }
 
@@ -159,7 +176,7 @@ public class EnemySpawner : MonoBehaviour
             enemiesMatrix.Add(enemy, 1);
         }
 
-        infoUI.SetEnemieInfo(GetEnemiesPercentages());
+        //infoUI.SetEnemieInfo(GetEnemiesPercentages());
     }
 
     public void RemoveEnemy(GameObject enemy)
@@ -174,7 +191,7 @@ public class EnemySpawner : MonoBehaviour
             }
         }
 
-        infoUI.SetEnemieInfo(GetEnemiesPercentages());
+        //infoUI.SetEnemieInfo(GetEnemiesPercentages());
     }
 
     public List<GameObject> GetEnemiesInPool()
@@ -185,5 +202,17 @@ public class EnemySpawner : MonoBehaviour
     public void LowerFrequency(float value)
     {
         spawnFrequency -= value;
+    }
+
+    public void ReceiveMutation(MutationBase mutation)
+    {
+        var mut = mutations.Find(x => x.Compare(mutation));
+        if (mut != null) mut.AddMutation(mutation);
+        else
+        {
+            var _m = mutation.GetCopy();
+            mutations.Add(_m);
+        }
+        
     }
 }

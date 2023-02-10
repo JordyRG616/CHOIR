@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ParentMarch : EnemyMarch
+public class ParentMarch : EnemyMarchModule
 {
-    [SerializeField] private List<EnemyMarch> childrenMarch;
+    [SerializeField] private List<EnemyMarchModule> childrenMarch;
 
     public override void SetDirection(int direction)
     {

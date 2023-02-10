@@ -23,35 +23,69 @@ public class InputManager : MonoBehaviour
     public GameObject currentHoveredBox;
     public bool IsOverTrash;
 
+    public SupportCard currentSupportCard;
+    public SupportTile currentSupportTile;
+
+    public bool waitingForSlot = false;
+    public bool draggingWeapon = false;
+    public Transform weaponDragged = null;
+    public GameObject hoveredSlot = null;
+    public bool selectingUpgrade = false;
+    public WeaponSlot selectedSlot = null;
+    public WeaponBase weaponToPlace;
+
+    [Header("UI")]
+    [SerializeField] private KeyCode showUIKey;
+    [SerializeField] private List<Animator> animators;
+
+    private bool _open;
+    public bool uiOpen
+    {
+        get => _open;
+        set
+        {
+            _open = value;
+            animators.ForEach(x => x.SetBool("Open", _open));
+        }
+    }
+
+    private bool paused = false;
+
     public void SetHoveredBox(GameObject box)
     {
         currentHoveredBox = box;
     }
 
-    public void SetTile()
+    public void SetActionTile(bool hasCard = true)
     {
         var rect = currentTileInstance.GetComponent<RectTransform>();
         rect.SetParent(currentHoveredBox.transform);
         rect.anchoredPosition = Vector2.zero;
         currentTileInstance.Initialize(currentHoveredBox);
-        Destroy(currentWeaponCard.gameObject);
+        if(hasCard) Destroy(currentWeaponCard.gameObject);
+    }
+
+    public void SetSupportTile()
+    {
+        var rect = currentSupportTile.GetComponent<RectTransform>();
+        rect.SetParent(currentHoveredBox.transform);
+        rect.anchoredPosition = Vector2.zero;
+        Destroy(currentSupportCard.gameObject);
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            Time.timeScale = 1;
+            paused = !paused;
+
+            if (paused) Time.timeScale = 1;
+            else Time.timeScale = 0;
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha2))
+        if(Input.GetKeyDown(showUIKey))
         {
-            Time.timeScale = 2;
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            Time.timeScale = 3;
+            uiOpen = !uiOpen;
         }
     }
 
