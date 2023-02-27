@@ -1,0 +1,69 @@
+{
+	"identifier": "Level_2",
+	"uniqueIdentifer": "a1497c40-7820-11ed-81dc-55479f775eeb",
+	"x": -928,
+	"y": -144,
+	"width": 688,
+	"height": 544,
+	"bgColor": "#696A79",
+	"neighbourLevels": [],
+	"customFields" : {},
+	"layers": [
+		"Background.png",
+		"Foreground.png",
+		"Props_L0.png",
+		"Props_L1.png",
+		"Props_L2.png",
+		"Fade.png"
+	],
+	"entities": {
+		"Enemy_Spawner": [
+			{
+				"id": "Enemy_Spawner",
+				"iid": "8cb5e330-7820-11ed-bbeb-b7bd18678607",
+				"layer": "Entities",
+				"x": 616,
+				"y": 288,
+				"width": 16,
+				"height": 80,
+				"color": 15363951,
+				"customFields" : {}
+			},
+			{
+				"id": "Enemy_Spawner",
+				"iid": "be0956f0-7820-11ed-bbeb-fb6e5297c710",
+				"layer": "Entities",
+				"x": 520,
+				"y": 128,
+				"width": 16,
+				"height": 80,
+				"color": 15363951,
+				"customFields" : {}
+			},
+			{
+				"id": "Enemy_Spawner",
+				"iid": "c356ea00-7820-11ed-bbeb-d3cbe3dbd07b",
+				"layer": "Entities",
+				"x": 648,
+				"y": 448,
+				"width": 16,
+				"height": 80,
+				"color": 15363951,
+				"customFields" : {}
+			}
+		],
+		"Crystal_Position": [
+			{
+				"id": "Crystal_Position",
+				"iid": "b69cf800-7820-11ed-bbeb-cdf48cce03ca",
+				"layer": "Entities",
+				"x": 184,
+				"y": 448,
+				"width": 32,
+				"height": 64,
+				"color": 9755059,
+				"customFields" : {}
+			}
+		]
+	}
+}

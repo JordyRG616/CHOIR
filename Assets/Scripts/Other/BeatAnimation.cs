@@ -6,6 +6,9 @@ public class BeatAnimation : MonoBehaviour
 {
     private Animator anim;
     private ActionMarker marker;
+    
+    public bool OverrideBeat;
+
 
     void Start()
     {
@@ -16,6 +19,7 @@ public class BeatAnimation : MonoBehaviour
 
     private void DoBeatAnimation()
     {
+        if(OverrideBeat) return;
         anim.SetTrigger("Beat");
     }
 

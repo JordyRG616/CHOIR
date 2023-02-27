@@ -3,45 +3,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bolt : ElectricBase
+public class Bolt : WeaponBase
 {
-    [SerializeField] private ParticleSystem trail;
-    private float appliedValue;
-
-    protected override void Awake()
+    public override void LevelUp()
     {
-        base.Awake();
-
-        upgrades.Add(new WeaponUpgrade(UpgradeTag.Multishot,
-            () =>
-            {
-                var main = MainShooter.main;
-                var emission = MainShooter.emission;
-                var burst = emission.GetBurst(0);
-                burst.cycleCount += 3;
-                emission.SetBurst(0, burst);
-
-                var shape = trail.shape;
-                shape.randomPositionAmount = 0.75f;
-            }
-            ));
-
-        ActionMarker.Main.OnReset += RemoveAppliedValues;
+        throw new NotImplementedException();
     }
 
-    private void RemoveAppliedValues()
+    public override string WeaponDescription()
     {
-        WeaponMasterController.Main.currentPotency -= appliedValue;
-        appliedValue = 0;
+        throw new NotImplementedException();
     }
 
-    public override void Shoot(WeaponKey key)
+    protected override void ApplyPerk()
     {
-        base.Shoot(key);
-
-        WeaponMasterController.Main.currentPotency += 0.05f;
-        appliedValue += 0.05f;
+        throw new NotImplementedException();
     }
 
-    
+    protected override void RemovePerk()
+    {
+        throw new NotImplementedException();
+    }
 }

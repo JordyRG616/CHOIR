@@ -24624,7 +24624,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1515930876
 Transform:
   m_ObjectHideFlags: 0
@@ -49013,7 +49013,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6750947037888810278
 Transform:
   m_ObjectHideFlags: 0
@@ -49193,30 +49193,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 3490646350416696802}
-        m_TargetAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
-        m_MethodName: Play
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1905935749}
-        m_TargetAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
-        m_MethodName: Play
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 6750947037888810301}
         m_TargetAssemblyTypeName: FMODUnity.StudioEventEmitter, FMODUnity
         m_MethodName: Play
@@ -49244,31 +49220,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 3490646350416696802}
-        m_TargetAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
-        m_MethodName: Stop
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1905935749}
-        m_TargetAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
-        m_MethodName: Stop
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1905935749}
+      - m_Target: {fileID: 6750947038906082304}
         m_TargetAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
         m_MethodName: Clear
         m_Mode: 1
@@ -49280,8 +49232,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 6750947037888810302}
-        m_TargetAssemblyTypeName: FlameBase, Assembly-CSharp
+      - m_Target: {fileID: 6750947037888810301}
+        m_TargetAssemblyTypeName: FMODUnity.StudioEventEmitter, FMODUnity
         m_MethodName: Stop
         m_Mode: 1
         m_Arguments:
@@ -49293,6 +49245,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   damageRange: {x: 2, y: 3}
+  exp: {fileID: 485098360858854784, guid: 18dc999ca60e81d40943d222f0a41d3d, type: 3}
   unlocked: 0
   classes: 4
   <upgrades>k__BackingField:
@@ -49424,7 +49377,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 3
+      scalar: 7
       minScalar: 1
       maxCurve:
         serializedVersion: 2

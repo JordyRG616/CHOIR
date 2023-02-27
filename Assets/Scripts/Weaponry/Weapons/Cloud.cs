@@ -2,24 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Cloud : ElectricBase
+public class Cloud : WeaponBase
 {
-    [SerializeField] private List<ParticleSystem> shooters;
-
-    protected override void Awake()
+    public override void LevelUp()
     {
-        base.Awake();
+        throw new System.NotImplementedException();
+    }
 
-        upgrades.Add(new WeaponUpgrade(UpgradeTag.Multishot, () =>
-        {
-            foreach (var shooter in shooters)
-            {
-                var emission = shooter.emission;
-                var burst = emission.GetBurst(0);
-                burst.cycleCount += 1;
-                emission.SetBurst(0, burst);
-            }
-        }
-        ));
+    public override string WeaponDescription()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    protected override void ApplyPerk()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    protected override void RemovePerk()
+    {
+        throw new System.NotImplementedException();
     }
 }

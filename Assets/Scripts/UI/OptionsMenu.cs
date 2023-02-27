@@ -6,7 +6,6 @@ using TMPro;
 public class OptionsMenu : MonoBehaviour
 {
     [SerializeField] private List<Animator> animators;
-    [SerializeField] private TextMeshProUGUI fpsMonitor;
     private bool open;
     private int frameCount;
     private float elapsedTime;
@@ -35,7 +34,6 @@ public class OptionsMenu : MonoBehaviour
             if (open) CloseMenu();
             else OpenMenu();
         }
-        CalculateFPS();
     }
 
     public void Continue()
@@ -51,18 +49,5 @@ public class OptionsMenu : MonoBehaviour
     public void Exit()
     {
         Application.Quit();
-    }
-
-    private void CalculateFPS()
-    {
-        frameCount++;
-        elapsedTime += Time.deltaTime;
-        if (elapsedTime > 0.5f)
-        {
-            frameRate = System.Math.Round(frameCount / elapsedTime, 1, System.MidpointRounding.AwayFromZero);
-            frameCount = 0;
-            elapsedTime = 0;
-        }
-        fpsMonitor.text = frameRate + " fps";
     }
 }

@@ -19749,6 +19749,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   damageRange: {x: 1, y: 3}
+  exp: {fileID: 485098360858854784, guid: 18dc999ca60e81d40943d222f0a41d3d, type: 3}
   unlocked: 0
   classes: 2
   <upgrades>k__BackingField:

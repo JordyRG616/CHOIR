@@ -9781,7 +9781,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &6860717028632198124
 Transform:
   m_ObjectHideFlags: 0
@@ -9916,6 +9916,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   damageRange: {x: 15, y: 20}
+  exp: {fileID: 485098360858854784, guid: 18dc999ca60e81d40943d222f0a41d3d, type: 3}
   unlocked: 0
   classes: 2
   <upgrades>k__BackingField:
@@ -9929,8 +9930,8 @@ MonoBehaviour:
     - {fileID: 6064568517016421709}
     objectsToDeactivate: []
     applied: 0
-  baseFirerate: 2
-  maxFirerateIncrement: 5
+  baseRange: 1
+  maxRange: 3
 --- !u!114 &6860717028632198118
 MonoBehaviour:
   m_ObjectHideFlags: 0

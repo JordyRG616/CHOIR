@@ -6,9 +6,9 @@
       "source": "git",
       "dependencies": {
         "com.unity.textmeshpro": "3.0.6",
-        "com.unity.nuget.newtonsoft-json": "3.0.1"
+        "com.unity.nuget.newtonsoft-json": "3.0.2"
       },
-      "hash": "5d0f4b2d6df5ec7d93ddb8a87f0e8b7df3734326"
+      "hash": "e766469eefecb82a2469f65297aaf52cf0b58f15"
     },
     "com.unity.2d.animation": {
       "version": "7.0.6",

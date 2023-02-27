@@ -20,11 +20,9 @@ public class WeaponInfoPanel : MonoBehaviour
     }
     #endregion
 
-    [SerializeField] private Image weaponSprite;
-    [SerializeField] private TextMeshProUGUI weaponName, classInfo, description, effect;
-    [SerializeField] private Transform tiles;
-    [SerializeField] private TextMeshProUGUI cost;
-    [SerializeField] private GameObject costBox;
+    [SerializeField] private Image weaponSprite, classSprite, perkClassSprite, tileSprite;
+    [SerializeField] private TextMeshProUGUI weaponName, description, perk, perkReqAmount, level;
+    [SerializeField] private ClassToSpriteConverter converter;
     private WeaponBase selectedWeapon;
     private WeaponBox selectedBox;
     private InputManager pointerHandler;
@@ -38,21 +36,32 @@ public class WeaponInfoPanel : MonoBehaviour
     {
         selectedWeapon = weapon;
         weaponName.text = weapon.name;
+
         weaponSprite.color = Color.white;
-        weaponSprite.sprite = weapon.GetComponent<SpriteRenderer>().sprite;
-        classInfo.text = weapon.classes.ToString() + " WEAPON";
-        description.text = weapon.Description();
-        effect.text = weapon.Effect;
+        weaponSprite.sprite = weapon.weaponSprite;
 
-        costBox.SetActive(true);
-        var tile = weapon.tiles[0];
+        classSprite.color = Color.white;
+        classSprite.sprite = converter.GetSprite(weapon.weaponClass);
 
-        tiles.Find(tile.type.ToString()).gameObject.SetActive(true);
-        cost.text = tile.cost.ToString();
+        perkClassSprite.color = Color.white;
+        perkClassSprite.sprite = converter.GetSprite(weapon.perkReqClass);
+        perkReqAmount.text = weapon.perkReqAmount.ToString();
 
+        var tile = weapon.tile;
+        tileSprite.color = Color.white;
+        tileSprite.sprite = tile.sprite;
+
+        UpdateInfo();
         selectedBox = box;
 
         gameObject.SetActive(true);
+    }
+
+    public void UpdateInfo()
+    {
+        level.text = "LEVEL " + selectedWeapon.level;
+        description.text = selectedWeapon.WeaponDescription();
+        perk.text = selectedWeapon.ClassPerkDesc;
     }
 
     public void ReceiveUpgrade(UpgradeBase upgrade)
@@ -70,16 +79,43 @@ public class WeaponInfoPanel : MonoBehaviour
         weaponName.text = "";
         weaponSprite.sprite = null;
         weaponSprite.color = Color.clear;
-        classInfo.text = "";
         description.text = "";
-        effect.text = "";
+        perk.text = "";
+        level.text = "";
+        perkReqAmount.text = "";
 
-        costBox.SetActive(false);
-        for (int i = 0; i < 3; i++)
+        classSprite.sprite = null;
+        classSprite.color = Color.clear;
+        perkClassSprite.sprite = null;
+        perkClassSprite.color = Color.clear;
+        tileSprite.sprite = null;
+        tileSprite.color = Color.clear;
+
+        // gameObject.SetActive(false);
+    }
+}
+
+[System.Serializable]
+public class ClassToSpriteConverter
+{
+    public Sprite flameIcon, bulletIcon, electricIcon, laserIcon, nuclearIcon;
+
+    public Sprite GetSprite(WeaponClass _class)
+    {
+        switch(_class)
         {
-            tiles.GetChild(i).gameObject.SetActive(false);
+            case WeaponClass.Projectile:
+            return bulletIcon;
+            case WeaponClass.Laser:
+            return laserIcon;
+            case WeaponClass.Electric:
+            return electricIcon;
+            case WeaponClass.Flame:
+            return flameIcon;
+            case WeaponClass.Nuclear:
+            return nuclearIcon;
         }
 
-        gameObject.SetActive(false);
+        return null;
     }
 }

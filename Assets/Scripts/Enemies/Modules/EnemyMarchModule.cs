@@ -10,7 +10,14 @@ public class EnemyMarchModule : MonoBehaviour, IEnemyModule
     [SerializeField] private float verticalPosition;
     public int directionModifier;
     public bool frozen;
+    public BeatAnimation beat;
+    private bool Grounded => Physics2D.BoxCast(transform.position, new Vector2(1.5f, 1), 0f, Vector2.down, 1.5f, LayerMask.GetMask("Ground"));
 
+
+    void Awake()
+    {
+        beat = GetComponent<BeatAnimation>();
+    }
 
     public void ReceiveValues(float Step, float Speed)
     {
@@ -20,18 +27,13 @@ public class EnemyMarchModule : MonoBehaviour, IEnemyModule
 
     public void A_Step()
     {
-        if (frozen) return;
+        // if (frozen || !Grounded) return;
         transform.position += Vector3.right * step * directionModifier;
     }
 
     private void Update()
     {
-        if (frozen) return;
-        transform.position += Vector3.right * speed * Time.deltaTime * directionModifier;
-        if (spawnInVerticalPosition)
-        {
-            transform.position = new Vector3(transform.position.x, verticalPosition, transform.position.y);
-        }
+        beat.OverrideBeat = !Grounded;
     }
 
     public void RaiseSpeed(float value)

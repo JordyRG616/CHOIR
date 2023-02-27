@@ -48,7 +48,7 @@ public class TileCreator : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndD
         Cursor.visible = true;
         if (pointerHandler.currentHoveredBox != null && !pointerHandler.currentTileInstance.IsOverReseter)
         {
-            pointerHandler.SetActionTile(false);
+            pointerHandler.SetActionTile();
             crystal.ExpendBuildPoints(cost);
         }
         else

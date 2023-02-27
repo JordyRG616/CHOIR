@@ -17,6 +17,7 @@ public class SequencerBlocker : MonoBehaviour
         if (CrystalManager.Main.buildPoints >= cost)
         {
             gameObject.SetActive(false);
+            CrystalManager.Main.ExpendBuildPoints(cost);
         } else
         {
             CrystalManager.Main.BlinkCost();

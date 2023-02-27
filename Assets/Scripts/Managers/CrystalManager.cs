@@ -40,15 +40,10 @@ public class CrystalManager : MonoBehaviour
     private int experienceHolder;
     [field: SerializeField] public int buildPoints { get; private set; }
 
-    [Header("UI")]
-    [SerializeField] private List<Vector2> barSizes;
-    [SerializeField] private ParticleSystem levelVFX;
     [SerializeField] private List<Light2D> lights;
 
     [Header("Cash UI")]
     [SerializeField] private TextMeshProUGUI points;
-    [SerializeField] private RectTransform expbar;
-    [SerializeField] private Image cashIcon;
 
     public delegate void LevelUpEvent(int level);
     public LevelUpEvent onLevelUp;
@@ -62,8 +57,7 @@ public class CrystalManager : MonoBehaviour
         currentHealth = maxHealth;
         currentExperience = 0;
         SetHealthValue();
-        SetExpBarSize();
-        points.text = buildPoints.ToString();
+        points.text = buildPoints.ToString() + " S";
     }
 
     private void OnParticleCollision(GameObject other)
@@ -79,7 +73,6 @@ public class CrystalManager : MonoBehaviour
         }
 
         //gainExpVFX.Play();
-        SetExpBarSize();
     }
 
     public void BlinkCost()
@@ -92,31 +85,20 @@ public class CrystalManager : MonoBehaviour
     {
         blinkingCash = true;
         var ogTextColor = points.color;
-        var ogImageColor = cashIcon.color;
 
         points.color = Color.red;
-        cashIcon.color = Color.red;
-        expbar.GetComponent<Image>().color = Color.red;
 
         yield return new WaitForSeconds(0.1f);
 
         points.color = ogTextColor;
-        cashIcon.color = ogImageColor;
-        expbar.GetComponent<Image>().color = ogImageColor;
         blinkingCash = false;
-    }
-
-    private void SetExpBarSize()
-    {
-        var percentage = currentExperience / requiredExperience;
-        expbar.sizeDelta = Vector2.Lerp(barSizes[0], barSizes[1], percentage);
     }
 
     public void ExpendBuildPoints(int value)
     {
         buildPoints -= value;
 
-        points.text = buildPoints.ToString();
+        points.text = buildPoints.ToString() + " S";
     }
 
     private void EnqueueLevelUp()
@@ -132,8 +114,7 @@ public class CrystalManager : MonoBehaviour
         requiredExperience += increment.Evaluate(level);
         level++;
         buildPoints++;
-        levelVFX.Play();
-        points.text = buildPoints.ToString();
+        points.text = buildPoints.ToString() + " S";
 
         onLevelUp?.Invoke(level);
 

@@ -12,16 +12,14 @@ public class WeaponSelector : MonoBehaviour, IPointerClickHandler, IPointerEnter
     [Space]
     [SerializeField] private Image weaponIcon;
     [SerializeField] private TextMeshProUGUI weaponName;
-    [SerializeField] private TextMeshProUGUI weaponClass;
+    [SerializeField] private Image weaponClass;
     [SerializeField] private TextMeshProUGUI weaponDescription;
-    [SerializeField] private TextMeshProUGUI weaponEffect;
-    [SerializeField] private Transform tiles;
-    [SerializeField] private TextMeshProUGUI cost;
-    [SerializeField] private GameObject costBox;
+    [SerializeField] private TextMeshProUGUI weaponPerk;
+    [SerializeField] private Image tile;
+    [SerializeField] private Image perkClass;
+    [SerializeField] private TextMeshProUGUI perkAmount;
+    public ClassToSpriteConverter converter;
     private WeaponBase storedWeapon = null;
-    private ChordBonus storedChord = null;
-    private UpgradeBase storedUpgrade = null;
-    private MutationBase storedMutation = null;
 
     public void ReceiveWeapon(WeaponBase weapon)
     {
@@ -29,50 +27,20 @@ public class WeaponSelector : MonoBehaviour, IPointerClickHandler, IPointerEnter
 
         weaponIcon.sprite = storedWeapon.GetComponent<SpriteRenderer>().sprite;
         weaponName.text = storedWeapon.name;
-        weaponClass.text = storedWeapon.classes.ToString() + " WEAPON";
-        weaponDescription.text = storedWeapon.Description();
-        weaponEffect.text = storedWeapon.Effect;
+        weaponClass.sprite = converter.GetSprite(storedWeapon.weaponClass);
+        weaponDescription.text = storedWeapon.WeaponDescription();
+        weaponPerk.text = storedWeapon.ClassPerkDesc;
 
-        costBox.SetActive(true);
-        var tile = weapon.tiles[0];
+        perkClass.sprite = converter.GetSprite(storedWeapon.perkReqClass);
+        perkAmount.text = storedWeapon.perkReqAmount.ToString();
 
-        tiles.Find(tile.type.ToString()).gameObject.SetActive(true);
-        cost.text = tile.cost.ToString();
+        tile.sprite = storedWeapon.tile.sprite;
     }
 
-    public void ReceiveChord(ChordBonus chordBonus)
-    {
-        storedChord = chordBonus;
-
-        weaponIcon.sprite = chordBonus.icon;
-        weaponName.text = storedChord.name;
-        weaponClass.text = "";
-        weaponDescription.text = storedChord.Description;
-        weaponEffect.text = storedChord.ExtraInfo;
-    }
-
-    public void ReceiveUpgrade(UpgradeBase upgrade, MutationBase mutation)
-    {
-        storedUpgrade = upgrade;
-        storedMutation = mutation;
-
-        weaponIcon.sprite = upgrade.icon;
-        weaponName.text = upgrade.name;
-        weaponDescription.text = upgrade.description;
-        weaponEffect.color = Color.red;
-        weaponEffect.text = mutation.Description;
-    }
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if(storedWeapon != null) ShopManager.Main.AddNewWeapon(storedWeapon);
-        if (storedChord != null) storedChord.Apply();
-        if(storedUpgrade != null)
-        {
-            Inventory.Main.AddUpgrade(storedUpgrade);
-            SpawnerManager.Main.PassMutation(storedMutation);
-            ShopManager.Main.GenerateUpgradeList();
-        }
+        ShopManager.Main.AddNewWeapon(storedWeapon);
 
         foreach (var sel in FindObjectsOfType<WeaponSelector>())
         {
@@ -84,22 +52,16 @@ public class WeaponSelector : MonoBehaviour, IPointerClickHandler, IPointerEnter
 
     public void Clear()
     {
-        storedChord = null;
         storedWeapon = null;
-        storedUpgrade = null;
-        storedMutation = null;
 
         weaponName.text = "";
-        weaponClass.text = "";
         weaponDescription.text = "";
-        weaponEffect.color = Color.white;
-        weaponEffect.text = "";
+        weaponPerk.text = "";
+        perkAmount.text = "";
 
-        costBox.SetActive(false);
-        for (int i = 0; i < 3; i++)
-        {
-            tiles.GetChild(i).gameObject.SetActive(false);
-        }
+        weaponClass.color = Color.clear;
+        tile.color = Color.clear;
+        perkClass.color = Color.clear;
     }
 
     public void OnPointerEnter(PointerEventData eventData)

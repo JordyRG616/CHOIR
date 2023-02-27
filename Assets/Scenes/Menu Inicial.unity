@@ -1907,7 +1907,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac0142f8341ddd84ebfe347f3a930491, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameId: TotemDemo
+  gameId: 0x8E89C621A42DF13163DF965999C7aF69434cE515
   selectedAvatar:
     name: 
     race: 0

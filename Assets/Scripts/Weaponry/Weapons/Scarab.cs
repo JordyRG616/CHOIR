@@ -2,36 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Scarab : FlameBase
+public class Scarab : WeaponBase
 {
-    [SerializeField] GameObject extraThrower;
-
-    protected override void Awake()
+    public override void LevelUp()
     {
-        base.Awake();
-
-        upgrades.Add(new WeaponUpgrade(UpgradeTag.Multishot,
-            () =>
-            {
-                var shape = MainShooter.shape;
-                shape.randomDirectionAmount = 0.12f;
-
-                extraThrower.SetActive(true);
-            }
-            ));
+        throw new System.NotImplementedException();
     }
 
-    public override void Shoot(WeaponKey key)
+    public override string WeaponDescription()
     {
-        WeaponMasterController.Main.heatLevel += 1;
-
-        base.Shoot(key);
+        throw new System.NotImplementedException();
     }
 
-    public override void Stop()
+    protected override void ApplyPerk()
     {
-        WeaponMasterController.Main.heatLevel -= 1;
+        throw new System.NotImplementedException();
+    }
 
-        base.Stop();
+    protected override void RemovePerk()
+    {
+        throw new System.NotImplementedException();
     }
 }

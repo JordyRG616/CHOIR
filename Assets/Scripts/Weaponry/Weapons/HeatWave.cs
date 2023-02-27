@@ -2,22 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HeatWave : FlameBase
+public class HeatWave : WeaponBase
 {
-    [SerializeField] private GameObject trail;
-
-    public override void ApplyPassiveEffect()
+    public override void LevelUp()
     {
-        WeaponMasterController.Main.heatLevel += 1;
+        throw new System.NotImplementedException();
     }
 
-    protected override void ApplyHeatEffect()
+    public override string WeaponDescription()
     {
-        trail.SetActive(true);
+        throw new System.NotImplementedException();
     }
 
-    protected override void RemoveHeatEffect()
+    protected override void ApplyPerk()
     {
-        trail.SetActive(false);
+        throw new System.NotImplementedException();
+    }
+
+    protected override void RemovePerk()
+    {
+        throw new System.NotImplementedException();
     }
 }

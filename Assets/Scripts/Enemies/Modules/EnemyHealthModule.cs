@@ -36,7 +36,9 @@ public class EnemyHealthModule : MonoBehaviour, IEnemyModule
     public delegate void OnDamageTaken(float healthPercentage);
     public OnDamageTaken onDamageTaken;
 
+    [Header("UI")]
     [SerializeField] private Transform healthBar;
+    [SerializeField] private TMPro.TextMeshPro armorValue;
 
     [Header("Death")]
     [SerializeField] private GameObject deathAnimation;
@@ -47,12 +49,21 @@ public class EnemyHealthModule : MonoBehaviour, IEnemyModule
     {
         maxHealth = MaxHealth;
         armor = Armor;
+        if(armor > 0)
+        {
+            armorValue.text = armor.ToString();
+            armorValue.transform.parent.gameObject.SetActive(true);
+        } else
+        {
+            armorValue.transform.parent.gameObject.SetActive(false);
+        }
     }
 
     private void Start()
     {
         materialInstance = new Material(GetComponent<SpriteRenderer>().material);
         GetComponent<SpriteRenderer>().material = materialInstance;
+
 
         InitializeStatusHandling();
     }
@@ -160,16 +171,16 @@ public class EnemyHealthModule : MonoBehaviour, IEnemyModule
 
         if (exp && drops.Count > 0)
         {
-            var rdm = UnityEngine.Random.Range(0, 1f);
+            var rdm = UnityEngine.Random.Range(0, 2f);
             Instantiate(drops[0].obj, transform.position + new Vector3(0, 0, 75), Quaternion.identity);
 
             GameObject container = null;
-            for (int i = 0; i < drops.Count; i++)
+            for (int i = 1; i < drops.Count; i++)
             {
                 var drop = drops[i];
                 if (rdm <= drop.chance) container = drop.obj;
             }
-            Instantiate(container, transform.position + new Vector3(0, 0, 75), Quaternion.identity);
+            if(container != null) Instantiate(container, transform.position + new Vector3(0, 0, 75), Quaternion.identity);
         }
 
         if (exp && deathAnimation != null) TriggerDeathAnimation();

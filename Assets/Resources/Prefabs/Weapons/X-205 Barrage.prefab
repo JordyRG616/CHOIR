@@ -10907,7 +10907,7 @@ ParticleSystem:
           m_PostInfinity: 2
           m_RotationOrder: 4
       cycleCount: 3
-      repeatInterval: 0.2
+      repeatInterval: 0.25
       probability: 1
   SizeModule:
     enabled: 1
@@ -19833,6 +19833,7 @@ MonoBehaviour:
           m_BoolArgument: 1
         m_CallState: 2
   damageRange: {x: 8, y: 12}
+  exp: {fileID: 485098360858854784, guid: 18dc999ca60e81d40943d222f0a41d3d, type: 3}
   unlocked: 0
   classes: 1
   <upgrades>k__BackingField:

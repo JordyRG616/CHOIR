@@ -27,22 +27,22 @@ public class ChestUpgradeSelection : MonoBehaviour
         upgradeName.text = storedUpgrade.name;
         upgradeDescription.text = storedUpgrade.description;
 
-        mutationPanel.SetActive(true);
-        mutationName.text = storedMutation.name;
-        mutationDescription.text = storedMutation.Description;
+        // mutationPanel.SetActive(true);
+        // mutationName.text = storedMutation.name;
+        // mutationDescription.text = storedMutation.Description;
     }
 
     private void OnMouseExit()
     {
         infoPanel.SetActive(false);
-        mutationPanel.SetActive(false);
+        // mutationPanel.SetActive(false);
         transform.localScale = Vector3.one;
     }
 
     private void OnMouseUp()
     {
         Inventory.Main.AddUpgrade(storedUpgrade);
-        SpawnerManager.Main.PassMutation(storedMutation);
+        // SpawnerManager.Main.PassMutation(storedMutation);
         Destroy(transform.parent.gameObject);
     }
 

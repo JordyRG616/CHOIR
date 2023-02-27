@@ -20,8 +20,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3141011618288750579, guid: 26f12621049bc5a498fe6cea60ff1015, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3141011618288750579, guid: 26f12621049bc5a498fe6cea60ff1015, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3141011618288750579, guid: 26f12621049bc5a498fe6cea60ff1015, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: 3141011618288750579, guid: 26f12621049bc5a498fe6cea60ff1015, type: 3}
       propertyPath: m_LocalPosition.x
@@ -83,6 +91,10 @@ PrefabInstance:
       propertyPath: m_Offset.y
       value: 0.54393566
       objectReference: {fileID: 0}
+    - target: {fileID: 3141011618288750589, guid: 26f12621049bc5a498fe6cea60ff1015, type: 3}
+      propertyPath: drops.Array.data[0].obj
+      value: 
+      objectReference: {fileID: 485098360858854784, guid: 49e92373ef035854ca89db2da1b3ed83, type: 3}
     - target: {fileID: 3892589446024495470, guid: 26f12621049bc5a498fe6cea60ff1015, type: 3}
       propertyPath: defaultStats.Step
       value: 0.45

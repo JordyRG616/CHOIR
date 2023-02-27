@@ -43,5 +43,5 @@ Material:
     - _Center_Power: 6.59
     - _Scroll_Speed: -0.075
     m_Colors:
-    - _Color: {r: 1.0592737, g: 0.21185473, b: 0.9406348, a: 1}
+    - _Color: {r: 1.0592737, g: 0.9684789, b: 0.21185473, a: 1}
   m_BuildTextureStacks: []

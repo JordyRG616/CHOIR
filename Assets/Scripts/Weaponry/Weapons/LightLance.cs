@@ -2,27 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LightLance : LaserBase
+public class LightLance : WeaponBase
 {
-    [SerializeField] private float baseFirerate;
-    [SerializeField] private float maxFirerateIncrement;
-
-    protected override void ApplyPotency()
+    public override void LevelUp()
     {
-        var emission = MainShooter.emission;
-        var rate = baseFirerate + (maxFirerateIncrement * weaponMasterController.potencyPercentage);
-        emission.rateOverTime = new ParticleSystem.MinMaxCurve(rate);
+        throw new System.NotImplementedException();
     }
 
-    protected override void ApplyOverloadEffect()
+    public override string WeaponDescription()
     {
-        var emission = MainShooter.emission;
-        emission.rateOverTime = new ParticleSystem.MinMaxCurve(0);
+        throw new System.NotImplementedException();
     }
 
-    protected override void RemoveEffects()
+    protected override void ApplyPerk()
     {
-        var emission = MainShooter.emission;
-        emission.rateOverTime = new ParticleSystem.MinMaxCurve(baseFirerate);
+        throw new System.NotImplementedException();
+    }
+
+    protected override void RemovePerk()
+    {
+        throw new System.NotImplementedException();
     }
 }

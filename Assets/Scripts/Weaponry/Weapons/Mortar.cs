@@ -2,43 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Mortar : FlameBase
+public class Mortar : WeaponBase
 {
-    [SerializeField] GameObject explosion;
-
-    protected override void Awake()
+    public override void LevelUp()
     {
-        base.Awake();
-
-        upgrades.Add(new WeaponUpgrade(UpgradeTag.Multishot,
-            () =>
-            {
-                var main = MainShooter.main;
-                main.startSize = new ParticleSystem.MinMaxCurve(main.startSize.constant * .6f);
-
-                var emission = MainShooter.emission;
-                var burst = emission.GetBurst(0);
-                burst.cycleCount += 2;
-                emission.SetBurst(0, burst);
-            }
-            )) ;
-
-        var upg = upgrades.Find(x => x.tag == UpgradeTag.Explosive);
-
-        upg.onUpgradedApplied += () =>
-        {
-            var main = MainShooter.main;
-            main.startLifetime = new ParticleSystem.MinMaxCurve(.5f, .85f);
-        };
+        throw new System.NotImplementedException();
     }
 
-    protected override void ApplyHeatEffect()
+    public override string WeaponDescription()
     {
-        explosion.SetActive(true);
+        throw new System.NotImplementedException();
     }
 
-    protected override void RemoveHeatEffect()
+    protected override void ApplyPerk()
     {
-        explosion.SetActive(false);
+        throw new System.NotImplementedException();
+    }
+
+    protected override void RemovePerk()
+    {
+        throw new System.NotImplementedException();
     }
 }

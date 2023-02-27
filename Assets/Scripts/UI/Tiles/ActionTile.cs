@@ -8,6 +8,7 @@ using UnityEngine.EventSystems;
 
 public class ActionTile : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
+    public Sprite sprite;
     public TileType type;
     public int cost;
     [SerializeField] private Sprite inactiveSprite;
@@ -44,6 +45,7 @@ public class ActionTile : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDr
     public void ReceiveWeapon(WeaponBase weapon)
     {
         weaponToActivate = weapon;
+        weapon.OnSell += DestroyTile;
     }
 
     public virtual void Initialize(GameObject box)

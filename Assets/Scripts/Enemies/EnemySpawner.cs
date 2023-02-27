@@ -7,12 +7,14 @@ public class EnemySpawner : MonoBehaviour
 {
     [SerializeField] private float spawnFrequency;
     public float chanceForExtraEnemy = 0;
+    public float chanceForExtraMutation = 0;
     [SerializeField] private int directionModifier;
     [SerializeField] private GameObject initialEnemyModel;
     [SerializeField] private int initialEnemyWeight;
+    [SerializeField] private AnimationCurve spawnProgression;
+    [SerializeField] private AnimationCurve extraEnemyProgression;
     private Dictionary<GameObject, int> enemiesMatrix = new Dictionary<GameObject, int>();
     private List<GameObject> enemyPool = new List<GameObject>();
-    [field: SerializeField] public SpawnerInfo infoUI { get; private set; }
     private float timeCounter;
 
     private List<MutationBase> mutations = new List<MutationBase>();
@@ -40,10 +42,11 @@ public class EnemySpawner : MonoBehaviour
         timeCounter = 0;
     }
 
-    public void RaiseParameters(int tankLevel)
+    public void RaiseParameters(int waveNumber, int totalWaves)
     {
-        spawnFrequency -= tankLevel / 10;
-        chanceForExtraEnemy += tankLevel / 10;
+        var perc = (float)waveNumber/totalWaves;
+        spawnFrequency = spawnProgression.Evaluate(perc);
+        chanceForExtraEnemy += extraEnemyProgression.Evaluate(perc);
     }
 
     private void SpawnEnemy()
@@ -175,8 +178,6 @@ public class EnemySpawner : MonoBehaviour
         {
             enemiesMatrix.Add(enemy, 1);
         }
-
-        //infoUI.SetEnemieInfo(GetEnemiesPercentages());
     }
 
     public void RemoveEnemy(GameObject enemy)
@@ -190,8 +191,6 @@ public class EnemySpawner : MonoBehaviour
                 enemiesMatrix.Remove(enemy);
             }
         }
-
-        //infoUI.SetEnemieInfo(GetEnemiesPercentages());
     }
 
     public List<GameObject> GetEnemiesInPool()

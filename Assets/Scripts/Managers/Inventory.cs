@@ -25,19 +25,7 @@ public class Inventory : MonoBehaviour
 
     private void Awake()
     {
-        //var container = new List<WeaponBase>();
-
-        //for (int i = 0; i < 3; i++)
-        //{
-        //    var rdm = Random.Range(0, ownedWeapons.Count);
-        //    container.Add(ownedWeapons[rdm]);
-        //    ownedWeapons.RemoveAt(rdm);
-        //}
-
-        //availableWeapons = ownedWeapons;
-        //ownedWeapons = container;
-
-        //ownedWeapons = availableWeapons;
+        
     }
 
     public void AddWeapon(WeaponBase weapon)

@@ -54,7 +54,7 @@ ParticleSystem:
   emitterVelocityMode: 1
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:
@@ -9862,7 +9862,7 @@ ParticleSystem:
   emitterVelocityMode: 1
   looping: 1
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:
@@ -19535,7 +19535,7 @@ ParticleSystem:
   emitterVelocityMode: 1
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:
@@ -24478,7 +24478,7 @@ ParticleSystem:
   emitterVelocityMode: 1
   looping: 1
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:
@@ -29481,6 +29481,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   damageRange: {x: 8, y: 10}
+  exp: {fileID: 485098360858854784, guid: 18dc999ca60e81d40943d222f0a41d3d, type: 3}
   unlocked: 0
   classes: 4
   <upgrades>k__BackingField:
@@ -29551,7 +29552,7 @@ ParticleSystem:
   emitterVelocityMode: 1
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:
@@ -34520,7 +34521,7 @@ ParticleSystem:
   emitterVelocityMode: 1
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:

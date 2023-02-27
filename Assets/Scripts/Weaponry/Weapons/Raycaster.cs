@@ -2,34 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Raycaster : FlameBase
+public class Raycaster : WeaponBase
 {
-    [SerializeField] private StatusEffectApplier burnApplier;
-    [SerializeField] private ParticleSystem subShooter;
-    [SerializeField] private Color flameColor;
-    private Color ogColor;
-
-    protected override void Start()
+    public override void LevelUp()
     {
-        base.Start();
-
-        var main = subShooter.main;
-        ogColor = main.startColor.color;
+        throw new System.NotImplementedException();
     }
 
-    protected override void ApplyHeatEffect()
+    public override string WeaponDescription()
     {
-        var main = subShooter.main;
-        main.startColor = flameColor;
-
-        subShooter.GetComponent<WeaponDamageDealer>().ReceiveStatusApplier(burnApplier);
+        throw new System.NotImplementedException();
     }
 
-    protected override void RemoveHeatEffect()
+    protected override void ApplyPerk()
     {
-        var main = subShooter.main;
-        main.startColor = ogColor;
+        throw new System.NotImplementedException();
+    }
 
-        subShooter.GetComponent<WeaponDamageDealer>().RemoveStatusApplier(burnApplier);
+    protected override void RemovePerk()
+    {
+        throw new System.NotImplementedException();
     }
 }

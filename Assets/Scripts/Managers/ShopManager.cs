@@ -38,7 +38,6 @@ public class ShopManager : MonoBehaviour
     [Header("Rewards")]
     [SerializeField] private Database database;
     [SerializeField] private List<WeaponSelector> weaponSelectors;
-    [SerializeField] private List<ChordBonus> chords;
 
     private float weaponMax;
     private float upgradeMax;
@@ -77,7 +76,7 @@ public class ShopManager : MonoBehaviour
             else _wCost = value;
         }
     }
-    private int currentWeaponCost => weaponCosts[weaponCostIndex];
+    public int currentWeaponCost => weaponCosts[weaponCostIndex];
 
     private int _uCost;
     private int upgradeCostIndex
@@ -89,7 +88,7 @@ public class ShopManager : MonoBehaviour
             else _uCost = value;
         }
     }
-    private int currentUpgradeCost => upgradeCosts[upgradeCostIndex];
+    public int currentUpgradeCost => upgradeCosts[upgradeCostIndex];
 
 
 
@@ -114,21 +113,12 @@ public class ShopManager : MonoBehaviour
         }
 
         var weapons = new List<WeaponBase>(inventory.ownedWeapons);
-        bool chordChosen = false;
 
         foreach (var selector in weaponSelectors)
         {
-            if (Random.Range(0, 1f) >= 0.2f || chordChosen)
-            {
-                var rdm = Random.Range(0, weapons.Count);
-                selector.ReceiveWeapon(weapons[rdm]);
-                weapons.RemoveAt(rdm);
-            } else
-            {
-                var rdm = Random.Range(0, chords.Count);
-                selector.ReceiveChord(chords[rdm]);
-                chordChosen = true;
-            }
+            var rdm = Random.Range(0, weapons.Count);
+            selector.ReceiveWeapon(weapons[rdm]);
+            weapons.RemoveAt(rdm);
         }
 
         rewardPanel.SetActive(true);
@@ -139,63 +129,16 @@ public class ShopManager : MonoBehaviour
         TutorialManager.Main.RequestTutorialPage(5, 4);
     }
 
-    public void OpenNewUpgradePanel()
-    {
-        if (crystalManager.buildPoints < currentUpgradeCost)
-        {
-            crystalManager.BlinkCost();
-            return;
-        }
-
-            foreach (var selector in weaponSelectors)
-        {
-            var upg = database.GetRandomUpgrade();
-            var mut = database.GetRandomMutation();
-            selector.ReceiveUpgrade(upg, mut);
-        }
-
-        rewardPanel.SetActive(true);
-        crystalManager.ExpendBuildPoints(currentUpgradeCost);
-        upgradeCostIndex++;
-        upgradeCost.text = currentUpgradeCost.ToString();
-
-        TutorialManager.Main.RequestTutorialPage(13);
-    }
-
     public void AddNewWeapon(WeaponBase weapon)
     {
-        TutorialManager.Main.RequestTutorialPage(4);
-
-        var box = Instantiate(weaponBox, weaponPanel);
-        box.ReceiveWeapon(weapon);
-
-        weaponMax = weaponPanel.childCount > 4 ? ((weaponPanel.childCount - 4) * 41.5f) + 10f : 0;
+        var slot = InputManager.Main.selectedSlot;
+        var _weapon = Instantiate(weapon, Vector3.one * 500, Quaternion.identity);
+        slot.ReceiveWeapon(_weapon);
     }
 
     public bool HasEnoughPoints(int value)
     {
         return crystalManager.buildPoints >= value;
-    }
-
-    public void GenerateUpgradeList()
-    {
-        var count = upgradePanel.childCount;
-        if (count > 1)
-        {
-            for (int i = 1; i < count; i++)
-            {
-                var box = upgradePanel.GetChild(i);
-                Destroy(box.gameObject);
-            }
-        }
-
-        foreach (var upgrade in inventory.ownedUpgrades)
-        {
-            var box = Instantiate(upgradeBox, upgradePanel);
-            box.ReceiveUpgrade(upgrade);
-        }
-
-        upgradeMax = upgradePanel.childCount > 4 ? ((upgradePanel.childCount - 4) * 41.5f) + 10f : 0;
     }
 
     public void OpenWeaponPanel()
@@ -210,8 +153,6 @@ public class ShopManager : MonoBehaviour
 
     public void OpenUpgradePanel()
     {
-        GenerateUpgradeList();
-
         weaponPanel.parent.gameObject.SetActive(false);
         upgradePanel.parent.gameObject.SetActive(true);
         upgradePanel.anchoredPosition = Vector2.zero;

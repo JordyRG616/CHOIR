@@ -85,4 +85,11 @@ public class EndGameLog : MonoBehaviour
         var i = SceneManager.GetActiveScene().buildIndex;
         SceneManager.LoadScene(i);
     }
+
+    public void ToNextLevel()
+    {
+        Time.timeScale = 1;
+        var i = SceneManager.GetActiveScene().buildIndex;
+        SceneManager.LoadScene(i + 1);
+    }
 }

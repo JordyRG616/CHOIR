@@ -12,7 +12,7 @@ public class PropagationController : MonoBehaviour
     private void Start()
     {
         controller = WeaponMasterController.Main;
-        controller.OnPropagationChange += UpdatePropagationChance;
+        // controller.OnPropagationChange += UpdatePropagationChance;
 
         ps = GetComponent<ParticleSystem>();
     }

@@ -199,26 +199,16 @@ MonoBehaviour:
   burnTick: 0
   shockDuration: 0
   exposedMultiplier: 0
-  heatIncrement: 0.5
-  heatDecaying: 1.5
-  raisingHeat: 0
-  potencyIncrement: 1
+  ammo: 0
+  ammoGeneration: 0
+  heatLevel: 0
   overloadThreshold: 10
-  raisingPotency: 0
-  heatBar: {fileID: 0}
-  heatSizes:
-  - {x: 24, y: 0}
-  - {x: 24, y: 24}
-  heatColors:
-  - {r: 0.9490196, g: 0.90588236, b: 0.28627452, a: 1}
-  - {r: 0.8980392, g: 0.74509805, b: 0.13333334, a: 1}
-  - {r: 0.8509804, g: 0.49411765, b: 0.08627451, a: 1}
-  - {r: 0.7490196, g: 0.28235295, b: 0.11372549, a: 1}
-  - {r: 0.6, g: 0.15686275, b: 0.09019608, a: 1}
-  potencyBar: {fileID: 0}
-  potencySizes:
-  - {x: 0, y: 10}
-  - {x: 38, y: 10}
+  currentPotency: 0
+  ammoUI: {fileID: 0}
+  ammoGenerationUI: {fileID: 0}
+  heatUI: {fileID: 0}
+  energyUI: {fileID: 0}
+  propagationUI: {fileID: 0}
 --- !u!114 &2769373848126601828
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -231,10 +221,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a18623081fce2b43b33a3589e782019, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scrollSpeed: 0
+  weaponCosts: 
+  upgradeCosts: 
   weaponPanel: {fileID: 0}
   upgradePanel: {fileID: 0}
+  rewardPanel: {fileID: 0}
   weaponBox: {fileID: 2252494847351049595, guid: 6d931c197c8cd4640a7d749e1a6f8ca2, type: 3}
   upgradeBox: {fileID: 1967739428726533637, guid: 5af5ea8c26cd7824b96e6857b37b2e39, type: 3}
+  weaponCost: {fileID: 0}
+  upgradeCost: {fileID: 0}
+  database: {fileID: 0}
+  weaponSelectors: []
+  chords: []
 --- !u!114 &442181324
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -257,6 +256,7 @@ MonoBehaviour:
   - {fileID: 3243512912285616120, guid: 361cf556e775217419fab3bf3fef198a, type: 3}
   - {fileID: 6287976724556135258, guid: d89920cead8790146b02479fed85e196, type: 3}
   ownedUpgrades: []
+  availableWeapons: []
 --- !u!114 &627387215
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -269,3 +269,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 547a46add2d65cc4a85db0f4b5418dab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  adds: []
+  database: {fileID: 0}
+  maxWaves: 0
+  waveDurations: []
+  startButton: {fileID: 0}
+  fill: {fileID: 0}
+  waveIndicator: {fileID: 0}
+  upgradeButton: {fileID: 0}

@@ -5,58 +5,63 @@ using UnityEngine.Events;
 using System.Text.RegularExpressions;
 using System;
 
-public class WeaponBase : MonoBehaviour
+public abstract class WeaponBase : MonoBehaviour
 {
-    public int ID;
-    public int cost;
-    [TextArea][SerializeField] protected string description;
-    [TextArea][SerializeField] public string Effect;
-    [SerializeField] protected List<float> parameters;
-    [TextArea] protected string processedDescription;
+    public Sprite weaponSprite;
+    public WeaponClass weaponClass;
+    [field:SerializeField] public WeaponClass perkReqClass { get; private set; }
+    [field:SerializeField] public int perkReqAmount { get; private set; }
+    [TextArea] public string ClassPerkDesc;
     [SerializeField] protected ParticleSystem MainShooter;
-    [field:SerializeField] public List<ActionTile> tiles { get; protected set; }
+    [field:SerializeField] public ActionTile tile { get; protected set; }
+    [field:SerializeField] public ActionTile AltTile { get; protected set; }
+
     [Space]
     [SerializeField] public UnityEvent OnShoot, OnStop;
     public Vector2 damageRange;
+    [SerializeField] private GameObject exp;
     protected Animator anim;
     protected WeaponAudioController audioController;
     public WeaponGraphicsController graphicsController { get; protected set; }
     public bool unlocked = false;
-    public WeaponClass classes;
-    Regex rex = new Regex(@"&.\d");
+    private WeaponClassInfo perkInfo;
+    private bool perkApplied;
+    public int level = 0;
 
-
-    [field:SerializeField] public List<WeaponUpgrade> upgrades { get; private set; }
+    public delegate void SellEvent();
+    public SellEvent OnSell;
 
     protected virtual void Awake()
     {
         anim = GetComponent<Animator>();
         audioController = GetComponent<WeaponAudioController>();
         graphicsController = GetComponent<WeaponGraphicsController>();
-
-        processedDescription = Description();
-
-        upgrades.Add(new WeaponUpgrade(UpgradeTag.Estabilizer, ApplyEstabilizer));
-        upgrades.Add(new WeaponUpgrade(UpgradeTag.Unstable, ApplyUnstable));
     }
 
-    public virtual void ApplyPassiveEffect()
+    public virtual void Set()
     {
-
+        WeaponMasterController.Main.RegisterWeaponClass(weaponClass, perkReqClass, out perkInfo);
+        perkInfo.OnLevelChange += HandlePerk;
     }
 
-    private void ApplyUnstable()
+    protected virtual void HandlePerk(int currentLevel)
     {
-        damageRange.x = 0;
-        damageRange.y *= 1.5f;
+        if(currentLevel >= perkReqAmount && !perkApplied) 
+        {
+            ApplyPerk();
+            perkApplied = true;
+        }
+
+        if(currentLevel < perkReqAmount && perkApplied) 
+        {
+            RemovePerk();
+            perkApplied = false;
+        }
     }
 
-    private void ApplyEstabilizer()
+    protected virtual void UnlockAltTile()
     {
-        var average = (damageRange.x + damageRange.y) / 2;
-
-        damageRange.x = average;
-        damageRange.y = average;
+        
     }
 
     public virtual void Shoot(WeaponKey key)
@@ -71,93 +76,39 @@ public class WeaponBase : MonoBehaviour
         OnStop?.Invoke();
     }
 
-    public bool HasUpgradeTag(UpgradeTag tag, out WeaponUpgrade upgrade)
+    public void Sell()
     {
-        foreach (var _upgrade in upgrades)
+        var count = Mathf.FloorToInt(ShopManager.Main.currentWeaponCost / 2f);
+
+        for (int i = 0; i < count; i++)
         {
-            if (_upgrade.tag == tag)
-            {
-                upgrade = _upgrade;
-                return true;
-            }
+            Instantiate(exp, transform.position, Quaternion.identity);
         }
 
-        upgrade = null;
-        return false;
+        OnSell?.Invoke();
+        WeaponMasterController.Main.RemoveWeaponClass(weaponClass);
+        perkInfo.OnLevelChange += HandlePerk;
+        Stop();
+        Destroy(gameObject);
     }
 
-    public WeaponUpgrade FindUpgrade(UpgradeTag tag)
-    {
-        foreach (var upgrade in upgrades)
-        {
-            if (upgrade.tag == tag) return upgrade;
-        }
 
-        return null;
-    }
+    public abstract void LevelUp();
 
-    public string Description()
-    {
-        var matches = rex.Matches(description);
-        var replacement = string.Empty;
-        var _desc = new string(description);
+    public abstract string WeaponDescription();
+    
 
-        foreach(var match in matches)
-        {
-            var key = match.ToString().ToCharArray();
-            var index = int.Parse(key[2].ToString());
-
-            switch(key[1])
-            {
-                case 'd':
-                    replacement = damageRange[index].ToString();
-                    break;
-                case 'p':
-                    replacement = parameters[index].ToString();
-                    break;
-            }
-
-            _desc = _desc.Replace(match.ToString(), replacement);
-        }
-
-        return _desc;
-    }
+    protected abstract void ApplyPerk();
+    
+    protected abstract void RemovePerk();
 }
 
-[System.Flags]
 public enum WeaponClass 
 { 
     Default = 0,
-    Ballistic = 1,
+    Projectile = 1,
     Laser = 2, 
     Flame = 4,
-    Electric = 8
-}
-
-[System.Serializable]
-public class WeaponUpgrade
-{
-    public UpgradeTag tag;
-    public List<GameObject> objectsToActivate = new List<GameObject>();
-    public List<GameObject> objectsToDeactivate = new List<GameObject>();
-    public bool applied;
-
-    public delegate void ApplyUpgrade();
-    public ApplyUpgrade onUpgradedApplied;
-
-    public WeaponUpgrade(UpgradeTag tag, ApplyUpgrade function)
-    {
-        this.tag = tag;
-        onUpgradedApplied += function;
-    }
-
-    public void Apply()
-    {
-        onUpgradedApplied?.Invoke();
-        
-        objectsToActivate.ForEach(x => x.SetActive(true));
-        objectsToDeactivate.ForEach(x => x.SetActive(false));
-
-        applied = true;
-    }
+    Electric = 8,
+    Nuclear = 16
 }

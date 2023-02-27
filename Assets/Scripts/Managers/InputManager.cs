@@ -18,21 +18,19 @@ public class InputManager : MonoBehaviour
     }
     #endregion
 
-    public WeaponCard currentWeaponCard;
     public ActionTile currentTileInstance;
     public GameObject currentHoveredBox;
     public bool IsOverTrash;
 
-    public SupportCard currentSupportCard;
-    public SupportTile currentSupportTile;
-
     public bool waitingForSlot = false;
     public bool draggingWeapon = false;
     public Transform weaponDragged = null;
-    public GameObject hoveredSlot = null;
+    public WeaponSlot hoveredSlot = null;
     public bool selectingUpgrade = false;
     public WeaponSlot selectedSlot = null;
     public WeaponBase weaponToPlace;
+    public ModeButton selectedButton;
+    public InteractionMode interactionMode;
 
     [Header("UI")]
     [SerializeField] private KeyCode showUIKey;
@@ -56,21 +54,12 @@ public class InputManager : MonoBehaviour
         currentHoveredBox = box;
     }
 
-    public void SetActionTile(bool hasCard = true)
+    public void SetActionTile()
     {
         var rect = currentTileInstance.GetComponent<RectTransform>();
         rect.SetParent(currentHoveredBox.transform);
         rect.anchoredPosition = Vector2.zero;
         currentTileInstance.Initialize(currentHoveredBox);
-        if(hasCard) Destroy(currentWeaponCard.gameObject);
-    }
-
-    public void SetSupportTile()
-    {
-        var rect = currentSupportTile.GetComponent<RectTransform>();
-        rect.SetParent(currentHoveredBox.transform);
-        rect.anchoredPosition = Vector2.zero;
-        Destroy(currentSupportCard.gameObject);
     }
 
     private void Update()
@@ -95,3 +84,4 @@ public class InputManager : MonoBehaviour
     }
 }
 
+public enum InteractionMode  { Default, Build, Upgrade, Move, Sell }

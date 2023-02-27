@@ -2,41 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Beam : LaserBase
+public class Beam : WeaponBase
 {
-    [SerializeField] private float baseSize;
-    [SerializeField] private float maxSize;
-
-
-    protected override void Awake()
+    public override void LevelUp()
     {
-        base.Awake();
-
-        upgrades.Add(new WeaponUpgrade(UpgradeTag.Multishot,
-            () =>
-            {
-                var velocity = MainShooter.velocityOverLifetime;
-                velocity.enabled = true;
-            }
-            ));
+        throw new System.NotImplementedException();
     }
 
-    public override void ApplyPassiveEffect()
+    public override string WeaponDescription()
     {
-        weaponMasterController.currentPotency += 0.15f;
+        throw new System.NotImplementedException();
     }
 
-    protected override void ApplyPotency()
+    protected override void ApplyPerk()
     {
-        var main = MainShooter.main;
-        var value = Mathf.Lerp(baseSize, maxSize, weaponMasterController.potencyPercentage);
-        main.startSize = new ParticleSystem.MinMaxCurve(value);
+        throw new System.NotImplementedException();
     }
 
-    protected override void ApplyOverloadEffect()
+    protected override void RemovePerk()
     {
-        var main = MainShooter.main;
-        var value = baseSize / 2;
-        main.startSize = new ParticleSystem.MinMaxCurve(value);
+        throw new System.NotImplementedException();
     }
 }

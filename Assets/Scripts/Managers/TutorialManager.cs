@@ -21,17 +21,19 @@ public class TutorialManager : MonoBehaviour
     [SerializeField] private GameObject panel;
     [SerializeField] private List<GameObject> pages;
     private List<int> usedIndexes = new List<int>();
-    private bool skipTutorial;
+    [SerializeField] private bool skipTutorial;
 
 
     private void Start()
     {
+        if(skipTutorial) return;
         pages[0].SetActive(true);
         usedIndexes.Add(0);
     }
 
     public void RequestTutorialPage(int pageIndex, int steps = 1, bool cursorPosition = false)
     {
+        if(pageIndex + steps > pages.Count) skipTutorial = true;
         if (skipTutorial || usedIndexes.Contains(pageIndex)) return;
 
         panel.SetActive(true);
