@@ -23,14 +23,28 @@ public class EndGameLog : MonoBehaviour
     private float seconds = 0;
     private int minutes;
     private int waves = 0;
-    public int enemies = 0;
     private int health = 0;
+
+    [Header("Score")]
+    [SerializeField] private float pointsWeight;
+    public int enemies = 0;
+    [SerializeField] private float enemyWeight;
+    public int damageTaken;
+    [SerializeField] private float damageWeight;
 
     [Header("UI")]
     [SerializeField] private GameObject panel;
     [SerializeField] private TextMeshProUGUI title;
-    [SerializeField] private TextMeshProUGUI values;
     [SerializeField] private TextMeshProUGUI finalScore;
+    [Space]
+    [SerializeField] private TextMeshProUGUI pointsValue;
+    [SerializeField] private TextMeshProUGUI pointsMultiplier;
+    [Space]
+    [SerializeField] private TextMeshProUGUI enemiesValue;
+    [SerializeField] private TextMeshProUGUI enemiesMultiplier;
+    [Space]
+    [SerializeField] private TextMeshProUGUI damageValue;
+    [SerializeField] private TextMeshProUGUI damageMultiplier;
 
     private void Update()
     {
@@ -44,12 +58,24 @@ public class EndGameLog : MonoBehaviour
 
     public void TriggerEndgame(bool victory)
     {
+        Debug.Log("Triggered");
         panel.SetActive(true);
 
-        if (victory) title.text = "victory";
-        else title.text = "defeat";
+        if (victory) 
+        {
+            title.text = "victory";
+            title.color = Color.green;
+        }
+        else 
+        {
+            title.text = "defeat";
+            title.color = Color.red;
+        }
 
-        values.text = minutes + "m" + seconds.ToString("00") + "s\n" + CrystalManager.Main.level + "\n" + enemies + "\n" + CrystalManager.Main.currentHealth;
+        pointsMultiplier.text = "x" + pointsWeight;
+        enemiesMultiplier.text = "x" + enemyWeight;
+        damageMultiplier.text = "x" + damageWeight;
+
         finalScore.text = CalculateFinalScore().ToString();
         Time.timeScale = 0;
     }
@@ -58,14 +84,21 @@ public class EndGameLog : MonoBehaviour
     {
         int score = 0;
 
-        for (int i = 1; i <= CrystalManager.Main.level; i++)
-        {
-            score += i;
-        }
+        var pValue = Mathf.RoundToInt(CrystalManager.Main.buildPoints * pointsWeight);
+        score += pValue;
+        pointsValue.text = pValue.ToString();
 
-        score += enemies;
-        score += CrystalManager.Main.currentHealth * 3;
-        return score;
+        var eValue = Mathf.RoundToInt(enemies * enemyWeight);
+        score += eValue;
+        enemiesValue.text = eValue.ToString();
+
+        var dValue = -Mathf.RoundToInt(damageTaken * damageWeight);
+        score += dValue;
+        damageValue.text = dValue.ToString();
+        
+        Inventory.Main.ReceiveEndlevelValues(score, CrystalManager.Main.currentHealth);
+
+        return Mathf.Max(0, score);
     }
 
     public void ToMainMenu()
@@ -89,7 +122,7 @@ public class EndGameLog : MonoBehaviour
     public void ToNextLevel()
     {
         Time.timeScale = 1;
-        var i = SceneManager.GetActiveScene().buildIndex;
-        SceneManager.LoadScene(i + 1);
+        var scene = AlbumManager.Main.GetNextLevelName();
+        SceneManager.LoadScene(scene);
     }
 }

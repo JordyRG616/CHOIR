@@ -5,7 +5,6 @@ using UnityEngine.EventSystems;
 
 public class ActionBox : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    public bool inactive = false;
     private ActionTile storedTile;
     public bool occupied => storedTile != null;
 
@@ -15,19 +14,20 @@ public class ActionBox : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (inactive) return;
+        if (occupied) return;
         InputManager.Main.currentHoveredBox = gameObject;
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (inactive) return;
+        if (occupied) return;
         InputManager.Main.currentHoveredBox = null;
     }
 
     public void ReceiveTile(ActionTile tile)
     {
         storedTile = tile;
+        tile.transform.localPosition = new Vector3(0, .5f, 0);
         OnTilePlaced?.Invoke(tile);
     }
 

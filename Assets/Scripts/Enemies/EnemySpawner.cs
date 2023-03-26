@@ -6,9 +6,12 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
     [SerializeField] private float spawnFrequency;
+    private float nextSpawn;
+    private float frequencyRange = 0.75f;
     public float chanceForExtraEnemy = 0;
-    public float chanceForExtraMutation = 0;
+    private int extraEnemyCount = 1;
     [SerializeField] private int directionModifier;
+    [SerializeField] private bool addBox;
     [SerializeField] private GameObject initialEnemyModel;
     [SerializeField] private int initialEnemyWeight;
     [SerializeField] private AnimationCurve spawnProgression;
@@ -19,21 +22,30 @@ public class EnemySpawner : MonoBehaviour
 
     private List<MutationBase> mutations = new List<MutationBase>();
 
-    public enum SpawnerPosition { Left, Right, Both, None}
-    public SpawnerPosition position;
-
     [HideInInspector] public bool active = false;
 
 
     private void Start()
     {
         enemiesMatrix.Add(initialEnemyModel, initialEnemyWeight);
+
+        if(addBox) SpawnerManager.Main.SetEnemyBox(initialEnemyModel.GetComponent<EnemyManager>());
     }
 
     public void Activate()
     {
         active = true;
         SpawnEnemy();
+        StartCoroutine(SpawnExtraEnemies());
+
+        SetNextFrequency();
+    }
+
+    private void SetNextFrequency()
+    {
+        var min = frequencyRange + chanceForExtraEnemy;
+        var max = frequencyRange - chanceForExtraEnemy;
+        nextSpawn = Random.Range(spawnFrequency - min, spawnFrequency + max);
     }
 
     public void Deactivate()
@@ -46,7 +58,7 @@ public class EnemySpawner : MonoBehaviour
     {
         var perc = (float)waveNumber/totalWaves;
         spawnFrequency = spawnProgression.Evaluate(perc);
-        chanceForExtraEnemy += extraEnemyProgression.Evaluate(perc);
+        extraEnemyCount = Mathf.RoundToInt(extraEnemyProgression.Evaluate(perc));
     }
 
     private void SpawnEnemy()
@@ -66,21 +78,6 @@ public class EnemySpawner : MonoBehaviour
         enemy.GetComponent<EnemyHealthModule>().onEnemyDeath += AddEnemyToPool;
         enemy.GetComponent<EnemyMarchModule>().SetDirection(directionModifier);
         enemy.transform.position = transform.position;
-        enemy.transform.localScale = new Vector3
-            (Mathf.Abs(enemy.transform.localScale.x) * directionModifier,
-            enemy.transform.localScale.y, 1);
-        ApplyMutations(enemy);
-    }
-
-    private void ApplyMutations(GameObject enemy)
-    {
-        var manager = enemy.GetComponent<EnemyManager>();
-
-        manager.SetStats();
-
-        mutations.ForEach(x => x.ApplyMutation(manager.currentStats));
-
-        manager.SetStats(false);
     }
 
     private void AddEnemyToPool(EnemyHealthModule healthController, bool destroy)
@@ -114,58 +111,38 @@ public class EnemySpawner : MonoBehaviour
         return list;
     }
 
-    public int GetTotal()
-    {
-        int total = 0;
-
-        foreach (var enemy in enemiesMatrix.Keys)
-        {
-            total += enemiesMatrix[enemy];
-        }
-
-        return total;
-    }
-
-    public List<(string enemyName, float percentage)> GetEnemiesPercentages()
-    {
-        var list = new List<(string enemyName, float percentage)>();
-
-        foreach (var enemy in enemiesMatrix.Keys)
-        {
-            (string name, float value) t;
-            t.name = enemy.name;
-            t.value = (float)enemiesMatrix[enemy] / GetTotal();
-            list.Add(t);
-        }
-
-        return list;
-    }
-
     private void Update()
     {
         if (!active) return;
 
         timeCounter += Time.deltaTime;
 
-        if(timeCounter >= spawnFrequency)
+        if(timeCounter >= nextSpawn)
         {
             SpawnEnemy();
             StartCoroutine(SpawnExtraEnemies());
+
             timeCounter = 0;
+            SetNextFrequency();
         }
 
     }
 
     private IEnumerator SpawnExtraEnemies()
     {
-        var rdm = Random.Range(0, chanceForExtraEnemy);
-        var count = Mathf.RoundToInt(rdm);
-
-        for (int i = 0; i < count; i++)
+        var rdm = Random.Range(0, 1f);
+        
+        if(rdm <= chanceForExtraEnemy)
         {
-            yield return new WaitForSeconds(.66f);
-            SpawnEnemy();
+            var count = Random.Range(0, extraEnemyCount + 1);
+
+            for (int i = 0; i < count; i++)
+            {
+                yield return new WaitForSeconds(.66f);
+                SpawnEnemy();
+            }
         }
+
 
     }
 
@@ -196,11 +173,6 @@ public class EnemySpawner : MonoBehaviour
     public List<GameObject> GetEnemiesInPool()
     {
         return enemyPool;
-    }
-
-    public void LowerFrequency(float value)
-    {
-        spawnFrequency -= value;
     }
 
     public void ReceiveMutation(MutationBase mutation)

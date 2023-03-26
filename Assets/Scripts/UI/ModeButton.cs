@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class ModeButton : MonoBehaviour
+public class ModeButton : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField] private Sprite selectedSprite;
     [SerializeField] private Image icon;
@@ -23,8 +24,10 @@ public class ModeButton : MonoBehaviour
         ogIconColor = icon.color;
     }
 
-    public void ChangeSelection()
+    public void ChangeSelection(bool overrideRestriction = false)
     {
+        if(ShopManager.Main.panelOpen && !overrideRestriction) return;
+
         selected = !selected;
         if(selected)
         {
@@ -49,5 +52,10 @@ public class ModeButton : MonoBehaviour
         {
             ChangeSelection();
         }
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        ChangeSelection();
     }
 }

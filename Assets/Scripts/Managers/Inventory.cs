@@ -19,13 +19,22 @@ public class Inventory : MonoBehaviour
     #endregion
 
     public List<WeaponBase> ownedWeapons;
-    public List<UpgradeBase> ownedUpgrades;
-    [Space]
-    public List<WeaponBase> availableWeapons;
-
-    private void Awake()
+    private List<WeaponBase> placedWeapons = new List<WeaponBase>();
+    [SerializeField] private float convertFactor;
+    public int currentMaxHealth {get; private set;}
+    private int _credits;
+    public int Credits
     {
-        
+        get => _credits;
+        set
+        {
+            _credits = value;
+        }
+    }
+
+    void Awake()
+    {
+        if(_instance != null) Destroy(gameObject);
     }
 
     public void AddWeapon(WeaponBase weapon)
@@ -33,26 +42,16 @@ public class Inventory : MonoBehaviour
         ownedWeapons.Add(weapon);
     }
 
-    public void AddUpgrade(UpgradeBase upgrade)
+    public void PlaceWeapon(WeaponBase weapon)
     {
-        var _upg = ownedUpgrades.Find(x => x == upgrade);
-        if (_upg == null) ownedUpgrades.Add(upgrade);
-        else _upg += upgrade;
+        ownedWeapons.Remove(weapon);
+        placedWeapons.Add(weapon);
     }
 
-    public void ExpendUpgrade(UpgradeBase upgrade)
+    public void ResetList()
     {
-        var _upg = ownedUpgrades.Find(x => x == upgrade);
-
-        if (_upg == null) return;
-        else
-        {
-            _upg--;
-            if (_upg.amount == 0)
-            {
-                ownedUpgrades.Remove(_upg);
-            }
-        }
+        ownedWeapons.AddRange(placedWeapons);
+        placedWeapons.Clear();
     }
 
     public WeaponBase GetRandomAvailableWeapon()
@@ -61,5 +60,16 @@ public class Inventory : MonoBehaviour
         var _w = ownedWeapons[rdm];
         ownedWeapons.RemoveAt(rdm);
         return _w;
+    }
+
+    public void ReceiveEndlevelValues(int score, int health)
+    {
+        Credits += Mathf.FloorToInt(score / convertFactor);
+        currentMaxHealth = health;
+    }
+
+    public void SetMaxHealth(int initialHealth)
+    {
+        currentMaxHealth = initialHealth;
     }
 }

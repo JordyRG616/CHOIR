@@ -12,36 +12,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c3748629ecfd274eb829481858ae3bc, type: 3}
   m_Name: Database
   m_EditorClassIdentifier: 
-  Upgrades:
-  - name: Multishot
-    icon: {fileID: 1324663268, guid: 81ec44af7ca945e4a825b0e0395458f2, type: 3}
-    cost: 0
-    description: Applies Multishot to the chosen weapon
-    tag: 1
-    amount: 0
-  - name: Explosive
-    icon: {fileID: -1000684094, guid: 81ec44af7ca945e4a825b0e0395458f2, type: 3}
-    cost: 0
-    description: Applies Explosive to the chosen weapon
-    tag: 2
-    amount: 0
-  - name: Unstable
-    icon: {fileID: -461407374, guid: 81ec44af7ca945e4a825b0e0395458f2, type: 3}
-    cost: 0
-    description: Doubles the maximum damage of the weapon. Set it's minimum damage
-      to 0
-    tag: 4
-    amount: 0
-  - name: Reliable
-    icon: {fileID: -1547091118, guid: 81ec44af7ca945e4a825b0e0395458f2, type: 3}
-    cost: 0
-    description: Set the maximum and minimum damage of the weapon to the average
-      value of both
-    tag: 3
-    amount: 0
-  Mutations:
-  - {fileID: 11400000, guid: 44a3f336484b6b445ae8fc81e477d608, type: 2}
-  - {fileID: 11400000, guid: 80ded299c8377a24c829badeee92ffc9, type: 2}
-  - {fileID: 11400000, guid: a5574a7288536854cae518e91aec3207, type: 2}
-  - {fileID: 11400000, guid: 322a178c38467264299e8296de4151d1, type: 2}
-  - {fileID: 11400000, guid: 6b55d99b7dc44344db4ed0f18b97720a, type: 2}
+  weapons:
+  - {fileID: 3243512912285616120, guid: 361cf556e775217419fab3bf3fef198a, type: 3}
+  - {fileID: 3522596660736824121, guid: c357f79ef37382845b873a985a571a40, type: 3}
+  - {fileID: 4248227030274679455, guid: eaaee98bff959824e9d7dc51b97edb48, type: 3}
+  - {fileID: 6287976724556135258, guid: d89920cead8790146b02479fed85e196, type: 3}
+  - {fileID: 7742699432853824601, guid: 7cf8110e2f1fa3f458a9ffdcf21b64d4, type: 3}
+  - {fileID: 4699824849886692915, guid: 9b9c90525c04ed349a60befbcc59668e, type: 3}
+  - {fileID: 8460822432213314435, guid: ed10630b0a2e87448bc4cf6069ba1844, type: 3}
+  - {fileID: 8386180874023725567, guid: 4c626baaf72470e40aa8be70b8d1cd42, type: 3}
+  - {fileID: 2760933962053611953, guid: 65844b57b7995cf4e8d6a947df675d32, type: 3}
+  - {fileID: 90959507614168787, guid: 1e87218d45cf26d4aaaee047c9cc0f6a, type: 3}
+  - {fileID: 300729188613039477, guid: 6ff7c5ed83676d34483616c32cb0f61a, type: 3}
+  - {fileID: 6860717028632198114, guid: d4455e048e944204982ee5ce0d0456af, type: 3}
+  - {fileID: 1627041366, guid: cfc98ab8dd7e8284baed49c66f6b1ee8, type: 3}
+  - {fileID: 6823479951378466422, guid: e1ce0b67b28a16c4ab509f1b66d5e756, type: 3}
+  - {fileID: 7063141423624797425, guid: 3e594d615213caf49986cee20ec3bc1d, type: 3}
+  - {fileID: 7010819176685251824, guid: 4f0b1d7e330625b41846cef3bd71392a, type: 3}
+  - {fileID: 1855876890798413358, guid: 3d40b6fc3213330458dc33f5111a6e3f, type: 3}
+  - {fileID: 6750947037888810302, guid: 86b454ebb160df24e98f5fcc2489ba74, type: 3}
+  - {fileID: 3337659900044350982, guid: cead99ad0cc723545885f76a955e7398, type: 3}
+  - {fileID: 1946228433, guid: 2bc6db62882528c4a9067cf8391f5619, type: 3}
+  - {fileID: 6422405914037013302, guid: 373ea3617fac0f541887fe113d33cf19, type: 3}
+  - {fileID: 2037245947, guid: 81fbfb9fcf8ea24418af3be8c9417c5f, type: 3}
+  - {fileID: 3699652990655043070, guid: 209f13fcb22009046933a9b427727627, type: 3}
+  - {fileID: 1160966324, guid: 339287511c97a4a4abd3a522050f96ef, type: 3}
+  - {fileID: 3410218125169919286, guid: 91515a8bfbfe6d145abe9c39650d255c, type: 3}

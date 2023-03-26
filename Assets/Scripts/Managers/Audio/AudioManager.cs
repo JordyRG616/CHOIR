@@ -20,7 +20,7 @@ public class AudioManager : MonoBehaviour
     #endregion
 
     [SerializeField] private List<AudioChannel> channels;
-    [SerializeField] private TextMeshProUGUI masterValue, sfxValue, bgmValue, weaponsValue, generalValue;
+    [SerializeField] private TextMeshProUGUI masterValue, weaponsValue, beatValue, sfxValue, uiValue;
 
     private void Start()
     {
@@ -39,10 +39,10 @@ public class AudioManager : MonoBehaviour
         masterValue.text = (volume * 100).ToString("00") + "%";
     }
 
-    public void SetBGMVolume(float volume)
+    public void SetBeatVolume(float volume)
     {
         SetChannelVolume("BGM", volume);
-        bgmValue.text = (volume * 100).ToString("00") + "%";
+        beatValue.text = (volume * 100).ToString("00") + "%";
     }
 
     public void SetSFXVolume(float volume)
@@ -57,10 +57,10 @@ public class AudioManager : MonoBehaviour
         weaponsValue.text = (volume * 100).ToString("00") + "%";
     }
 
-    public void SetGeneralVolume(float volume)
+    public void SetUIVolume(float volume)
     {
         SetChannelVolume("General", volume);
-        generalValue.text = (volume * 100).ToString("00") + "%";
+        uiValue.text = (volume * 100).ToString("00") + "%";
     }
 
     public void PauseAudio()

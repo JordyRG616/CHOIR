@@ -13,22 +13,19 @@ public class Carbine : WeaponBase
 
         switch(level)
         {
-            case 1:
+            case 2:
                 damageRange.y += 5;
             break;
-            case 2:
+            case 3:
                 IncreaseKnockback(10);
                 knockbackAmount = "moderately";
             break;
-            case 3:
-                UnlockAltTile();
-            break;
             case 4:
-                IncreaseKnockback(15);
-                knockbackAmount = "Significantly";
+                damageRange += Vector2.one * 5; 
             break;
             case 5:
-                damageRange += Vector2.one * 5; 
+                IncreaseKnockback(15);
+                knockbackAmount = "Significantly";
             break;
         }
     }
@@ -41,7 +38,7 @@ public class Carbine : WeaponBase
 
     public override string WeaponDescription()
     {
-        return "Shoots a projectile straight forward that causes " + damageRange.x + " - " + damageRange.y + " damage to the enemy hit and knocks it back " + knockbackAmount +".";
+        return "Shoots a projectile straight forward that causes " + damageRange.x + " - " + damageRange.y + " damage to the enemy hit and knocks it back " + knockbackAmount + ".";
     }
 
     protected override void ApplyPerk()

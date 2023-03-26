@@ -30,11 +30,30 @@ public class InputManager : MonoBehaviour
     public WeaponSlot selectedSlot = null;
     public WeaponBase weaponToPlace;
     public ModeButton selectedButton;
-    public InteractionMode interactionMode;
+    public InteractionMode _mode;
+    public InteractionMode interactionMode
+    {
+        get => _mode;
+        set
+        {
+            _mode = value;
+            if(_mode == InteractionMode.Default)
+            {
+                specialCursor.Deactivate();
+                Cursor.visible = true;
+            } else
+            {
+                specialCursor.SetActive(_mode);
+                Cursor.visible = false;
+            }
+        }
+    }
 
     [Header("UI")]
     [SerializeField] private KeyCode showUIKey;
-    [SerializeField] private List<Animator> animators;
+    [SerializeField] private CanvasGroup uiGroup;
+    [SerializeField] private GameObject extraBG;
+    [SerializeField] private SpecialCursor specialCursor;
 
     private bool _open;
     public bool uiOpen
@@ -43,7 +62,19 @@ public class InputManager : MonoBehaviour
         set
         {
             _open = value;
-            animators.ForEach(x => x.SetBool("Open", _open));
+            if(_open)
+            {
+                uiGroup.alpha = 1;
+                uiGroup.interactable = true;
+                uiGroup.blocksRaycasts = true;
+                extraBG.SetActive(true);
+            } else
+            {
+                uiGroup.alpha = 0;
+                uiGroup.blocksRaycasts = false;
+                uiGroup.interactable = false;
+                extraBG.SetActive(false);
+            }
         }
     }
 

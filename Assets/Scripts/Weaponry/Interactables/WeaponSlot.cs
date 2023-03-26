@@ -5,27 +5,35 @@ using UnityEngine;
 
 public class WeaponSlot : MonoBehaviour
 {
+    [field:SerializeField] public bool surface {get; private set;}
     [field: SerializeField] public Transform holder { get; private set; }
-    [SerializeField] private ParticleSystem selectableVFX;
-    [SerializeField] private List<int> rotations;
     [SerializeField] private float dragThreshold = 0.25f;
     [SerializeField] private GameObject dragIcon;
     [SerializeField] private float timeToSell;
     [SerializeField] private SpriteRenderer radialBar;
+
+    [Header("Effects")]
+    [SerializeField] private ParticleSystem selectableVFX;
+    [SerializeField] private ParticleSystem levelUpVFX;
+    public ParticleSystem buildVFX;
+
     [Header("Beat Behaviour")]
     [SerializeField] private bool rotating;
+    [SerializeField] private List<int> rotations;
     [SerializeField] private bool wandering;
     [SerializeField] private List<Transform> wanderPoints;
     private Material radialMat;
-    private float sellingTime;
+    private float interactionTime;
+    private bool interacted;
     private RectTransform tile;
-    private float counter;
+    private float dragCounter;
     private bool draggingTile, draggingWeapon;
     private float stationaryAngle;
     private bool pointerIsInside;
     public Transform weapon { get; private set; }
     public WeaponBase weaponBase { get; private set; }
     private InputManager inputManager;
+    private CrystalManager crystalManager;
     public bool IsOccupied => weapon != null;
     private int _rotIndex = 0;
     private int RotationIndex
@@ -37,8 +45,10 @@ public class WeaponSlot : MonoBehaviour
             else _rotIndex = value;
         }
     }
-
+    public int CurrentRotation => rotations[RotationIndex];
+    
     private int _wanderIndex = 0;
+
     private int WanderIndex
     {
         get => _wanderIndex;
@@ -52,9 +62,10 @@ public class WeaponSlot : MonoBehaviour
 
     private void Start()
     {
+        crystalManager = CrystalManager.Main;
+
         inputManager = InputManager.Main;
         stationaryAngle = holder.eulerAngles.z;
-        StartCoroutine(ManageSelectableVFX());
 
         radialMat = new Material(radialBar.material);
         radialBar.material = radialMat;
@@ -65,38 +76,22 @@ public class WeaponSlot : MonoBehaviour
             holder.position = wanderPoints[0].position;
             ActionMarker.Main.OnBeat += Wander;
         }
+
+        StartCoroutine(ManageSelectableEffect());
     }
 
-    private IEnumerator ManageSelectableVFX()
+    private IEnumerator ManageSelectableEffect()
     {
-        var waitToActivate = new WaitUntil(() => inputManager.waitingForSlot == true);
-        var waitToDeactivate = new WaitUntil(() => inputManager.waitingForSlot == false);
-
-        while (true)
+        while(true)
         {
-            yield return waitToActivate;
+            yield return new WaitUntil(() => HighlightCursor(out var c, out var d));
 
             selectableVFX.Play();
 
-            yield return waitToDeactivate;
+            yield return new WaitUntil(() => !HighlightCursor(out var c, out var d));
 
             selectableVFX.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
         }
-    }
-
-    public void PlaySelectableEffect()
-    {
-        selectableVFX.Play();
-    }
-
-    public void StopSelectableEffect()
-    {
-        selectableVFX.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
-    }
-
-    public void UnlockDirectionalButtons(string[] keys)
-    {
-        
     }
 
     private void OnMouseUp()
@@ -116,13 +111,12 @@ public class WeaponSlot : MonoBehaviour
             
             draggingTile = false;
         }
-
-        if(draggingWeapon)
+        else if(draggingWeapon)
         {
             Cursor.visible = true;
             if (inputManager.draggingWeapon && inputManager.hoveredSlot != null)
             {
-                inputManager.hoveredSlot.ReceiveWeapon(weaponBase);
+                inputManager.hoveredSlot.ReceiveWeapon(weaponBase, false);
                 weaponBase = null;
                 weapon = null;
             }
@@ -131,57 +125,59 @@ public class WeaponSlot : MonoBehaviour
                 weapon.localPosition = Vector3.zero;
             }
 
+            draggingWeapon = false;
             inputManager.draggingWeapon = false;
         }
-
-        counter = 0;
+                
+        interacted = false;
+        dragCounter = 0;
     }
 
     private void DoInteraction()
     {
         switch(inputManager.interactionMode)
         {
-            case InteractionMode.Default:
-                if(!rotating) SetRotation();
-            break;
             case InteractionMode.Build:
-                if(!IsOccupied)
+                if(ShopManager.Main.canBuild)
                 {
-                    ShopManager.Main.OpenNewWeaponPanel();
                     inputManager.selectedSlot = this;
-                }
+                    ShopManager.Main.OpenNewWeaponPanel();
+                } else crystalManager.BlinkCost();
             break;
             case InteractionMode.Upgrade:
-                if(IsOccupied)
+                if(crystalManager.buildPoints >= weaponBase.level + 1)
                 {
+                    crystalManager.ExpendBuildPoints(weaponBase.level + 1);
                     weaponBase.LevelUp();
-                }
+                    WeaponInfoPanel.Main.UpdateInfo();
+                    levelUpVFX.Play();
+                } else crystalManager.BlinkCost();
             break;
             case InteractionMode.Sell:
-                if(IsOccupied)
-                {
                     Sell();
-                }
             break;
         }
 
-        radialMat.SetFloat("_Fill", sellingTime / timeToSell);
+        inputManager.selectedButton.ChangeSelection(true);
+        interacted = true;
+        radialMat.SetFloat("_Fill", interactionTime / timeToSell);
     }
 
     private void OnMouseDrag()
     {
-        if (weapon == null || inputManager.interactionMode != InteractionMode.Default) return;
+        if (weapon == null || CanInteract() || interacted) return;
 
-        if(!draggingTile) counter += Time.deltaTime;
-        if(counter >= dragThreshold)
+        if(!draggingTile) dragCounter += Time.deltaTime;
+        if(dragCounter >= dragThreshold)
         {
             if(inputManager.interactionMode == InteractionMode.Default)
             {
                 CreateTile();
             }
-            if(inputManager.interactionMode == InteractionMode.Default)
+            if(inputManager.interactionMode == InteractionMode.Move)
             {
                 inputManager.draggingWeapon = true;
+                draggingWeapon = true;
                 Cursor.visible = false;
             }
         }
@@ -199,23 +195,25 @@ public class WeaponSlot : MonoBehaviour
 
     private void CreateTile()
     {
-        if (CrystalManager.Main.buildPoints >= weaponBase.tile.cost)
+        if (crystalManager.buildPoints >= weaponBase.tile.cost)
         {
             inputManager.currentTileInstance = Instantiate(weaponBase.tile, GameObject.FindGameObjectWithTag("MainUI").transform);
             tile = inputManager.currentTileInstance.GetComponent<RectTransform>();
             inputManager.currentTileInstance.ReceiveWeapon(weaponBase);
             draggingTile = true;
-            counter = 0;
+            dragCounter = 0;
         }
         else
         {
-            CrystalManager.Main.BlinkCost();
+            crystalManager.BlinkCost();
         }
     }
 
     private void OnMouseEnter()
     {
         pointerIsInside = true;
+        SpecialCursor.Main.SetAvailable(HighlightCursor(out var cost, out var desc), cost, desc);
+        selectableVFX.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
 
         if (inputManager.draggingWeapon && weaponBase == null)
         {
@@ -224,14 +222,17 @@ public class WeaponSlot : MonoBehaviour
         else if (weaponBase != null)
         {
             WeaponInfoPanel.Main.ReceiveWeapon(weaponBase);
-            dragIcon.SetActive(true);
-            TutorialManager.Main.RequestTutorialPage(15, 2, true);
+            if(inputManager.interactionMode == InteractionMode.Default) dragIcon.SetActive(true);
         }
     }
 
     private void OnMouseExit()
     {
         pointerIsInside = false;
+        interactionTime = 0;
+        interacted = false;
+        SpecialCursor.Main.SetAvailable(false);
+        if(CanInteract()) selectableVFX.Play();
 
         if (inputManager.hoveredSlot == gameObject)
         {
@@ -248,22 +249,86 @@ public class WeaponSlot : MonoBehaviour
     {
         if(pointerIsInside)
         {
-            if(Input.GetMouseButton(0))
+            if(Input.GetMouseButton(0) && CanInteract() && !interacted)
             {
-                sellingTime += Time.deltaTime;
-                radialMat.SetFloat("_Fill", sellingTime / timeToSell);
+                interactionTime += Time.deltaTime;
+                radialMat.SetFloat("_Fill", interactionTime / timeToSell);
 
-                if(sellingTime >= timeToSell)
+                if(interactionTime >= timeToSell)
                 {
                     DoInteraction();
+                    interactionTime = 0;
                 }
 
             } else if(Input.GetMouseButtonUp(0))
             {
-                sellingTime = 0;
-                radialMat.SetFloat("_Fill", sellingTime / timeToSell);
+                interactionTime = 0;
             }
+
+            SetRotation(Mathf.RoundToInt(-Input.mouseScrollDelta.y));
         }
+        radialMat.SetFloat("_Fill", interactionTime / timeToSell);
+    }
+
+    private bool CanInteract()
+    {
+        if(inputManager.interactionMode == InteractionMode.Build)
+        {
+            if(IsOccupied) return false;
+            else return true;
+        } 
+        else if(inputManager.interactionMode == InteractionMode.Move) 
+        {
+            return false;
+        }
+        else if(inputManager.interactionMode == InteractionMode.Upgrade) 
+        {
+            if(IsOccupied && !weaponBase.maxLevel) return true;
+            return false;
+        }
+        else if(inputManager.interactionMode == InteractionMode.Sell)
+        {
+            if(IsOccupied) return true;
+            else return false;
+        }
+        return false;
+    }
+
+    private bool HighlightCursor(out int cost, out string desc)
+    {
+        cost = 0;
+        desc = "";
+
+        if(inputManager.interactionMode == InteractionMode.Build)
+        {
+            if(IsOccupied) return false;
+            else 
+            {
+                cost = ShopManager.Main.weaponCost;
+                return true;
+            }
+        } 
+        else if(inputManager.interactionMode == InteractionMode.Move) 
+        {
+            if(IsOccupied) return true;
+            else return false;
+        }
+        else if(inputManager.interactionMode == InteractionMode.Upgrade) 
+        {
+            if(IsOccupied && !weaponBase.maxLevel) 
+            {
+                cost = weaponBase.level + 1;
+                desc = weaponBase.nextLevelDescription;
+                return true;
+            }
+            return false;
+        }
+        else if(inputManager.interactionMode == InteractionMode.Sell)
+        {
+            if(IsOccupied) return true;
+            else return false;
+        }
+        return false;
     }
 
     private void Sell()
@@ -271,27 +336,30 @@ public class WeaponSlot : MonoBehaviour
         weaponBase.Sell();
         weaponBase = null;
         weapon = null;
-        sellingTime = 0;
     }
 
-    public void ReceiveWeapon(WeaponBase receivedWeapon)
+    public void ReceiveWeapon(WeaponBase receivedWeapon, bool setWeapon = true)
     {
-        TutorialManager.Main.RequestTutorialPage(9, 2);
-
         weapon = receivedWeapon.transform;
         weaponBase = receivedWeapon;
         weapon.SetParent(holder);
         weapon.localPosition = Vector3.zero;
         weapon.rotation = holder.rotation;
-        SetRotation();
+        // SetRotation();
 
-        receivedWeapon.Set();
+        receivedWeapon.Set(this, setWeapon);
     }
 
     public void SetRotation()
     {
         RotationIndex++;
         stationaryAngle = rotations[RotationIndex];
+        holder.rotation = Quaternion.Euler(0, 0, stationaryAngle);
+    }
+
+    public void SetRotation(int direction)
+    {
+        stationaryAngle = holder.eulerAngles.z + (10 * direction);
         holder.rotation = Quaternion.Euler(0, 0, stationaryAngle);
     }
 

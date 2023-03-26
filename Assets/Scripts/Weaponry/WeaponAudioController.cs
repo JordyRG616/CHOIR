@@ -7,7 +7,6 @@ using FMODUnity;
 public class WeaponAudioController : MonoBehaviour
 {
     [SerializeField] private StudioEventEmitter emitter;
-    [SerializeField] private TextMeshProUGUI kitIndexText;
     private int kitCount = 1;
     private ActionMarker marker;
     private int currentKit = 0;
@@ -22,7 +21,6 @@ public class WeaponAudioController : MonoBehaviour
         currentKit += direction;
         if (currentKit <= 0) currentKit = kitCount;
         if (currentKit > kitCount) currentKit = 0;
-        kitIndexText.text = (currentKit + 1).ToString();
         marker.OnReset += ChangeKit;
     }
 

@@ -16,9 +16,9 @@ public class WeaponGraphicsController : MonoBehaviour
         spriteRenderer.material = _material;
     }
 
-    public void SetPreview(bool previewOn)
+    public void SetHighlighted(bool on)
     {
-        var _b = previewOn ? 1 : 0;
-        _material.SetInt("_Preview", _b);
+        var _b = on ? 1 : 0;
+        _material.SetInt("_highlighted", _b);
     }
 }

@@ -122,6 +122,10 @@ PrefabInstance:
       value: Frog
       objectReference: {fileID: 0}
     - target: {fileID: 3892589446024495470, guid: 26f12621049bc5a498fe6cea60ff1015, type: 3}
+      propertyPath: sprite
+      value: 
+      objectReference: {fileID: -501077747, guid: 2c688967d96d56b4893354962d34f66a, type: 3}
+    - target: {fileID: 3892589446024495470, guid: 26f12621049bc5a498fe6cea60ff1015, type: 3}
       propertyPath: defaultStats.Step
       value: 0.5
       objectReference: {fileID: 0}
@@ -129,6 +133,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: -501077747, guid: 2c688967d96d56b4893354962d34f66a, type: 3}
+    - target: {fileID: 7568381986704261807, guid: 26f12621049bc5a498fe6cea60ff1015, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3141011618288750583, guid: 26f12621049bc5a498fe6cea60ff1015, type: 3}
     - {fileID: 2927067182263631774, guid: 26f12621049bc5a498fe6cea60ff1015, type: 3}

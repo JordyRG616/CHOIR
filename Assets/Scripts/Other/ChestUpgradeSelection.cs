@@ -41,14 +41,14 @@ public class ChestUpgradeSelection : MonoBehaviour
 
     private void OnMouseUp()
     {
-        Inventory.Main.AddUpgrade(storedUpgrade);
+        // Inventory.Main.AddUpgrade(storedUpgrade);
         // SpawnerManager.Main.PassMutation(storedMutation);
         Destroy(transform.parent.gameObject);
     }
 
     public void UnlockWeapon()
     {
-        ShopManager.Main.AddNewWeapon(storedWeapon);
+        ShopManager.Main.BuildWeapon(storedWeapon);
     }
 
     public void ReceiveUpgrade(UpgradeBase upgrade, MutationBase mutation)

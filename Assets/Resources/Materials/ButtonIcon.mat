@@ -48,7 +48,7 @@ Material:
     - _GradientPower: 1.04
     - _GradientSize: 0
     m_Colors:
-    - _Speed: {r: 0, g: 0.01, b: 0, a: 0}
+    - _Speed: {r: 0, g: -0.01, b: 0, a: 0}
     - _TIing: {r: 1, g: 6, b: 0, a: 0}
     - _TexColor: {r: 2.6701567, g: 2.6701567, b: 2.6701567, a: 1}
   m_BuildTextureStacks: []

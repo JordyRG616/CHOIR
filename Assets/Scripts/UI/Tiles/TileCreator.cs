@@ -5,7 +5,6 @@ using UnityEngine.EventSystems;
 
 public class TileCreator : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
-    public TileType tileType;
     [SerializeField] private TMPro.TextMeshProUGUI costText;
     private ActionTile tile;
     private int cost;

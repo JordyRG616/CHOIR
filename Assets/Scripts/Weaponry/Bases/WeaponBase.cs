@@ -7,29 +7,42 @@ using System;
 
 public abstract class WeaponBase : MonoBehaviour
 {
+    [Header("Workshop info")]
     public Sprite weaponSprite;
+    public int weaponCost;
+    public Sprite waveform;
     public WeaponClass weaponClass;
+    public bool surfaceWeapon;
+
+    [Space]
+    [TextArea] public string ClassPerkDesc;
     [field:SerializeField] public WeaponClass perkReqClass { get; private set; }
     [field:SerializeField] public int perkReqAmount { get; private set; }
-    [TextArea] public string ClassPerkDesc;
+
+    [SerializeField] protected List<string> upgradeDescriptions;
+    public string nextLevelDescription => upgradeDescriptions[level - 1];
+    [HideInInspector] public bool perkApplied;
+    private WeaponClassInfo perkInfo;
+
     [SerializeField] protected ParticleSystem MainShooter;
     [field:SerializeField] public ActionTile tile { get; protected set; }
-    [field:SerializeField] public ActionTile AltTile { get; protected set; }
+    private List<ActionTile> placedTiles = new List<ActionTile>();
 
     [Space]
     [SerializeField] public UnityEvent OnShoot, OnStop;
     public Vector2 damageRange;
+    public float criticalChance = 0.05f;
+    public float criticalMultiplier = 1.5f;
     [SerializeField] private GameObject exp;
     protected Animator anim;
     protected WeaponAudioController audioController;
     public WeaponGraphicsController graphicsController { get; protected set; }
     public bool unlocked = false;
-    private WeaponClassInfo perkInfo;
-    private bool perkApplied;
-    public int level = 0;
+    protected WeaponSlot slot;
 
-    public delegate void SellEvent();
-    public SellEvent OnSell;
+    public int level { get; protected set; } = 1;
+    public bool maxLevel => level == 5;
+
 
     protected virtual void Awake()
     {
@@ -38,35 +51,51 @@ public abstract class WeaponBase : MonoBehaviour
         graphicsController = GetComponent<WeaponGraphicsController>();
     }
 
-    public virtual void Set()
+    public virtual void Set(WeaponSlot slot, bool fullSet)
     {
+        this.slot = slot;
+        if(!fullSet) return;
+
         WeaponMasterController.Main.RegisterWeaponClass(weaponClass, perkReqClass, out perkInfo);
         perkInfo.OnLevelChange += HandlePerk;
+        if(perkInfo.classLevel >= perkReqAmount && !perkApplied) 
+        {
+            ApplyPerk();
+            perkApplied = true;
+        }
+        gameObject.SetActive(true);
     }
 
     protected virtual void HandlePerk(int currentLevel)
     {
         if(currentLevel >= perkReqAmount && !perkApplied) 
         {
-            ApplyPerk();
             perkApplied = true;
+            ApplyPerk();
         }
 
         if(currentLevel < perkReqAmount && perkApplied) 
         {
-            RemovePerk();
             perkApplied = false;
+            RemovePerk();
         }
     }
 
-    protected virtual void UnlockAltTile()
+    public void ReceiveTile(ActionTile tile)
     {
-        
+        placedTiles.Add(tile);
     }
 
     public virtual void Shoot(WeaponKey key)
     {
         audioController.ChangeKey(key);
+        OnShoot?.Invoke();
+        anim.SetTrigger("Shoot");
+    }
+
+    [ContextMenu("Shoot")]
+    public virtual void TestShoot()
+    {
         OnShoot?.Invoke();
         anim.SetTrigger("Shoot");
     }
@@ -78,17 +107,21 @@ public abstract class WeaponBase : MonoBehaviour
 
     public void Sell()
     {
-        var count = Mathf.FloorToInt(ShopManager.Main.currentWeaponCost / 2f);
+        var count = Mathf.FloorToInt(ShopManager.Main.weaponCost / 2f);
+        count += Mathf.CeilToInt(placedTiles.Count / 2f);
 
         for (int i = 0; i < count; i++)
         {
             Instantiate(exp, transform.position, Quaternion.identity);
         }
 
-        OnSell?.Invoke();
+        placedTiles.ForEach(x => x.DestroyTile());
+
         WeaponMasterController.Main.RemoveWeaponClass(weaponClass);
-        perkInfo.OnLevelChange += HandlePerk;
+        perkInfo.OnLevelChange -= HandlePerk;
         Stop();
+
+        Inventory.Main.AddWeapon(this);
         Destroy(gameObject);
     }
 

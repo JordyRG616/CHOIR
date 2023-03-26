@@ -16,7 +16,6 @@ public class HighImmunity : MutationBase
 
     public override void ApplyMutation(EnemyStatData data)
     {
-        data.Resistances.ForEach(x => x.RaiseResistance(percentage));
     }
 
     public override MutationBase GetCopy()

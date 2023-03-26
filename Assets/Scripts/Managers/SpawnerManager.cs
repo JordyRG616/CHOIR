@@ -32,10 +32,14 @@ public class SpawnerManager : MonoBehaviour
     [SerializeField] private Slider progressBar;
     [SerializeField] private TextMeshProUGUI waveIndicator, playlist, waveTime, upperText;
     private List<EnemySpawner> spawners;
-    private bool OnWave;
+    private bool preWaveEnd = true;
+    public bool OnWave {get; private set;}
 
     [Space]
-    [SerializeField] private GameObject upgradeButton;
+    [SerializeField] private EnemyBox boxModel;
+    [SerializeField] private Transform enemyPanel;
+    [SerializeField] private TextMeshProUGUI enemyVolume;
+
 
     public delegate void EndOfWaveEvent(int waveNumber);
     public EndOfWaveEvent OnEndOfWave;
@@ -44,9 +48,16 @@ public class SpawnerManager : MonoBehaviour
 
     private void Start()
     {
-        playlist.text = waveNumber + "/" + (maxWaves - 1);
+        currentDuration = waveDurations[waveNumber -1];
+        playlist.text = waveNumber + "/" + (maxWaves);
         spawners = FindObjectsOfType<EnemySpawner>().ToList();
         waveIndicator.text = "WAVE " +  waveNumber;
+    }
+
+    public void SetEnemyBox(EnemyManager enemy)
+    {
+        var box = Instantiate(boxModel, enemyPanel);
+        box.ReceiveEnemy(enemy);
     }
 
     public void InitiateWave()
@@ -54,6 +65,7 @@ public class SpawnerManager : MonoBehaviour
         if(!OnWave)
         {
             OnWave = true;
+            preWaveEnd = false;
             counter = 0;
             spawners.ForEach(x => x.Activate());
             startButton.SetActive(false);
@@ -67,6 +79,12 @@ public class SpawnerManager : MonoBehaviour
         }
     }
 
+    public void SetEnemyChance(float value)
+    {
+        spawners.ForEach(x => x.chanceForExtraEnemy = value);
+        enemyVolume.text = (value * 100).ToString("0") + "%";
+    }
+
     public void Pause()
     {
         Time.timeScale = 0;
@@ -74,7 +92,7 @@ public class SpawnerManager : MonoBehaviour
 
     public IEnumerator EndWave()
     {
-        OnWave = false;
+        preWaveEnd = true;
         waveNumber++;
 
         spawners.ForEach(x =>
@@ -85,29 +103,30 @@ public class SpawnerManager : MonoBehaviour
 
         yield return new WaitUntil(() => FindObjectsOfType<EnemyManager>().Length == 0);
 
-        currentDuration = waveDurations[waveNumber];
-        if (waveNumber == maxWaves) EndGameLog.Main.TriggerEndgame(true);
-        else startButton.SetActive(true);
-
+        OnWave = false;
         ActionMarker.Main.On = false;
         ActionMarker.Main.Reset();
-
-        if (upgradeButton.activeSelf == false)
-        {
-            upgradeButton.SetActive(true);
-            TutorialManager.Main.RequestTutorialPage(11, 2);
-        }
 
         foreach (var weapon in FindObjectsOfType<WeaponBase>())
         {
             weapon.Stop();
         }
 
+        if (waveNumber == maxWaves + 1) 
+        {
+            EndGameLog.Main.TriggerEndgame(true);
+            yield break;
+        }
+
+        startButton.SetActive(true);
+
+        currentDuration = waveDurations[waveNumber - 1];
+
         OnEndOfWave?.Invoke(waveNumber);
 
         ProcessNewAdds();
 
-        playlist.text = waveNumber + "/" + (maxWaves - 1);
+        playlist.text = waveNumber + "/" + (maxWaves);
         progressBar.value = 0;
         waveTime.text = "00:00/" + GetTimeInMinutes(currentDuration);
         upperText.text = "Next:";
@@ -120,9 +139,23 @@ public class SpawnerManager : MonoBehaviour
         {
             if(waveNumber == add.requiredWave)
             {
-                foreach(var spw in add.spawners)
+                foreach (var _spw in add.spawnersToUnlock)
                 {
-                    add.enemies.ForEach(x => spw.ReceiveEnemy(x));
+                    _spw.gameObject.SetActive(true);
+                    spawners.Add(_spw);
+                }
+
+                foreach(var spw in add.spawnersToApply)
+                {
+                    foreach(var enemy in add.enemies)
+                    {
+                        spw.ReceiveEnemy(enemy);
+
+                        if(add.addBox)
+                        {
+                            SetEnemyBox(enemy.GetComponent<EnemyManager>());
+                        }
+                    }
                 }
             }
         }
@@ -138,7 +171,7 @@ public class SpawnerManager : MonoBehaviour
 
     private void Update()
     {
-        if (OnWave)
+        if (!preWaveEnd)
         {
             counter += Time.deltaTime;
 
@@ -157,6 +190,8 @@ public class SpawnerManager : MonoBehaviour
 public struct EnemyAddData
 {
     public int requiredWave;
-    public List<EnemySpawner> spawners;
+    public bool addBox;
+    public List<EnemySpawner> spawnersToApply;
+    public List<EnemySpawner> spawnersToUnlock;
     public List<GameObject> enemies;
 }

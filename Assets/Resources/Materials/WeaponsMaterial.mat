@@ -24,6 +24,10 @@ Material:
         m_Texture: {fileID: 2800000, guid: 953ba955c919632498bd5a90e1033162, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Outline:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _ScrollingTex:
         m_Texture: {fileID: 2800000, guid: 8c7ed8b23a885ad45b209e1aa0f0f030, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -44,8 +48,11 @@ Material:
     m_Floats:
     - _Preview: 0
     - _SpeedMod: 0.1
+    - _highlighted: 0
     m_Colors:
     - _BlendColor: {r: 0.92941177, g: 0.6156863, b: 0.9490196, a: 1}
-    - _ScrollingColor: {r: 0.44544324, g: 0.5692478, b: 0.6603774, a: 1}
+    - _ScrollingColor: {r: 0.0966053, g: 1, b: 0, a: 1}
     - _Tilling: {r: 1, g: 1, b: 0, a: 0}
+    - _defaultColor: {r: 1, g: 1, b: 1, a: 0}
+    - _highlightColor: {r: 3.8025267, g: 21.361254, b: 0, a: 0}
   m_BuildTextureStacks: []

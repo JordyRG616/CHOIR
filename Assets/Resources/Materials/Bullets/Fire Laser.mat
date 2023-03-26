@@ -155,13 +155,14 @@ Material:
     - _Speed: 5.44
     - _SrcBlend: 5
     - _Surface: 1
+    - _TilingFactor: 0
     - _WorkflowMode: 1
     - _ZWrite: 0
     m_Colors:
     - _BaseColor: {r: 0, g: 1, b: 0.92499995, a: 1}
     - _BaseColorAddSubDiff: {r: 1, g: 0, b: 0, a: 0}
     - _CameraFadeParams: {r: 0, g: Infinity, b: 0, a: 0}
-    - _Color: {r: 30.368631, g: 29.096645, b: 9.221888, a: 1}
+    - _Color: {r: 162.17802, g: 18.587849, b: 0, a: 1}
     - _EmissionColor: {r: 0.0002948836, g: 0.0007314645, b: 0.0007314645, a: 1}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}

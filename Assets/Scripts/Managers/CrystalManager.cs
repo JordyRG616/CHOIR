@@ -54,16 +54,17 @@ public class CrystalManager : MonoBehaviour
     private void Start()
     {
         anim = GetComponent<Animator>();
+        maxHealth = Inventory.Main.currentMaxHealth;
         currentHealth = maxHealth;
         currentExperience = 0;
         SetHealthValue();
-        points.text = buildPoints.ToString() + " S";
+        points.text = buildPoints.ToString() + " $";
     }
 
     private void OnParticleCollision(GameObject other)
     {
-        if(!waitingLevelUp) currentExperience += 1;
-        else experienceHolder += 1;
+        if(waitingLevelUp) experienceHolder += 1;
+        else currentExperience += 1;
         gainExpSFX.Play();
 
         if(currentExperience >= requiredExperience)
@@ -98,13 +99,16 @@ public class CrystalManager : MonoBehaviour
     {
         buildPoints -= value;
 
-        points.text = buildPoints.ToString() + " S";
+        points.text = buildPoints.ToString() + " $";
     }
 
     private void EnqueueLevelUp()
     {
-        waitingLevelUp = true;
-        ActionMarker.Main.OnBeat += LevelUp;
+        if(SpawnerManager.Main.OnWave)
+        {
+            waitingLevelUp = true;
+            ActionMarker.Main.OnBeat += LevelUp;
+        } else LevelUp();
     }
 
     private void LevelUp()
@@ -114,7 +118,7 @@ public class CrystalManager : MonoBehaviour
         requiredExperience += increment.Evaluate(level);
         level++;
         buildPoints++;
-        points.text = buildPoints.ToString() + " S";
+        points.text = buildPoints.ToString() + " $";
 
         onLevelUp?.Invoke(level);
 
@@ -129,6 +133,7 @@ public class CrystalManager : MonoBehaviour
         {
 
             currentHealth -= damageController.damage;
+            EndGameLog.Main.damageTaken += damageController.damage;
             if (currentHealth <= 0)
             {
                 currentHealth = 0;

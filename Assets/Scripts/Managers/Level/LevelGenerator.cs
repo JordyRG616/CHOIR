@@ -58,7 +58,7 @@ public class LevelGenerator : MonoBehaviour
         foreach (var slot in ws_data)
         {
             var _s = Instantiate(weaponSlot, GetWorldPosition(slot.Position), Quaternion.identity, transform.Find("Weapon Slots"));
-            _s.GetComponent<WeaponSlot>().UnlockDirectionalButtons(slot.customFields.Directions);
+            // _s.GetComponent<WeaponSlot>().UnlockDirectionalButtons(slot.customFields.Directions);
             entities.Add(_s);
         }
 

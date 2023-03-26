@@ -50,11 +50,16 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _Burn: 0
     - _Damaged: 0
+    - _Death: 0
     - _EnableExternalAlpha: 0
+    - _Static: 0
     m_Colors:
+    - _Burn_Color: {r: 0.5377358, g: 0.0025364957, b: 0.0025364957, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _DamageBlinkColor: {r: 0.7647059, g: 0.8627451, b: 0.8980392, a: 1}
+    - _Damaged_Color: {r: 1, g: 1, b: 1, a: 1}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
     - _From_1: {r: 0.9490197, g: 0.9058824, b: 0.28627452, a: 0}
     - _From_2: {r: 0.8980393, g: 0.74509805, b: 0.13333334, a: 0}
@@ -63,6 +68,7 @@ Material:
     - _OutlineColor: {r: 3.2, g: 0.8156863, b: 1.0039216, a: 1}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
     - _ReplacedColor: {r: 0.94509804, g: 0.9490196, b: 0.9019608, a: 1}
+    - _Static_Color: {r: 0.94901997, g: 0.90927047, b: 0.28818408, a: 1}
     - _To_1: {r: 0.9490196, g: 0.90588236, b: 0.28627452, a: 0}
     - _To_2: {r: 0.8980392, g: 0.74509805, b: 0.13333334, a: 0}
     - _To_3: {r: 0.8509804, g: 0.49411765, b: 0.08627451, a: 0}

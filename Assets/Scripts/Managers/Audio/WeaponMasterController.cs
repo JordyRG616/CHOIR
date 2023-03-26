@@ -31,6 +31,8 @@ public class WeaponMasterController : MonoBehaviour
     public float shockDuration;
     [Space]
     public float exposedMultiplier;
+    [Space]
+    public float slowPercentage;
 
     private void Start()
     {
@@ -59,7 +61,7 @@ public class WeaponClassInfo
     public GameObject panel;
     public Slider slider;
     public List<TMPro.TextMeshProUGUI> indexes;
-    private int classLevel = 0;
+    public int classLevel { get; private set; } = 0;
 
     public delegate void LevelChangeEvent(int currentLevel);
     public LevelChangeEvent OnLevelChange;
@@ -69,6 +71,7 @@ public class WeaponClassInfo
         classLevel += value;
         OnLevelChange?.Invoke(classLevel);
         UpdateUI();
+        WeaponInfoPanel.Main.UpdateInfo();
     }
 
     public void UpdateUI()

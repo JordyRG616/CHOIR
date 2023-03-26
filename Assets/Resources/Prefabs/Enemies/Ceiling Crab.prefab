@@ -96,12 +96,36 @@ PrefabInstance:
       value: 0.54393566
       objectReference: {fileID: 0}
     - target: {fileID: 3141011618288750589, guid: 26f12621049bc5a498fe6cea60ff1015, type: 3}
+      propertyPath: armoured
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3141011618288750589, guid: 26f12621049bc5a498fe6cea60ff1015, type: 3}
       propertyPath: drops.Array.data[0].obj
       value: 
       objectReference: {fileID: 485098360858854784, guid: 49e92373ef035854ca89db2da1b3ed83, type: 3}
     - target: {fileID: 3892589446024495470, guid: 26f12621049bc5a498fe6cea60ff1015, type: 3}
+      propertyPath: sprite
+      value: 
+      objectReference: {fileID: -141578911, guid: 8adb4f81356e9c64c887a5e3b9c973c7, type: 3}
+    - target: {fileID: 3892589446024495470, guid: 26f12621049bc5a498fe6cea60ff1015, type: 3}
+      propertyPath: hasTrait
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3892589446024495470, guid: 26f12621049bc5a498fe6cea60ff1015, type: 3}
+      propertyPath: trait.icon
+      value: 
+      objectReference: {fileID: -1261808862, guid: eb812241371fdad49ab0c395a6377392, type: 3}
+    - target: {fileID: 3892589446024495470, guid: 26f12621049bc5a498fe6cea60ff1015, type: 3}
+      propertyPath: trait.name
+      value: Armoured
+      objectReference: {fileID: 0}
+    - target: {fileID: 3892589446024495470, guid: 26f12621049bc5a498fe6cea60ff1015, type: 3}
       propertyPath: defaultStats.Step
-      value: 0.45
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3892589446024495470, guid: 26f12621049bc5a498fe6cea60ff1015, type: 3}
+      propertyPath: trait.description
+      value: Takes half damage from all sources
       objectReference: {fileID: 0}
     - target: {fileID: 3892589446024495470, guid: 26f12621049bc5a498fe6cea60ff1015, type: 3}
       propertyPath: defaultStats.Armor
@@ -109,7 +133,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3892589446024495470, guid: 26f12621049bc5a498fe6cea60ff1015, type: 3}
       propertyPath: defaultStats.MaxHealth
-      value: 35
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 4023886042595317322, guid: 26f12621049bc5a498fe6cea60ff1015, type: 3}
       propertyPath: m_IsActive

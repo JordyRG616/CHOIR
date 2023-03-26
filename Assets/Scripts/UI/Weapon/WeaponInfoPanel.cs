@@ -20,7 +20,7 @@ public class WeaponInfoPanel : MonoBehaviour
     }
     #endregion
 
-    [SerializeField] private Image weaponSprite, classSprite, perkClassSprite, tileSprite;
+    [SerializeField] private Image classSprite, perkClassSprite, tileSprite;
     [SerializeField] private TextMeshProUGUI weaponName, description, perk, perkReqAmount, level;
     [SerializeField] private ClassToSpriteConverter converter;
     private WeaponBase selectedWeapon;
@@ -30,15 +30,13 @@ public class WeaponInfoPanel : MonoBehaviour
     private void Start()
     {
         pointerHandler = InputManager.Main;
+        Clear();
     }
 
     public void ReceiveWeapon(WeaponBase weapon, WeaponBox box = null)
     {
         selectedWeapon = weapon;
         weaponName.text = weapon.name;
-
-        weaponSprite.color = Color.white;
-        weaponSprite.sprite = weapon.weaponSprite;
 
         classSprite.color = Color.white;
         classSprite.sprite = converter.GetSprite(weapon.weaponClass);
@@ -59,26 +57,26 @@ public class WeaponInfoPanel : MonoBehaviour
 
     public void UpdateInfo()
     {
+        if(selectedWeapon == null) return;
+
         level.text = "LEVEL " + selectedWeapon.level;
         description.text = selectedWeapon.WeaponDescription();
         perk.text = selectedWeapon.ClassPerkDesc;
-    }
 
-    public void ReceiveUpgrade(UpgradeBase upgrade)
-    {
-        weaponName.text = upgrade.name;
-        weaponSprite.color = Color.white;
-        weaponSprite.sprite = upgrade.icon;
-        description.text = upgrade.description;
-
-        gameObject.SetActive(true);
+        if(selectedWeapon.perkApplied)
+        {
+            perk.alpha = 1f;
+            perkReqAmount.color = Color.green;
+        } else
+        {
+            perk.alpha = .7f;
+            perkReqAmount.color = Color.red;
+        }
     }
 
     public void Clear()
     {
         weaponName.text = "";
-        weaponSprite.sprite = null;
-        weaponSprite.color = Color.clear;
         description.text = "";
         perk.text = "";
         level.text = "";
@@ -91,7 +89,7 @@ public class WeaponInfoPanel : MonoBehaviour
         tileSprite.sprite = null;
         tileSprite.color = Color.clear;
 
-        // gameObject.SetActive(false);
+        gameObject.SetActive(false);
     }
 }
 

@@ -5,35 +5,29 @@ using UnityEngine;
 [CreateAssetMenu(menuName ="Data/Upgrade Database", fileName ="Upgrade Database")]
 public class Database : ScriptableObject
 {
-    [SerializeField] private List<UpgradeBase> Upgrades;
-    [SerializeField] private List<MutationBase> Mutations;
+    [field:SerializeField] public List<WeaponBase> weapons;
+    private List<WeaponBase> removedWeapons = new List<WeaponBase>();
 
-    public UpgradeBase GetRandomUpgrade()
+    public List<WeaponBase> GetRandomWeapons(int count)
     {
-        var rdm = Random.Range(0, Upgrades.Count);
-        var upg = new UpgradeBase(Upgrades[rdm]);
-        upg.amount = 1;
-        
-        return upg;
+        var list = new List<WeaponBase>();
+
+        for (int i = 0; i < count; i++)
+        {
+            var rdm = Random.Range(0, weapons.Count);
+            var weapon = weapons[rdm];
+            list.Add(weapon);
+            weapons.Remove(weapon);
+        }
+
+        weapons.AddRange(list);
+
+        return list;
     }
 
-    public UpgradeBase GetUpgrade(UpgradeTag tag)
+    internal void RemoveWeapon(WeaponBase weapon)
     {
-        var upg = new UpgradeBase(Upgrades.Find(x => x.tag == tag));
-        upg.amount = 1;
-
-        return upg;
-    }
-
-    public MutationBase GetRandomMutation()
-    {
-        var rdm = Random.Range(0, Mutations.Count);
-        return Mutations[rdm];
-    }
-
-    public MutationBase GetMatchingMutation(MutationBase mutation)
-    {
-        var mut = Mutations.Find(x => x.Compare(mutation));
-        return mut;
+        weapons.Remove(weapon);
+        removedWeapons.Add(weapon);
     }
 }

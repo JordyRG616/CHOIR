@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
+    public Sprite sprite;
+    public bool hasTrait;
+    public EnemyTrait trait;
     [SerializeField] private EnemyStatData defaultStats;
     public EnemyStatData currentStats { get; private set; }
     private bool birthed = false;
@@ -36,7 +39,11 @@ public class EnemyManager : MonoBehaviour
         GetModule<EnemyHealthModule>().ReceiveValues(data.MaxHealth, data.Armor);
         GetModule<EnemyMarchModule>().ReceiveValues(data.Step, data.Speed);
         GetModule<EnemyDamageModule>().damage = data.Damage;
-        GetModule<EnemyStatusModule>().ReceiveResistances(data.Resistances);
+    }
+
+    public string GetDeafultHealth()
+    {
+        return defaultStats.MaxHealth.ToString();
     }
 }
 
@@ -49,7 +56,6 @@ public class EnemyStatData
     public float Speed;
     public int Damage;
 
-    public List<StatusResistance> Resistances;
 
     public EnemyStatData(EnemyStatData data)
     {
@@ -59,6 +65,13 @@ public class EnemyStatData
         Speed = data.Speed;
         Damage = data.Damage;
 
-        Resistances = new List<StatusResistance>(data.Resistances);
     }
+}
+
+[System.Serializable]
+public struct EnemyTrait
+{
+    public string name;
+    [TextArea] public string description;
+    public Sprite icon;
 }

@@ -6,17 +6,14 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class ActionTile : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
+public class ActionTile : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler, IPointerEnterHandler, IPointerExitHandler
 {
     public Sprite sprite;
-    public TileType type;
     public int cost;
-    [SerializeField] private Sprite inactiveSprite;
-    [SerializeField] private List<ExtraTileBackground> extraTiles;
     public WeaponBase weaponToActivate { get; private set; }
+    private WeaponGraphicsController graphicsController;
     protected Image image;
     protected bool active = false;
-    public bool handler = false;
     public bool draggable = true;
     public bool IsOverReseter { get; private set; }
     protected bool moving;
@@ -24,6 +21,7 @@ public class ActionTile : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDr
     protected RectTransform rect;
     protected GameObject tileBox;
     private WeaponKey key;
+    private ActionBox box;
 
     public bool unlockWeapon = true;
 
@@ -35,7 +33,6 @@ public class ActionTile : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDr
     {
         rect = GetComponent<RectTransform>();
         pointerHandler = InputManager.Main;
-        if (handler) return;
         image = GetComponent<Image>();
         image.raycastTarget = false;
         image.maskable = false;
@@ -45,33 +42,28 @@ public class ActionTile : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDr
     public void ReceiveWeapon(WeaponBase weapon)
     {
         weaponToActivate = weapon;
-        weapon.OnSell += DestroyTile;
+        graphicsController = weaponToActivate.GetComponent<WeaponGraphicsController>();
     }
 
     public virtual void Initialize(GameObject box)
     {
         tileBox = box;
         tileBox.tag = "FilledNode";
-        var _b = tileBox.GetComponent<ActionBox>();
-        _b.ReceiveTile(this);
-        _b.inactive = true;
+        this.box = tileBox.GetComponent<ActionBox>();
+        this.box.ReceiveTile(this);
         pointerHandler.currentHoveredBox = null;
         if(draggable) image.raycastTarget = true;
-        
-        //var rdm = UnityEngine.Random.Range(0, 7);
-        //key = (WeaponKey)rdm;
+
+        weaponToActivate.ReceiveTile(this);
 
         ActionMarker.Main.OnReset += ActivateTile;
         ActivateTile();
-
-        TutorialManager.Main.RequestTutorialPage(17);
     }
-
+    
     protected virtual void ActivateTile()
     {
         OnPreActivation?.Invoke(weaponToActivate);
-        image.overrideSprite = null;
-        extraTiles.ForEach(x => x.Activate());
+        image.color = Color.white;
         active = true;
     }
 
@@ -83,8 +75,6 @@ public class ActionTile : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDr
     protected virtual void DeactivateTile()
     {
         OnDeactivation?.Invoke(weaponToActivate);
-        image.overrideSprite = inactiveSprite;
-        extraTiles.ForEach(x => x.Deactivate());
         active = false;
     }
 
@@ -93,6 +83,7 @@ public class ActionTile : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDr
         if (!active || moving) return;
         weaponToActivate.Shoot(key);
         DeactivateTile();
+        image.color = Color.gray;
     }
 
     public virtual void ExitTile()
@@ -100,9 +91,9 @@ public class ActionTile : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDr
         weaponToActivate.Stop();
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.tag == "Reseter" || collision.GetComponent<ActionTile>() != null)
+        if (collision.tag == "Reseter" || collision.tag == "Blocker" || collision.GetComponent<ActionTile>() != null)
         {
             IsOverReseter = true;
         }
@@ -110,7 +101,7 @@ public class ActionTile : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDr
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.tag == "Reseter" || collision.GetComponent<ActionTile>() != null)
+        if (collision.tag == "Reseter" || collision.tag == "Blocker" || collision.GetComponent<ActionTile>() != null)
         {
             IsOverReseter = false;
         }
@@ -143,13 +134,10 @@ public class ActionTile : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDr
         {
             rect.SetParent(pointerHandler.currentHoveredBox.transform);
             rect.anchoredPosition = Vector2.zero;
-            var _b = tileBox.GetComponent<ActionBox>();
-            _b.inactive = false;
-            _b.RemoveTile();
+            box.RemoveTile();
             tileBox = pointerHandler.currentHoveredBox;
-            _b = tileBox.GetComponent<ActionBox>();
-            _b.ReceiveTile(this);
-            _b.inactive = true;
+            box = tileBox.GetComponent<ActionBox>();
+            box.ReceiveTile(this);
         } else if(InputManager.Main.IsOverTrash)
         {
             TrashButton.Main.RecycleTile();
@@ -167,18 +155,26 @@ public class ActionTile : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDr
         var position = Camera.main.ScreenToViewportPoint(Input.mousePosition);
         position -= Vector3.one * 0.5f;
 
-        position.x *= 1280;
-        position.y *= 720;
+        position.x *= 640;
+        position.y *= 360;
 
         return position;
     }
 
     public void DestroyTile()
     {
-        tileBox.GetComponent<ActionBox>().inactive = false;
         ActionMarker.Main.OnReset -= ActivateTile;
         Destroy(gameObject);
     }
-}
 
-public enum TileType { Single, Double, TwoBar, ThreeBar}
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        graphicsController.SetHighlighted(true);
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        graphicsController.SetHighlighted(false);
+    }
+
+}
