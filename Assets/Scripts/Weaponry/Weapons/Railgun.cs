@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Railgun : WeaponBase
 {
-    public override void LevelUp()
+    public override void LevelUpEffect()
     {
         level++;
 

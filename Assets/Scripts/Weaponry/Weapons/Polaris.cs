@@ -7,7 +7,7 @@ public class Polaris : WeaponBase
     [SerializeField] private ParticleSystem SecondShooter;
 
 
-    public override void LevelUp()
+    public override void LevelUpEffect()
     {
         level++;
 

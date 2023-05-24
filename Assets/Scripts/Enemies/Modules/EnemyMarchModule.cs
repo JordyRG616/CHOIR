@@ -13,11 +13,14 @@ public class EnemyMarchModule : MonoBehaviour, IEnemyModule
     public bool frozen;
     public BeatAnimation beat;
     private bool Grounded => Physics2D.BoxCast(transform.position, new Vector2(1.5f, 1), 0f, Vector2.down, 1.5f, LayerMask.GetMask("Ground"));
-
+    public Rigidbody2D body {get; private set;}
+    private float originalGravityScale;
 
     void Awake()
     {
         beat = GetComponent<BeatAnimation>();
+        body = GetComponent<Rigidbody2D>();
+        originalGravityScale = body.gravityScale;
     }
     
     public void ReceiveValues(float Step, float Speed)
@@ -53,6 +56,12 @@ public class EnemyMarchModule : MonoBehaviour, IEnemyModule
         }
     }
 
+    public void DoKnockback(float force)
+    {
+        var dir = -transform.right;
+        GetComponent<Rigidbody2D>().AddForce(dir * force, ForceMode2D.Impulse);
+    }
+
     public Vector3 GetDirectionOfMovement()
     {
         return Vector3.right * directionModifier;// * speed;
@@ -72,5 +81,10 @@ public class EnemyMarchModule : MonoBehaviour, IEnemyModule
         frozen = active;
         if (frozen) anim.speed = 0;
         else anim.speed = 1;
+    }
+
+    public void ResetGravityScale()
+    {
+        body.gravityScale = originalGravityScale;
     }
 }

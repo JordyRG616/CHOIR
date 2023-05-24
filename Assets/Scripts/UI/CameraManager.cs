@@ -5,20 +5,15 @@ using UnityEngine.Experimental.Rendering.Universal;
 
 public class CameraManager : MonoBehaviour
 {
-    [SerializeField] private float radius, speed, duration;
+    [SerializeField] private float radius;
 
-    [Header("Boss Transition")]
-    [SerializeField] private float bossCameraPosition;
-    [SerializeField] private float transitionSpeed;
-
-    private WaitForSeconds waitTime = new WaitForSeconds(0.1f);
-    private Vector3 origin = new Vector3(0, 0, -10);
-    private WaitForSeconds wait = new WaitForSeconds(0.01f);
-    private bool onBossCamera;
-
+    private WaitForSeconds waitTime = new WaitForSeconds(0.075f);
+    private bool shaking;
     [SerializeField] private LevelGenerator levelGenerator;
     [SerializeField] private float cameraSpeed;
+    [SerializeField] private float cameraMouseSpeed;
     private Vector2 cameraBoundaries;
+    private Vector2 mousePos;
 
     private float _px = 0.5f;
     private float posX
@@ -54,10 +49,9 @@ public class CameraManager : MonoBehaviour
 
     public void DoShake()
     {
-        if (onBossCamera) return;
         StopAllCoroutines();
-        origin = transform.position;
-        transform.position = GetRandomPosition();
+        shaking = true;
+        transform.position += GetRandomPosition();
         StartCoroutine(ReturnToOrigin());
     }
 
@@ -65,7 +59,7 @@ public class CameraManager : MonoBehaviour
     {
         var position = Random.onUnitSphere;
         position *= radius;
-        position.z = -10;
+        position.z = 0;
 
         return position;        
     }
@@ -73,70 +67,43 @@ public class CameraManager : MonoBehaviour
     private IEnumerator ReturnToOrigin()
     {
         yield return waitTime;
-
-        transform.position = origin;
+        transform.position += GetRandomPosition();
+        yield return waitTime;
+        shaking = false;
     }
 
-    public void GoToBossCamera(Vector2 direction)
-    {
-        StartCoroutine(BossTransition(direction));
-        if (direction == Vector2.zero) onBossCamera = false;
-        else onBossCamera = true;
-    }
-
-    public void GoToFinalCamera()
-    {
-        StartCoroutine(FinalBossTransition());
-    }
-
-    private IEnumerator BossTransition(Vector2 direction)
-    {
-        float step = 0;
-        var originalPosition = transform.position;
-        Vector3 targetPosition = direction * bossCameraPosition;
-        targetPosition.z = -25;
-
-        while(step <= 1)
-        {
-            var position = Vector3.Lerp(originalPosition, targetPosition, step);
-            position.z = -25;
-
-            transform.position = position;
-
-            step += transitionSpeed;
-            yield return wait;
-        }
-
-        transform.position = targetPosition;
-    }
-
-    private IEnumerator FinalBossTransition()
-    {
-        float step = 0;
-
-        while (step <= 1)
-        {
-            Camera.main.orthographicSize = Mathf.Lerp(11.25f, 15f, step);
-
-            step += 0.01f;
-            yield return wait;
-        }
-    }
 
     private void Update()
     {
-        MoveCamera();
-
-        if(Input.GetKeyDown(KeyCode.F))
-        {
-            transform.position = origin;
-        }
+        if(!shaking) MoveCamera();
     }
 
     private void MoveCamera()
     {
-        posX += Time.deltaTime * cameraSpeed * Input.GetAxis("Horizontal");
-        posY += Time.deltaTime * cameraSpeed * Input.GetAxis("Vertical");
+        if(Input.GetMouseButtonDown(2)) mousePos = Input.mousePosition;
+
+        if(Input.GetMouseButton(2))
+        {
+            var diff = (Vector2)Input.mousePosition - mousePos;
+
+            posX += Time.deltaTime * cameraMouseSpeed * diff.x;
+            posY += Time.deltaTime * cameraMouseSpeed * diff.y;
+        } else
+        {
+            posX += Time.deltaTime * cameraSpeed * Input.GetAxis("Horizontal");
+            posY += Time.deltaTime * cameraSpeed * Input.GetAxis("Vertical");
+        }
+
+        var _x = Mathf.Lerp(-cameraBoundaries.x, cameraBoundaries.x, posX);
+        var _y = Mathf.Lerp(-cameraBoundaries.y, cameraBoundaries.y, posY);
+
+        transform.position = new Vector3(_x, _y, -10);
+    }
+
+    public void MoveCamera(Vector2 direction)
+    {
+        posX += Time.deltaTime * cameraSpeed * direction.x;
+        posY += Time.deltaTime * cameraSpeed * direction.y;
 
         var _x = Mathf.Lerp(-cameraBoundaries.x, cameraBoundaries.x, posX);
         var _y = Mathf.Lerp(-cameraBoundaries.y, cameraBoundaries.y, posY);

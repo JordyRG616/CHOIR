@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class EnemyHealthModule : MonoBehaviour, IEnemyModule
 {
+    [SerializeField] private Material enemyMat;
     [SerializeField] private bool destroyOnDeath;
 
     private float maxHealth;
@@ -26,23 +27,22 @@ public class EnemyHealthModule : MonoBehaviour, IEnemyModule
 
     private bool dead = false;
     private bool blinking;
-    public bool triggerCooldown;
-    private WaitForSeconds triggerCooldownTime = new WaitForSeconds(0.01f);
     public bool immune;
     public float exposedMultiplier;
     [SerializeField] private Animator anim;
 
     public delegate void OnEnemyDeath(EnemyHealthModule healthModule, bool destroy);
     public OnEnemyDeath onEnemyDeath;
-    public delegate void OnDamageTaken(float healthPercentage);
+    public delegate void OnDamageTaken(int damagetaken, bool crit);
     public OnDamageTaken onDamageTaken;
 
     [Header("UI")]
     [SerializeField] private Transform healthBar;
 
-    [Header("Death")]
-    [SerializeField] private GameObject deathAnimation;
-    [SerializeField] private List<EnemyDrop> drops;
+    [Header("Drops")]
+    [SerializeField] private float expMultiplier = 1;
+    [SerializeField] private DeathExperienceSpawn experience;
+    [SerializeField] private GameObject explosion;
 
 
     public void ReceiveValues(float MaxHealth, int Armor)
@@ -52,11 +52,20 @@ public class EnemyHealthModule : MonoBehaviour, IEnemyModule
 
     private void Start()
     {
-        materialInstance = new Material(GetComponent<SpriteRenderer>().material);
+        materialInstance = new Material(enemyMat);
         GetComponent<SpriteRenderer>().material = materialInstance;
         
         statusHandler = GetComponent<EnemyStatusModule>();
+        statusHandler.Initialize(materialInstance);
         anim = GetComponent<Animator>();
+
+        foreach (var weapon in FindObjectsOfType<PiercingBulletWeapon>())
+        {
+            foreach(var col in GetComponents<Collider2D>())
+            {
+                weapon.ReceiveCollider(col);
+            }
+        }
     }
 
     private void OnEnable()
@@ -66,6 +75,7 @@ public class EnemyHealthModule : MonoBehaviour, IEnemyModule
         if(materialInstance != null) 
         {
             materialInstance.SetFloat("_Death", 0);
+            materialInstance.SetFloat("_Damaged", 0);
         }
 
         blinking = false;
@@ -78,16 +88,8 @@ public class EnemyHealthModule : MonoBehaviour, IEnemyModule
         anim.SetTrigger("Reset");
         anim.speed = 1;
 
-        //healthBar.transform.localScale = new Vector3(currentHealth / maxHealth, .1f, 1);
+        healthBar.transform.localScale = new Vector3(1, .1f, 1);
 
-        foreach (var weapon in FindObjectsOfType<PiercingBulletWeapon>())
-        {
-            foreach(var col in GetComponents<Collider2D>())
-            {
-                col.enabled = true;
-                weapon.ReceiveCollider(col);
-            }
-        }
         GetComponent<Rigidbody2D>().WakeUp();
     }
 
@@ -97,19 +99,19 @@ public class EnemyHealthModule : MonoBehaviour, IEnemyModule
         if (other.TryGetComponent<WeaponDamageDealer>(out var damageDealer))
         {
             damageDealer.ApplyWeaponEffects(statusHandler);
-            TakeDamage(damageDealer.Damage, damageDealer.damageMultiplier, damageDealer.bypassArmour);
+            TakeDamage(damageDealer.Damage(out var crit), damageDealer.damageMultiplier, crit, damageDealer.bypassArmour);
 
             if (dead) return;
         }
     }
 
-    public void TakeDamage(float damage, float damageMultiplier, bool bypassArmour = false)
+    public void TakeDamage(float damage, float damageMultiplier, bool crit, bool bypassArmour)
     {
         if (dead) return;
         if(armoured && !bypassArmour) damage /= 2;
         damage *= 1 + exposedMultiplier;
-        currentHealth -= damage;
-        onDamageTaken?.Invoke(currentHealth / maxHealth);
+        currentHealth -= Mathf.CeilToInt(damage);
+        onDamageTaken?.Invoke(Mathf.CeilToInt(damage), crit);
         if (!blinking) StartCoroutine(Blink());
 
         if (currentHealth <= 0) StartCoroutine(Die());
@@ -129,88 +131,60 @@ public class EnemyHealthModule : MonoBehaviour, IEnemyModule
         blinking = false;
     }
 
-    public void SetTriggerCooldown()
-    {
-        if (dead) return;
-        StartCoroutine(HandleTriggerCooldown());
-    }
-
-    private IEnumerator HandleTriggerCooldown()
-    {
-        yield return triggerCooldownTime;
-        triggerCooldown = false;
-    }
-
     public IEnumerator Die()
     {
         dead = true;
         EndGameLog.Main.enemies++;
         statusHandler.Terminate();
         anim.speed = 0;
-        foreach(var col in GetComponents<Collider2D>())
+        foreach (var col in GetComponents<Collider2D>())
         {
             col.enabled = false;
         }
         GetComponent<Rigidbody2D>().Sleep();
 
-        if (drops.Count > 0)
-        {
-            var rdm = UnityEngine.Random.Range(0, 2f);
-            Instantiate(drops[0].obj, transform.position + new Vector3(0, 0, 75), Quaternion.identity);
-
-            GameObject container = null;
-            for (int i = 1; i < drops.Count; i++)
-            {
-                var drop = drops[i];
-                if (rdm <= drop.chance) container = drop.obj;
-            }
-            if(container != null) Instantiate(container, transform.position + new Vector3(0, 0, 75), Quaternion.identity);
-        }
+        DropStuff();
 
         materialInstance.SetFloat("_Damaged", 0);
         var step = 0f;
 
-        while(step <= 1)
+        while (step <= 1)
         {
             materialInstance.SetFloat("_Death", step);
 
-            step += 0.01f;
+            step += 0.02f;
             yield return new WaitForSeconds(0.01f);
         }
 
         onEnemyDeath?.Invoke(this, destroyOnDeath);
     }
 
-    public void Die(bool exp)
+    private void DropStuff()
+    {
+        var exp = Instantiate(experience, transform.position, Quaternion.identity);
+        exp.Initialize(transform.position, expMultiplier);
+
+        if (ModuleActivationManager.Main.HasSpecialEffect(ModuleSpecialEffect.ExplosiveDeath))
+        {
+            if(statusHandler.HasStatus(StatusType.Burn)) Instantiate(explosion, transform.position, Quaternion.identity);
+        }
+    }
+
+    public void DieFromAttacking()
     {
         StopAllCoroutines();
         dead = true;
-        EndGameLog.Main.enemies++;
-
-        if (exp && drops.Count > 0)
-        {
-            var rdm = UnityEngine.Random.Range(0, 2f);
-            Instantiate(drops[0].obj, transform.position + new Vector3(0, 0, 75), Quaternion.identity);
-
-            GameObject container = null;
-            for (int i = 1; i < drops.Count; i++)
-            {
-                var drop = drops[i];
-                if (rdm <= drop.chance) container = drop.obj;
-            }
-            if(container != null) Instantiate(container, transform.position + new Vector3(0, 0, 75), Quaternion.identity);
-        }
-
+        
         statusHandler.Terminate();
         onEnemyDeath?.Invoke(this, destroyOnDeath);
     }
 
     private void OnDisable()
     {
-        foreach (var weapon in FindObjectsOfType<PiercingBulletWeapon>())
-        {
-            weapon.RemoveCollider(GetComponent<Collider2D>());
-        }
+        // foreach (var weapon in FindObjectsOfType<PiercingBulletWeapon>())
+        // {
+        //     weapon.RemoveCollider(GetComponent<Collider2D>());
+        // }
     }
 
     public void RaiseMaxHealth(float value)
@@ -218,11 +192,4 @@ public class EnemyHealthModule : MonoBehaviour, IEnemyModule
         maxHealth += value;
         currentHealth = maxHealth;
     }
-}
-
-[Serializable]
-public class EnemyDrop
-{
-    public GameObject obj;
-    [Range(0, 1)] public float chance;
 }

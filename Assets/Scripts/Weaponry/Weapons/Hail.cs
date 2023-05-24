@@ -8,7 +8,7 @@ public class Hail : WeaponBase
     [SerializeField] private GameObject salvo;
     private int missiles = 6;
 
-    public override void LevelUp()
+    public override void LevelUpEffect()
     {
         level++;
 

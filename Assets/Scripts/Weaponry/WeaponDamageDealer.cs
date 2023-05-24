@@ -11,25 +11,26 @@ public class WeaponDamageDealer : MonoBehaviour
     public List<StatusType> statuses;
     public float damageMultiplier = 1;
     public bool bypassArmour = false;
+    public bool OnTriggerCooldown {get; private set;}
+    private WaitForSeconds cooldownTime = new WaitForSeconds(.1f);
 
     public delegate void WeaponEffectHandler(GameObject enemy);
     public WeaponEffectHandler ApplyEffects;
 
-    public float Damage
+    public float Damage(out bool crit)
     {
-        get
+        var rdmDamage = UnityEngine.Random.Range(weapon.damageRange.x, weapon.damageRange.y);
+        rdmDamage *= damageMultiplier;
+
+        var rdm = UnityEngine.Random.Range(0, 1f);
+        if(rdm < weapon.criticalChance)
         {
-            var rdmDamage = UnityEngine.Random.Range(weapon.damageRange.x, weapon.damageRange.y);
-            rdmDamage *= damageMultiplier;
+            rdmDamage = weapon.damageRange.y; 
+            rdmDamage *= weapon.criticalMultiplier;
+            crit = true;
+        } else crit = false;
 
-            var rdm = UnityEngine.Random.Range(0, 1f);
-            if(rdm < weapon.criticalChance)
-            {
-                rdmDamage *= weapon.criticalMultiplier;
-            }
-
-            return rdmDamage;
-        }
+        return rdmDamage;
     }
 
     public void ApplyWeaponEffects(EnemyStatusModule statusHandler)
@@ -54,5 +55,17 @@ public class WeaponDamageDealer : MonoBehaviour
     void Update()
     {
         counter += Time.deltaTime;
+    }
+
+    public void SetTriggerCooldown()
+    {
+        StartCoroutine(DoCooldown());
+    }
+
+    private IEnumerator DoCooldown()
+    {
+        OnTriggerCooldown = true;
+        yield return cooldownTime;
+        OnTriggerCooldown = false;
     }
 }

@@ -7,7 +7,7 @@ public class Raycaster : WeaponBase
     [SerializeField] private ParticleSystem trail;
     [SerializeField] private GameObject multishot;
 
-    public override void LevelUp()
+    public override void LevelUpEffect()
     {
         level++;
 
@@ -17,7 +17,7 @@ public class Raycaster : WeaponBase
                 RaiseLaserDuration(1);
             break;
             case 3:
-                damageRange += Vector2.one * 4;
+                damageRange += Vector2.one * 2;
             break;
             case 4:
                 RaiseLaserDuration(2);

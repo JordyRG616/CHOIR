@@ -7,7 +7,7 @@ public class Helix : WeaponBase
     [SerializeField] private ParticleSystem zone;
     [SerializeField] private GameObject waste;
 
-    public override void LevelUp()
+    public override void LevelUpEffect()
     {
         level++;
 
@@ -28,6 +28,14 @@ public class Helix : WeaponBase
                 zoneMain.startSize = new ParticleSystem.MinMaxCurve(6f);
             break;
         }
+    }
+
+    public override void Shoot(WeaponKey key)
+    {
+        base.Shoot(key);
+        var shot = Instantiate(MainShooter, MainShooter.transform.position, transform.rotation);
+        shot.gameObject.SetActive(true);
+        shot.Play();
     }
 
     public override string WeaponDescription()

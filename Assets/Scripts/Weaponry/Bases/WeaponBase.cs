@@ -33,12 +33,13 @@ public abstract class WeaponBase : MonoBehaviour
     public Vector2 damageRange;
     public float criticalChance = 0.05f;
     public float criticalMultiplier = 1.5f;
-    [SerializeField] private GameObject exp;
+    [SerializeField] private DeathExperienceSpawn exp;
     protected Animator anim;
     protected WeaponAudioController audioController;
     public WeaponGraphicsController graphicsController { get; protected set; }
     public bool unlocked = false;
     protected WeaponSlot slot;
+    protected bool shooting;
 
     public int level { get; protected set; } = 1;
     public bool maxLevel => level == 5;
@@ -88,9 +89,13 @@ public abstract class WeaponBase : MonoBehaviour
 
     public virtual void Shoot(WeaponKey key)
     {
+        // if(shooting) return;
+
         audioController.ChangeKey(key);
         OnShoot?.Invoke();
         anim.SetTrigger("Shoot");
+        shooting = true;
+        CrystalManager.Main.DoWaveformBurst();
     }
 
     [ContextMenu("Shoot")]
@@ -102,6 +107,7 @@ public abstract class WeaponBase : MonoBehaviour
 
     public virtual void Stop()
     {
+        shooting = false;
         OnStop?.Invoke();
     }
 
@@ -110,10 +116,8 @@ public abstract class WeaponBase : MonoBehaviour
         var count = Mathf.FloorToInt(ShopManager.Main.weaponCost / 2f);
         count += Mathf.CeilToInt(placedTiles.Count / 2f);
 
-        for (int i = 0; i < count; i++)
-        {
-            Instantiate(exp, transform.position, Quaternion.identity);
-        }
+        var _exp = Instantiate(exp, transform.position, Quaternion.identity);
+        _exp.Initialize(transform.position, count);
 
         placedTiles.ForEach(x => x.DestroyTile());
 
@@ -122,11 +126,24 @@ public abstract class WeaponBase : MonoBehaviour
         Stop();
 
         Inventory.Main.AddWeapon(this);
-        Destroy(gameObject);
+        
+        transform.position = Vector3.one * 1000;
+        gameObject.SetActive(false);
     }
 
+    public virtual void LevelUp()
+    {
+        LevelUpEffect();
+        EndGameLog.Main.weaponLevel++;
 
-    public abstract void LevelUp();
+        if(ModuleActivationManager.Main.HasSpecialEffect(ModuleSpecialEffect.Cashback))
+        {
+            var _exp = Instantiate(exp, transform.position, Quaternion.identity);
+            _exp.Initialize(transform.position, level);
+        }
+    }
+
+    public abstract void LevelUpEffect();
 
     public abstract string WeaponDescription();
     

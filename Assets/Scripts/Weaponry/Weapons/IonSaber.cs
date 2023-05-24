@@ -6,7 +6,7 @@ public class IonSaber : WeaponBase
 {
     [SerializeField] private GameObject extraArms;
 
-    public override void LevelUp()
+    public override void LevelUpEffect()
     {
         level++;
 

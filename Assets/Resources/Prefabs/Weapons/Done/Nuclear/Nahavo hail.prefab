@@ -118,7 +118,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 5
+      scalar: 1.5
       minScalar: 0.3
       maxCurve:
         serializedVersion: 2
@@ -4913,8 +4913,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapon: {fileID: 8386180874023725567}
+  effectsCooldown: 0
   statuses: 
   damageMultiplier: 0.01
+  bypassArmour: 0
 --- !u!114 &8386180873196848953
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9850,8 +9852,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapon: {fileID: 8386180874023725567}
+  effectsCooldown: 0
   statuses: 
   damageMultiplier: 0.1
+  bypassArmour: 0
 --- !u!114 &8386180873577782640
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14800,8 +14804,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapon: {fileID: 8386180874023725567}
+  effectsCooldown: 0
   statuses: 
   damageMultiplier: 0.1
+  bypassArmour: 0
 --- !u!1 &8386180874017373909
 GameObject:
   m_ObjectHideFlags: 0
@@ -19724,8 +19730,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapon: {fileID: 8386180874023725567}
+  effectsCooldown: 0
   statuses: 
   damageMultiplier: 0.1
+  bypassArmour: 0
 --- !u!114 &8386180874017373915
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19917,6 +19925,7 @@ MonoBehaviour:
   weaponCost: 0
   waveform: {fileID: 21300000, guid: dcb62af8e8795e94cb553066a13b11ec, type: 3}
   weaponClass: 16
+  surfaceWeapon: 0
   ClassPerkDesc: Shoots an additional salvo of close range missiles
   <perkReqClass>k__BackingField: 1
   <perkReqAmount>k__BackingField: 3
@@ -19961,7 +19970,7 @@ MonoBehaviour:
   damageRange: {x: 3, y: 8}
   criticalChance: 0.05
   criticalMultiplier: 1.5
-  exp: {fileID: 485098360858854784, guid: 18dc999ca60e81d40943d222f0a41d3d, type: 3}
+  exp: {fileID: 7144364404028238956, guid: ec6a1e52c5f50474e8d450d586159b65, type: 3}
   unlocked: 0
   secondShooter: {fileID: 8386180874532345539}
   salvo: {fileID: 8386180874414854535}
@@ -24878,8 +24887,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapon: {fileID: 8386180874023725567}
+  effectsCooldown: 0
   statuses: 
   damageMultiplier: 0.01
+  bypassArmour: 0
 --- !u!114 &8386180874291094672
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39768,7 +39779,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 5
+      scalar: 1.5
       minScalar: 0.3
       maxCurve:
         serializedVersion: 2
@@ -44563,8 +44574,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapon: {fileID: 8386180874023725567}
+  effectsCooldown: 0
   statuses: 
   damageMultiplier: 0.01
+  bypassArmour: 0
 --- !u!114 &8386180875226513033
 MonoBehaviour:
   m_ObjectHideFlags: 0

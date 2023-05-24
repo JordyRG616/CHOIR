@@ -30,7 +30,7 @@ MonoBehaviour:
       Value: 0
       HasValue: 0
     SampleRate:
-      Value: 48000
+      Value: 0
       HasValue: 1
     BuildDirectory:
       Value: 
@@ -338,11 +338,11 @@ MonoBehaviour:
   sourceProjectPath: ../Fmod Project/Siege/Siege.fspro
   sourceBankPath: ../Fmod Project/Siege/Build
   SourceBankPathUnformatted: 
-  BankRefreshCooldown: 5
+  BankRefreshCooldown: 1
   ShowBankRefreshWindow: 1
   AutomaticEventLoading: 1
   BankLoadType: 0
-  AutomaticSampleLoading: 0
+  AutomaticSampleLoading: 1
   EncryptionKey: 
   ImportType: 0
   TargetAssetPath: FMODBanks

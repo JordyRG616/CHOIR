@@ -24,15 +24,6 @@ public class WeaponMasterController : MonoBehaviour
     [Space]
     [SerializeField] private List<WeaponClassInfo> classInfo;
 
-    [Header("Status Parameters")]
-    public float burnDPS;
-    public float burnTick;
-    [Space]
-    public float shockDuration;
-    [Space]
-    public float exposedMultiplier;
-    [Space]
-    public float slowPercentage;
 
     private void Start()
     {

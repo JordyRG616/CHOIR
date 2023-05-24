@@ -10,7 +10,7 @@ public class BeatAnimation : MonoBehaviour
     public bool OverrideBeat;
 
 
-    void Start()
+    void OnEnable()
     {
         anim = GetComponent<Animator>();
         marker = ActionMarker.Main;

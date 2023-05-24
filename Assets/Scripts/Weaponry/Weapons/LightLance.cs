@@ -1,18 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using FMODUnity;
 
 public class LightLance : WeaponBase
 {
-    [SerializeField] private Material fireMat;
-    [SerializeField] private Material laserMat;
-    [SerializeField] private ParticleSystemRenderer lance;
-    [SerializeField] private ParticleSystemRenderer coating;
-    [SerializeField] private WeaponDamageDealer damageDealer;
-    private int firerate = 1;
-    private string lances  = " lance";
+    [SerializeField] private StudioEventEmitter emitter;
+    private int emitAmount = 1;
+    private float firerate = 1f;
+    private string textComplement  = "second";
 
-    public override void LevelUp()
+    public override void LevelUpEffect()
     {
         level++;
 
@@ -25,15 +23,38 @@ public class LightLance : WeaponBase
                 damageRange += Vector2.one * 3;
             break;
             case 4:
-                firerate++;
-                lances = " lances";
-                var emission = MainShooter.emission;
-                emission.rateOverTime = new ParticleSystem.MinMaxCurve(firerate);
+                firerate /= 2;
+                textComplement = "beat";
             break;
             case 5:
                 RaiseLaserDuration(1);
             break;
         }
+    }
+
+    public override void Shoot(WeaponKey key)
+    {
+        base.Shoot(key);
+        StopAllCoroutines();
+        shooting = true;
+        StartCoroutine(ManageShooting());
+    }
+
+    private IEnumerator ManageShooting()
+    {
+        while(shooting)
+        {
+            MainShooter.Emit(emitAmount);
+            emitter.Play();
+
+            yield return new WaitForSeconds(firerate);
+        }
+    }
+
+    public override void Stop()
+    {
+        shooting = false;
+        base.Stop();
     }
 
     private void RaiseLaserDuration(float value)
@@ -45,22 +66,29 @@ public class LightLance : WeaponBase
 
     public override string WeaponDescription()
     {
-        return "While active, shoots " + firerate + lances + " per second that pierces enemies, dealing " + damageRange.x + " - " + damageRange.y + " damage to enemies.";
+        return "While active, shoots a lance each " + textComplement + " that pierces enemies, dealing " + damageRange.x + " - " + damageRange.y + " damage to enemies.";
     }
 
     protected override void ApplyPerk()
     {
-        lance.trailMaterial = fireMat;
-        coating.trailMaterial = fireMat;
+        emitAmount += 2;
 
-        damageDealer.statuses.Add(StatusType.Burn);
+        var main = MainShooter.main;
+        main.startSize = new ParticleSystem.MinMaxCurve(.12f);
+
+        var shape = MainShooter.shape;
+        shape.randomDirectionAmount = .4f;
     }
 
     protected override void RemovePerk()
     {
-        lance.trailMaterial = laserMat;
-        coating.trailMaterial = laserMat;
+        emitAmount -= 2;
 
-        damageDealer.statuses.Remove(StatusType.Burn);
+        var main = MainShooter.main;
+        main.startSize = new ParticleSystem.MinMaxCurve(.33f);
+
+        var shape = MainShooter.shape;
+        shape.randomDirectionAmount = 0;
+        
     }
 }

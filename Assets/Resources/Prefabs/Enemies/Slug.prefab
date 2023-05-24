@@ -4951,6 +4951,7 @@ GameObject:
   - component: {fileID: 3892589446024495471}
   - component: {fileID: 3892589446024495468}
   - component: {fileID: 6246542540910377874}
+  - component: {fileID: 6923138246107612139}
   m_Layer: 7
   m_Name: Slug
   m_TagString: BottomEnemy
@@ -5136,17 +5137,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21879c14f13322d4aa869ca5df76b2d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  destroyOnDeath: 1
+  enemyMat: {fileID: 2100000, guid: fbef93dc8073be0438dcd7a840348df4, type: 2}
+  destroyOnDeath: 0
   armoured: 0
-  triggerCooldown: 0
   immune: 0
   exposedMultiplier: 0
   anim: {fileID: 3141011618288750577}
   healthBar: {fileID: 912488287632202748}
-  deathAnimation: {fileID: 0}
-  drops:
-  - obj: {fileID: 485098360858854784, guid: 49e92373ef035854ca89db2da1b3ed83, type: 3}
-    chance: 1
+  expMultiplier: 1
+  experience: {fileID: 7144364404028238956, guid: 49e92373ef035854ca89db2da1b3ed83, type: 3}
+  explosion: {fileID: 356535721634839596, guid: 2136601951f59b24f95333a91415065f, type: 3}
 --- !u!114 &3892589446024495469
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5205,6 +5205,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   OverrideBeat: 0
+--- !u!114 &6923138246107612139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3141011618288750580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4c6b071f0b347941865f586182acff6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  popupModel: {fileID: 1697278904165487549, guid: 66ae0ea1ea41df3498c0da65d86e7e0d, type: 3}
+  maxPopups: 3
+  availablePop: {fileID: 0}
 --- !u!1 &4234798058600665479
 GameObject:
   m_ObjectHideFlags: 0

@@ -19,36 +19,14 @@ public class ShopManager : MonoBehaviour
     #endregion
 
     [field: SerializeField] public int weaponCost {get; private set;}
-    public bool canBuild => crystalManager.buildPoints >= weaponCost;
-
     public bool panelOpen;
+    public int weaponsBuild;
+    public int weaponsSold;
+    public int weaponCount => weaponsBuild - weaponsSold;
 
-    private float weaponMax;
-    private float upgradeMax;
+    public bool canBuild => crystalManager.buildPoints >= weaponCost;
+    private List<WeaponBase> weapons = new List<WeaponBase>();
 
-    private float _wPos;
-    private float weaponPanelPosition
-    {
-        get => _wPos;
-        set
-        {
-            if (value < 0) _wPos = 0;
-            else if (value > weaponMax) _wPos = weaponMax;
-            else _wPos = value;
-        }
-    }
-
-    private float _uPos;
-    private float upgradePanelPosition
-    {
-        get => _uPos;
-        set
-        {
-            if (value < 0) _uPos = 0;
-            else if (value > upgradeMax) _uPos = upgradeMax;
-            else _uPos = value;
-        }
-    }
 
     private CrystalManager crystalManager;
     private Inventory inventory;
@@ -63,11 +41,27 @@ public class ShopManager : MonoBehaviour
     public void OpenNewWeaponPanel()
     {
         var slot = InputManager.Main.selectedSlot;
-        var weapons = inventory.ownedWeapons.FindAll(x => x.surfaceWeapon == slot.surface);
+        weapons = inventory.ownedWeapons.FindAll(x => x.surfaceWeapon == slot.surface);
 
         slot.buildVFX.Play();
         WeaponList.Main.Open(weapons);
         panelOpen = true;
+    }
+
+    //DEBUG ONLY
+    void Update()
+    {
+        if(panelOpen)
+        {
+            if(Input.GetKey(KeyCode.LeftShift))
+            {
+                if(Input.GetKeyDown(KeyCode.R))
+                {
+                    var random = Random.Range(0, weapons.Count);
+                    BuildWeapon(weapons[random]);
+                }
+            }
+        }
     }
 
     public void BuildWeapon(WeaponBase weapon)
@@ -77,6 +71,11 @@ public class ShopManager : MonoBehaviour
         var _weapon = Instantiate(weapon, Vector3.one * 500, Quaternion.identity);
         _weapon.name = weapon.name;
 
+        if(weaponsBuild == 0 && ModuleActivationManager.Main.HasSpecialEffect(ModuleSpecialEffect.Firstborn))
+        {
+            _weapon.LevelUp();
+        }
+
         var slot = InputManager.Main.selectedSlot;
         slot.ReceiveWeapon(_weapon);
         slot.buildVFX.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
@@ -84,5 +83,7 @@ public class ShopManager : MonoBehaviour
         inventory.PlaceWeapon(weapon);
         WeaponList.Main.Close();
         panelOpen = false;
+
+        weaponsBuild++;
     }
 }

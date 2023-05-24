@@ -7,7 +7,7 @@ public class Phoenix : WeaponBase
     [SerializeField] private ActionTile altTile;
     [SerializeField] private GameObject trail;
 
-    public override void LevelUp()
+    public override void LevelUpEffect()
     {
         level++;
 

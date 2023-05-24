@@ -9772,7 +9772,7 @@ MonoBehaviour:
   StopEvent: 0
   AllowFadeout: 1
   TriggerOnce: 0
-  Preload: 0
+  Preload: 1
   Params:
   - Name: Key
     Value: 0
@@ -9821,6 +9821,7 @@ MonoBehaviour:
   weaponCost: 0
   waveform: {fileID: 21300000, guid: 1b713780623a3594ab367bdfa9c97eea, type: 3}
   weaponClass: 4
+  surfaceWeapon: 0
   ClassPerkDesc: Greatly increases the spread of the stream.
   <perkReqClass>k__BackingField: 4
   <perkReqAmount>k__BackingField: 2
@@ -9901,7 +9902,7 @@ MonoBehaviour:
   damageRange: {x: 2, y: 4}
   criticalChance: 0.05
   criticalMultiplier: 1.5
-  exp: {fileID: 485098360858854784, guid: 18dc999ca60e81d40943d222f0a41d3d, type: 3}
+  exp: {fileID: 7144364404028238956, guid: ec6a1e52c5f50474e8d450d586159b65, type: 3}
   unlocked: 0
 --- !u!1 &6750947038906082311
 GameObject:

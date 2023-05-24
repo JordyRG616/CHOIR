@@ -9712,8 +9712,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapon: {fileID: 6823479951378466422}
+  effectsCooldown: 0
   statuses: 03000000
   damageMultiplier: 0.1
+  bypassArmour: 0
 --- !u!1 &1593971688679511578
 GameObject:
   m_ObjectHideFlags: 0
@@ -14554,8 +14556,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapon: {fileID: 6823479951378466422}
+  effectsCooldown: 0
   statuses: 03000000
   damageMultiplier: 0.1
+  bypassArmour: 0
 --- !u!1 &6508479716451129159
 GameObject:
   m_ObjectHideFlags: 0
@@ -19620,6 +19624,7 @@ MonoBehaviour:
   weaponCost: 0
   waveform: {fileID: 21300000, guid: 16afacaad314ffc40a58b678131e1d5f, type: 3}
   weaponClass: 2
+  surfaceWeapon: 0
   ClassPerkDesc: Creates an additional wire each time one hits a surface.
   <perkReqClass>k__BackingField: 2
   <perkReqAmount>k__BackingField: 3
@@ -19676,6 +19681,6 @@ MonoBehaviour:
   damageRange: {x: 2, y: 5}
   criticalChance: 0.05
   criticalMultiplier: 1.5
-  exp: {fileID: 485098360858854784, guid: 18dc999ca60e81d40943d222f0a41d3d, type: 3}
+  exp: {fileID: 7144364404028238956, guid: ec6a1e52c5f50474e8d450d586159b65, type: 3}
   unlocked: 0
   extraWires: {fileID: 1988888846}

@@ -4900,8 +4900,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapon: {fileID: 2037245947}
+  effectsCooldown: 0
   statuses: 02000000
   damageMultiplier: 0.05
+  bypassArmour: 0
 --- !u!1 &825936743
 GameObject:
   m_ObjectHideFlags: 0
@@ -5004,7 +5006,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1620412445
 Transform:
   m_ObjectHideFlags: 0
@@ -9807,7 +9809,7 @@ ParticleSystemRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
-  - {fileID: 2100000, guid: 353a52fd51bdad444a63e8f3a5c471a4, type: 2}
+  - {fileID: 2100000, guid: 00af2d905a418774991ae49707e08566, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -9871,8 +9873,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapon: {fileID: 2037245947}
+  effectsCooldown: 0
   statuses: 
   damageMultiplier: 0.05
+  bypassArmour: 0
 --- !u!1 &5471642609765899544
 GameObject:
   m_ObjectHideFlags: 0
@@ -9894,7 +9898,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5471642609765899548
 Transform:
   m_ObjectHideFlags: 0
@@ -10051,13 +10055,14 @@ MonoBehaviour:
   weaponCost: 0
   waveform: {fileID: 21300000, guid: 89d369cddb58114488d862cf5b0acbe2, type: 3}
   weaponClass: 8
+  surfaceWeapon: 0
+  ClassPerkDesc: Creates a radioactive zone around the coil.
   <perkReqClass>k__BackingField: 16
   <perkReqAmount>k__BackingField: 4
-  ClassPerkDesc: Creates a radioactive zone around the coil.
   upgradeDescriptions:
-  - +3 minimum damage
+  - +1 maximum damage
   - Increase burst range
-  - +4 general damage
+  - +1 general damage
   - Greatly increase burst density
   perkApplied: 0
   MainShooter: {fileID: 69711626}
@@ -10116,9 +10121,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-  damageRange: {x: 2, y: 8}
+  damageRange: {x: 0, y: 0}
   criticalChance: 0.05
   criticalMultiplier: 1.5
-  exp: {fileID: 485098360858854784, guid: 18dc999ca60e81d40943d222f0a41d3d, type: 3}
+  exp: {fileID: 7144364404028238956, guid: ec6a1e52c5f50474e8d450d586159b65, type: 3}
   unlocked: 0
   zone: {fileID: 1620412444}

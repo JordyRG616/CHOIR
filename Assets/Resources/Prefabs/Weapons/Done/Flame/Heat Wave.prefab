@@ -44,7 +44,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 934737130}
   serializedVersion: 8
-  lengthInSec: 2
+  lengthInSec: 1
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 0
@@ -119,7 +119,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 4
+      scalar: 2
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -1046,20 +1046,29 @@ ParticleSystem:
         - serializedVersion: 3
           time: 0
           value: 0
-          inSlope: 2.0454433
-          outSlope: 2.0454433
-          tangentMode: 34
+          inSlope: 3.6129568
+          outSlope: 3.6129568
+          tangentMode: 0
           weightedMode: 0
           inWeight: 0
-          outWeight: 0.33333334
+          outWeight: 0.16457586
+        - serializedVersion: 3
+          time: 0.07151794
+          value: 0.5064007
+          inSlope: 0
+          outSlope: 0.7235265
+          tangentMode: 1
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.46205562
         - serializedVersion: 3
           time: 0.4888916
           value: 1
-          inSlope: 2.0454433
-          outSlope: 2.0454433
-          tangentMode: 34
+          inSlope: 2.2064772
+          outSlope: 2.2064772
+          tangentMode: 0
           weightedMode: 0
-          inWeight: 0.33333334
+          inWeight: 0.24418996
           outWeight: 0
         m_PreInfinity: 2
         m_PostInfinity: 2
@@ -1196,7 +1205,7 @@ ParticleSystem:
         m_RotationOrder: 4
     separateAxes: 0
   RotationModule:
-    enabled: 1
+    enabled: 0
     x:
       serializedVersion: 2
       minMaxState: 1
@@ -1383,8 +1392,8 @@ ParticleSystem:
         ctime6: 0
         ctime7: 0
         atime0: 0
-        atime1: 31226
-        atime2: 55319
+        atime1: 13493
+        atime2: 48380
         atime3: 65535
         atime4: 0
         atime5: 0
@@ -4863,7 +4872,7 @@ ParticleSystemRenderer:
   m_AllowRoll: 1
   m_FreeformStretching: 0
   m_RotateWithStretchDirection: 1
-  m_VertexStreams: 000103040c
+  m_VertexStreams: 000103040c15
   m_Mesh: {fileID: 0}
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}
@@ -4886,8 +4895,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapon: {fileID: 1855876890798413358}
+  effectsCooldown: 0
   statuses: 04000000
   damageMultiplier: 0.1
+  bypassArmour: 0
 --- !u!114 &6738442630576027524
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4935,7 +4946,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &8870363712467834027
 Transform:
   m_ObjectHideFlags: 0
@@ -5040,6 +5051,7 @@ MonoBehaviour:
   weaponCost: 0
   waveform: {fileID: 21300000, guid: be599b9a56f2be7429cd03941a9421b4, type: 3}
   weaponClass: 4
+  surfaceWeapon: 0
   ClassPerkDesc: Enemies take 2 - 4 continuous damage while inside the heat zone.
   <perkReqClass>k__BackingField: 4
   <perkReqAmount>k__BackingField: 3
@@ -5093,34 +5105,10 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 934737133}
-        m_TargetAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
-        m_MethodName: Clear
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 8870363712467834069}
-        m_TargetAssemblyTypeName: FMODUnity.StudioEventEmitter, FMODUnity
-        m_MethodName: Stop
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
   damageRange: {x: 0, y: 0}
   criticalChance: 0.05
   criticalMultiplier: 1.5
-  exp: {fileID: 485098360858854784, guid: 18dc999ca60e81d40943d222f0a41d3d, type: 3}
+  exp: {fileID: 7144364404028238956, guid: ec6a1e52c5f50474e8d450d586159b65, type: 3}
   unlocked: 0
   damageDealer: {fileID: 6009007198373903621}
 --- !u!114 &8870363712467834069

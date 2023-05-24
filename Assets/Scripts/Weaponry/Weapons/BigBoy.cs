@@ -6,7 +6,7 @@ public class BigBoy : WeaponBase
 {
     [SerializeField] private ParticleSystem secondShooter;
 
-    public override void LevelUp()
+    public override void LevelUpEffect()
     {
         level++;
 

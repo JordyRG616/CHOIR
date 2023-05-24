@@ -4915,8 +4915,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapon: {fileID: 3243512912285616120}
+  effectsCooldown: 0
   statuses: 04000000
   damageMultiplier: 0.01
+  bypassArmour: 0
 --- !u!114 &3980096553671082770
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14792,8 +14794,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapon: {fileID: 3243512912285616120}
+  effectsCooldown: 0
   statuses: 
   damageMultiplier: 1
+  bypassArmour: 0
 --- !u!1 &6371236269178072911
 GameObject:
   m_ObjectHideFlags: 0
@@ -19790,6 +19794,7 @@ MonoBehaviour:
   weaponCost: 0
   waveform: {fileID: 21300000, guid: d55446352b861914d86b26a93713fa63, type: 3}
   weaponClass: 1
+  surfaceWeapon: 0
   ClassPerkDesc: Projectiles explodes on contact, damaging and applying <color=red>burn</color>
     to the target and nearby enemies.
   <perkReqClass>k__BackingField: 4
@@ -19835,7 +19840,7 @@ MonoBehaviour:
   damageRange: {x: 17, y: 20}
   criticalChance: 0.05
   criticalMultiplier: 1.5
-  exp: {fileID: 485098360858854784, guid: 18dc999ca60e81d40943d222f0a41d3d, type: 3}
+  exp: {fileID: 7144364404028238956, guid: ec6a1e52c5f50474e8d450d586159b65, type: 3}
   unlocked: 0
   explosion: {fileID: 577554923176617101}
 --- !u!114 &6371236269327038515

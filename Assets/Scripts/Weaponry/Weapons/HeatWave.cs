@@ -7,7 +7,7 @@ public class HeatWave : WeaponBase
     [SerializeField] private WeaponDamageDealer damageDealer;
     private string burnStr = "";
 
-    public override void LevelUp()
+    public override void LevelUpEffect()
     {
         level++;
 

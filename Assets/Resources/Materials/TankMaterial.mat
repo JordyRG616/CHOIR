@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: TankMaterial
-  m_Shader: {fileID: -6465566751694194690, guid: b9c958fcf6c20284f82d38cb9e462a65, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 3878b0ad743dd2240aa3ce9f466dba3e, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
@@ -20,6 +20,10 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _CrackTex:
+        m_Texture: {fileID: 2800000, guid: 7203d75805d333e4ea3705357724cd44, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -38,10 +42,13 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Border_Power: 8.47
-    - _Bubble_Size: 6.15
-    - _Center_Power: 1.66
-    - _Scroll_Speed: -0.075
+    - _Border_Power: 1
+    - _Bubble_Size: 5.71
+    - _Center_Power: 0.27
+    - _Damage: 0
+    - _Scroll_Speed: 0.08
+    - _Tiling: 8.23
     m_Colors:
-    - _Color: {r: 16, g: 14.628572, b: 3.1999998, a: 1}
+    - _Color: {r: 0.93119407, g: 1, b: 0, a: 1}
+    - _Tiling: {r: 2, g: 6, b: 0, a: 0}
   m_BuildTextureStacks: []

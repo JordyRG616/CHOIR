@@ -7,7 +7,7 @@ public class Carbine : WeaponBase
     [SerializeField] private GameObject explosion;
     private string knockbackAmount = "slightly";
 
-    public override void LevelUp()
+    public override void LevelUpEffect()
     {
         level++;
 

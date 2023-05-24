@@ -7,7 +7,7 @@ public class BulletStorm : WeaponBase
     [SerializeField] private Transform guideShooter;
     [SerializeField] private List<GameObject> perkObjs;
 
-    public override void LevelUp()
+    public override void LevelUpEffect()
     {
         level++;
 

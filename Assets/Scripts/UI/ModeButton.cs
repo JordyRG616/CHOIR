@@ -24,18 +24,19 @@ public class ModeButton : MonoBehaviour, IPointerClickHandler
         ogIconColor = icon.color;
     }
 
-    public void ChangeSelection(bool overrideRestriction = false)
+    public void ChangeSelection(bool overrideRestriction = false, bool muteCancel = false)
     {
         if(ShopManager.Main.panelOpen && !overrideRestriction) return;
 
         selected = !selected;
         if(selected)
         {
-            if(inputManager.selectedButton != null) inputManager.selectedButton.ChangeSelection();
+            if(inputManager.selectedButton != null) inputManager.selectedButton.ChangeSelection(muteCancel:true);
             image.overrideSprite = selectedSprite;
             icon.color = Color.white;
             inputManager.selectedButton = this;
             inputManager.interactionMode = mode;
+            AudioManager.Main.RequestEvent(FixedAudioEvent.Confirm);
         }
         else
         {
@@ -43,6 +44,7 @@ public class ModeButton : MonoBehaviour, IPointerClickHandler
             icon.color = ogIconColor;
             inputManager.selectedButton = null;
             inputManager.interactionMode = InteractionMode.Default;
+            if(!muteCancel) AudioManager.Main.RequestEvent(FixedAudioEvent.Cancel);
         }
     }
 

@@ -7,7 +7,7 @@ public class Naja : WeaponBase
     [SerializeField] private ParticleSystem secondShooter;
     [SerializeField] private GameObject gas;
 
-    public override void LevelUp()
+    public override void LevelUpEffect()
     {
         level++;
 

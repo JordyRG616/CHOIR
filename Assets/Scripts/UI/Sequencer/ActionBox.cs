@@ -28,6 +28,7 @@ public class ActionBox : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     {
         storedTile = tile;
         tile.transform.localPosition = new Vector3(0, .5f, 0);
+        AudioManager.Main.RequestEvent(FixedAudioEvent.PlaceTile);
         OnTilePlaced?.Invoke(tile);
     }
 

@@ -9763,8 +9763,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapon: {fileID: 300729188613039477}
+  effectsCooldown: 0
   statuses: 
   damageMultiplier: 0.25
+  bypassArmour: 0
 --- !u!114 &1752616367
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14677,8 +14679,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapon: {fileID: 300729188613039477}
+  effectsCooldown: 0
   statuses: 
   damageMultiplier: 0.25
+  bypassArmour: 0
 --- !u!1 &300729188613039474
 GameObject:
   m_ObjectHideFlags: 0
@@ -14805,12 +14809,13 @@ MonoBehaviour:
   weaponCost: 0
   waveform: {fileID: 21300000, guid: 22f712c51b650594d898835a4c03a4ec, type: 3}
   weaponClass: 2
+  surfaceWeapon: 0
   ClassPerkDesc: The ray now splits in two smaller rays when it hits a surface.
   <perkReqClass>k__BackingField: 2
   <perkReqAmount>k__BackingField: 4
   upgradeDescriptions:
   - Increased laser range
-  - +4 general damage
+  - +2 general damage
   - Increased laser range
   - Increased laser width
   perkApplied: 0
@@ -14846,10 +14851,10 @@ MonoBehaviour:
   OnStop:
     m_PersistentCalls:
       m_Calls: []
-  damageRange: {x: 5, y: 8}
+  damageRange: {x: 2, y: 4}
   criticalChance: 0.05
   criticalMultiplier: 1.5
-  exp: {fileID: 485098360858854784, guid: 18dc999ca60e81d40943d222f0a41d3d, type: 3}
+  exp: {fileID: 7144364404028238956, guid: ec6a1e52c5f50474e8d450d586159b65, type: 3}
   unlocked: 0
   trail: {fileID: 300729190324161576}
   multishot: {fileID: 1638905373}
@@ -24667,8 +24672,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapon: {fileID: 300729188613039477}
+  effectsCooldown: 0
   statuses: 
-  damageMultiplier: 0.05
+  damageMultiplier: 1
+  bypassArmour: 0
 --- !u!114 &300729190324161559
 MonoBehaviour:
   m_ObjectHideFlags: 0

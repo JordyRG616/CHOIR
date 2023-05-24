@@ -19,12 +19,26 @@ public class AudioManager : MonoBehaviour
     }
     #endregion
 
+    [SerializeField] private List<AudioEvent> events;
     [SerializeField] private List<AudioChannel> channels;
     [SerializeField] private TextMeshProUGUI masterValue, weaponsValue, beatValue, sfxValue, uiValue;
 
     private void Start()
     {
         channels.ForEach(x => x.Initialize());
+    }
+
+    public void RequestEvent(FixedAudioEvent eventName)
+    {
+        var ev = events.Find(x => x.eventName == eventName);
+        RuntimeManager.PlayOneShot(ev.eventRef);
+    }
+
+    public EventInstance RequestInstance(FixedAudioEvent eventName)
+    {
+        var ev = events.Find(x => x.eventName == eventName);
+        return RuntimeManager.CreateInstance(ev.eventRef);
+
     }
 
     private void SetChannelVolume(string channelName, float volume)
@@ -112,4 +126,18 @@ public class AudioChannel
         bus = RuntimeManager.GetBus(busPath);
         Volume = initialVolume;
     }
+}
+
+[System.Serializable]
+public struct AudioEvent
+{
+    public FixedAudioEvent eventName;
+    [EventRef] public string eventRef;
+}
+
+public enum FixedAudioEvent 
+{
+Confirm, Cancel, Charge, Build, 
+Upgrade, Sell, HoverSlot, PlaceWeapon, 
+TakeWeapon, PlaceTile, TakeDamage, CashUp
 }

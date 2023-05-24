@@ -8,7 +8,7 @@ public class Warlock : WeaponBase
     [SerializeField] private float launchForce;
     public bool levelFive { get; private set; }
 
-    public override void LevelUp()
+    public override void LevelUpEffect()
     {
         level++;
 
@@ -33,6 +33,7 @@ public class Warlock : WeaponBase
     public void Launch()
     {
         var _o = Instantiate(orb, transform.position, Quaternion.identity);
+        _o.ReceiveWeapon(this);
         var body = _o.GetComponent<Rigidbody2D>();
         var direction = -transform.right * launchForce;
         body.AddForce(direction, ForceMode2D.Impulse);

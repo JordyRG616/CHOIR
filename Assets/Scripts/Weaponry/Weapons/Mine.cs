@@ -8,7 +8,7 @@ public class Mine : WeaponBase
     [SerializeField] private ParticleSystem smoke;
     [SerializeField] private WeaponDamageDealer damageDealer;
 
-    public override void LevelUp()
+    public override void LevelUpEffect()
     {
         level++;
 

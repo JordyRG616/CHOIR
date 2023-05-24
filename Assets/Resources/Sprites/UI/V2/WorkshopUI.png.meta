@@ -355,7 +355,7 @@ TextureImporter:
         width: 20
         height: 20
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -363,6 +363,48 @@ TextureImporter:
       bones: []
       spriteID: 787586cc4d8336d48b4a822057bd6d75
       internalID: 1227437258
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WorkshopUI_12
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 33
+        width: 16
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 2, y: 4, z: 11, w: 7}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2f9ffcc960df2ff4a84b6fa7bdf014ab
+      internalID: 1122036869
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WorkshopUI_13
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 10
+        width: 32
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 7, y: 7, z: 7, w: 7}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bca0c2eeda3ee574ba392bbd714e69a3
+      internalID: -1926642038
       vertices: []
       indices: 
       edges: []
@@ -378,11 +420,13 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
+      WorkshopUI_13: -1926642038
       WorkshopUI_1: -1257743521
       WorkshopUI_0: 1156722089
       WorkshopUI_7: -1326261648
       WorkshopUI_2: 2000355389
       WorkshopUI_9: -1807087499
+      WorkshopUI_12: 1122036869
       WorkshopUI_10: 2014975253
       WorkshopUI_4: -1765991543
       WorkshopUI_8: -231014147

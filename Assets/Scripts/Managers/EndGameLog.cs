@@ -31,6 +31,8 @@ public class EndGameLog : MonoBehaviour
     [SerializeField] private float enemyWeight;
     public int damageTaken;
     [SerializeField] private float damageWeight;
+    public int weaponLevel;
+    [SerializeField] private float levelWeight;
 
     [Header("UI")]
     [SerializeField] private GameObject panel;
@@ -39,12 +41,21 @@ public class EndGameLog : MonoBehaviour
     [Space]
     [SerializeField] private TextMeshProUGUI pointsValue;
     [SerializeField] private TextMeshProUGUI pointsMultiplier;
+    [SerializeField] private TextMeshProUGUI pointsTotal;
     [Space]
     [SerializeField] private TextMeshProUGUI enemiesValue;
     [SerializeField] private TextMeshProUGUI enemiesMultiplier;
+    [SerializeField] private TextMeshProUGUI enemiesTotal;
     [Space]
     [SerializeField] private TextMeshProUGUI damageValue;
     [SerializeField] private TextMeshProUGUI damageMultiplier;
+    [SerializeField] private TextMeshProUGUI damageTotal;
+    [Space]
+    [SerializeField] private TextMeshProUGUI levelValue;
+    [SerializeField] private TextMeshProUGUI levelMultiplier;
+    [SerializeField] private TextMeshProUGUI levelTotal;
+    private WaitForSecondsRealtime longerWait = new WaitForSecondsRealtime(0.25f);
+
 
     private void Update()
     {
@@ -53,6 +64,25 @@ public class EndGameLog : MonoBehaviour
         {
             minutes++;
             seconds -= 60f;
+        }
+    }
+
+    public void ChangeWeight(WeightType weight, float value)
+    {
+        switch(weight)
+        {
+            case WeightType.EnemiesKilled:
+                enemyWeight += value;
+            break;
+            case WeightType.DamageTaken:
+                damageWeight += value;
+            break;
+            case WeightType.SpareMoney:
+                pointsWeight += value;
+            break;
+            case WeightType.WeaponLevel:
+                levelWeight += value;
+            break;
         }
     }
 
@@ -75,30 +105,84 @@ public class EndGameLog : MonoBehaviour
         pointsMultiplier.text = "x" + pointsWeight;
         enemiesMultiplier.text = "x" + enemyWeight;
         damageMultiplier.text = "x" + damageWeight;
+        levelMultiplier.text = "x" + levelWeight;
 
-        finalScore.text = CalculateFinalScore().ToString();
+        StartCoroutine(CalculateFinalScore());
+
         Time.timeScale = 0;
     }
 
-    private int CalculateFinalScore()
+    private IEnumerator CalculateFinalScore()
     {
-        int score = 0;
+        yield return longerWait;
+        int container = 0;
 
         var pValue = Mathf.RoundToInt(CrystalManager.Main.buildPoints * pointsWeight);
-        score += pValue;
-        pointsValue.text = pValue.ToString();
+        var waitTime = 0.05f;
+
+        for (int i = 0; i < pValue; i++)
+        {
+            container++;
+            pointsValue.text = container.ToString();
+            yield return new WaitForSecondsRealtime(waitTime);
+            if(waitTime > 0.01f) waitTime -= 0.005f;
+        }
+        pointsTotal.text = "=" + pValue.ToString();
+
+        yield return longerWait;
+
+        var lValue = Mathf.RoundToInt(weaponLevel * levelWeight);
+        container = 0;
+        waitTime = 0.05f;
+        for (int i = 0; i < lValue; i++)
+        {
+            container++;
+            levelValue.text = container.ToString();
+            yield return new WaitForSecondsRealtime(waitTime);
+            if(waitTime > 0.01f) waitTime -= 0.005f;
+        }
+        levelTotal.text = "=" + lValue.ToString();
+
+        yield return longerWait;
 
         var eValue = Mathf.RoundToInt(enemies * enemyWeight);
-        score += eValue;
-        enemiesValue.text = eValue.ToString();
+        container = 0;
+        waitTime = 0.05f;
+        for (int i = 0; i < eValue; i++)
+        {
+            container++;
+            enemiesValue.text = container.ToString();
+            yield return new WaitForSecondsRealtime(waitTime);
+            if(waitTime > 0.01f) waitTime -= 0.005f;
+        }
+        enemiesTotal.text = "=" + eValue.ToString();
+
+        yield return longerWait;
 
         var dValue = -Mathf.RoundToInt(damageTaken * damageWeight);
-        score += dValue;
-        damageValue.text = dValue.ToString();
+        container = 0;
+        waitTime = 0.05f;
+        for (int i = 0; i < dValue; i++)
+        {
+            container++;
+            damageValue.text = container.ToString();
+            yield return new WaitForSecondsRealtime(waitTime);
+            if(waitTime > 0.01f) waitTime -= 0.005f;
+        }
+        damageTotal.text = "=" + dValue.ToString();
+
+        yield return longerWait;
+
+        
+
+        var score = lValue + pValue + dValue + eValue;
         
         Inventory.Main.ReceiveEndlevelValues(score, CrystalManager.Main.currentHealth);
 
-        return Mathf.Max(0, score);
+        score = Mathf.Max(0, score);
+
+        finalScore.text = score.ToString();
+
     }
 
     public void ToMainMenu()
@@ -117,12 +201,18 @@ public class EndGameLog : MonoBehaviour
         Time.timeScale = 1;
         var i = SceneManager.GetActiveScene().buildIndex;
         SceneManager.LoadScene(i);
+        AudioManager.Main.UnpauseAudio();
     }
 
     public void ToNextLevel()
     {
         Time.timeScale = 1;
+
+        Inventory.Main.ResetList();
+
         var scene = AlbumManager.Main.GetNextLevelName();
         SceneManager.LoadScene(scene);
     }
 }
+
+public enum WeightType {EnemiesKilled, WeaponLevel, DamageTaken, SpareMoney}

@@ -34,6 +34,7 @@ public class SpawnerManager : MonoBehaviour
     private List<EnemySpawner> spawners;
     private bool preWaveEnd = true;
     public bool OnWave {get; private set;}
+    private bool paused;
 
     [Space]
     [SerializeField] private EnemyBox boxModel;
@@ -76,6 +77,9 @@ public class SpawnerManager : MonoBehaviour
         else
         {
             Time.timeScale = 1;
+            paused = false;
+            startButton.SetActive(false);
+            AudioManager.Main.UnpauseAudio();
         }
     }
 
@@ -88,6 +92,9 @@ public class SpawnerManager : MonoBehaviour
     public void Pause()
     {
         Time.timeScale = 0;
+        paused = true;
+        startButton.SetActive(true);
+        AudioManager.Main.PauseAudio();
     }
 
     public IEnumerator EndWave()
@@ -181,6 +188,16 @@ public class SpawnerManager : MonoBehaviour
             if (counter >= currentDuration)
             {
                 StartCoroutine(EndWave());
+            }
+        }
+
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            if(!OnWave) InitiateWave();
+            else
+            {
+                if(paused) InitiateWave();
+                else Pause();
             }
         }
     }

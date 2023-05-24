@@ -6,7 +6,7 @@ public class Spike : WeaponBase
 {
     [SerializeField] private GameObject burst;
 
-    public override void LevelUp()
+    public override void LevelUpEffect()
     {
         level++;
 

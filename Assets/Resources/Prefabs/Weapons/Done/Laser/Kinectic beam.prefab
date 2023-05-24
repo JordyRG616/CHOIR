@@ -8773,7 +8773,7 @@ ParticleSystem:
         m_RotationOrder: 4
     maxLights: 20
   TrailModule:
-    enabled: 1
+    enabled: 0
     mode: 0
     ratio: 1
     lifetime:
@@ -9617,7 +9617,6 @@ ParticleSystemRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: b6fa7152ad8b1154e9bbf55b76bc902f, type: 2}
-  - {fileID: 2100000, guid: b6fa7152ad8b1154e9bbf55b76bc902f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -9689,7 +9688,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5537602742169360017
 Transform:
   m_ObjectHideFlags: 0
@@ -9845,6 +9844,7 @@ MonoBehaviour:
   weaponCost: 0
   waveform: {fileID: 21300000, guid: 622fe840316865e45808f1145609b96d, type: 3}
   weaponClass: 2
+  surfaceWeapon: 0
   ClassPerkDesc: This weapon now also applies Static.
   <perkReqClass>k__BackingField: 8
   <perkReqAmount>k__BackingField: 4
@@ -9922,10 +9922,10 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  damageRange: {x: 1, y: 5}
+  damageRange: {x: 1, y: 3}
   criticalChance: 0.05
   criticalMultiplier: 1.5
-  exp: {fileID: 485098360858854784, guid: 18dc999ca60e81d40943d222f0a41d3d, type: 3}
+  exp: {fileID: 7144364404028238956, guid: ec6a1e52c5f50474e8d450d586159b65, type: 3}
   unlocked: 0
   coating: {fileID: 5537602742185285858}
   electricColor: {r: 0.8862745, g: 0.78039217, b: 0.29803923, a: 1}
@@ -14815,5 +14815,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapon: {fileID: 1627041366}
-  statuses: 
+  effectsCooldown: 0
+  statuses: 03000000
   damageMultiplier: 0.1
+  bypassArmour: 0

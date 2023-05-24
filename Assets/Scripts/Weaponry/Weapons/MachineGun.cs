@@ -1,21 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using FMODUnity;
 
 public class MachineGun : WeaponBase
 {
+    [SerializeField] private StudioEventEmitter emitter;
+    [SerializeField] private float firerate;
     private string knockbackAmount = "slightly";
-    private int firerate
-    {
-        get
-        {
-            if(level == 5 && perkApplied) return 8;
-            if(level == 5 && !perkApplied) return 4;
-            return 2;
-        }
-    }
 
-    public override void LevelUp()
+    public override void LevelUpEffect()
     {
         level++;
 
@@ -28,8 +22,11 @@ public class MachineGun : WeaponBase
                 damageRange.y += 3;
             break;
             case 4:
-                IncreaseKnockback(10);
+                IncreaseKnockback(150);
                 knockbackAmount = "moderately";
+            break;
+            case 5:
+                firerate /= 2;
             break;
         }
     }
@@ -40,30 +37,43 @@ public class MachineGun : WeaponBase
         coll.colliderForce += amount;
     }
 
-    private void SetFirerate()
-    {
-        var emission = MainShooter.emission;
-        emission.rateOverTime = new ParticleSystem.MinMaxCurve(firerate);
-    }
-
     public override void Shoot(WeaponKey key)
     {
-        SetFirerate();
         base.Shoot(key);
+        StopAllCoroutines();
+        shooting = true;
+        StartCoroutine(ManageShooting());
+    }
+
+    private IEnumerator ManageShooting()
+    {
+        while(shooting)
+        {
+            MainShooter.Emit(1);
+            emitter.Play();
+
+            yield return new WaitForSeconds(firerate);
+        }
+    }
+
+    public override void Stop()
+    {
+        shooting = false;
+        base.Stop();
     }
 
     public override string WeaponDescription()
     {
-        return "While active, shoots " + firerate + " bullets per second that deals " + damageRange.x + " - " + damageRange.y + " damage each, knocking back the target " + knockbackAmount + ".";
+        return "While active, shoots a bullet each " + firerate + " secondes that deals " + damageRange.x + " - " + damageRange.y + " damage each, knocking back the target " + knockbackAmount + ".";
     }
 
     protected override void ApplyPerk()
     {
-
+        firerate /= 2;
     }
 
     protected override void RemovePerk()
     {
-        
+        firerate *= 2;
     }
 }

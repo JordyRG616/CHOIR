@@ -8,7 +8,7 @@ public class Twingun : WeaponBase
     [SerializeField] private List<GameObject> sparks;
     private string knockback = " moderately";
 
-    public override void LevelUp()
+    public override void LevelUpEffect()
     {
       level++;
 

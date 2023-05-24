@@ -14,6 +14,8 @@ TagManager:
   - MainUI
   - UpgradeCursor
   - Blocker
+  - EXP
+  - Heal
   layers:
   - Default
   - TransparentFX
@@ -63,14 +65,14 @@ TagManager:
   - name: Enemies
     uniqueID: 3900362201
     locked: 0
-  - name: Foreground
-    uniqueID: 3139934333
+  - name: TankBG
+    uniqueID: 2867186647
     locked: 0
   - name: Tank
     uniqueID: 1881322749
     locked: 0
-  - name: Upper Tank
-    uniqueID: 2867186647
+  - name: Foreground
+    uniqueID: 3139934333
     locked: 0
   - name: Shots
     uniqueID: 2213220671

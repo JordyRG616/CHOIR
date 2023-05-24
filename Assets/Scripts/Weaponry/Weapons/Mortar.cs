@@ -9,7 +9,7 @@ public class Mortar : WeaponBase
     private bool raiseSize;
     private bool unlockMultishot;
 
-    public override void LevelUp()
+    public override void LevelUpEffect()
     {
         level++;
 

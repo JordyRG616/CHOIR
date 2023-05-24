@@ -95,14 +95,6 @@ public class InputManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            paused = !paused;
-
-            if (paused) Time.timeScale = 1;
-            else Time.timeScale = 0;
-        }
-
         if(Input.GetKeyDown(showUIKey))
         {
             uiOpen = !uiOpen;

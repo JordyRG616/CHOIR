@@ -44,7 +44,9 @@ public class PiercingBulletWeapon : MonoBehaviour
 
     private void OnParticleTrigger()
     {
+        if(system == null) return;
         List<ParticleSystem.Particle> particles = new List<ParticleSystem.Particle>();
+
 
         int count = system.GetTriggerParticles(ParticleSystemTriggerEventType.Inside, particles, out var colliderData);
 
@@ -59,22 +61,22 @@ public class PiercingBulletWeapon : MonoBehaviour
                 }
                 else if (col.TryGetComponent<EnemyHealthModule>(out var healthController))
                 {
-                    if (!healthController.triggerCooldown)
+                    if (!damageDealer.OnTriggerCooldown)
                     {
-                        healthController.TakeDamage(damageDealer.Damage, damageDealer.damageMultiplier);
-                        healthController.SetTriggerCooldown();
+                        healthController.TakeDamage(damageDealer.Damage(out var crit), damageDealer.damageMultiplier, crit, damageDealer.bypassArmour);
+                        damageDealer.SetTriggerCooldown();
                         damageDealer.ApplyWeaponEffects(healthController.statusHandler);
                     }
                 }
-                else if(col.transform.parent.TryGetComponent<EnemyHealthModule>(out var parentHealth))
-                {
-                    if (!parentHealth.triggerCooldown)
-                    {
-                        parentHealth.TakeDamage(damageDealer.Damage, damageDealer.damageMultiplier);
-                        parentHealth.SetTriggerCooldown();
-                        damageDealer.ApplyWeaponEffects(parentHealth.statusHandler);
-                    }
-                }
+                // else if(col.transform.parent.TryGetComponent<EnemyHealthModule>(out var parentHealth))
+                // {
+                //     if (!parentHealth.triggerCooldown)
+                //     {
+                //         parentHealth.TakeDamage(damageDealer.Damage, damageDealer.damageMultiplier);
+                //         parentHealth.SetTriggerCooldown();
+                //         damageDealer.ApplyWeaponEffects(parentHealth.statusHandler);
+                //     }
+                // }
             }
         }
     }

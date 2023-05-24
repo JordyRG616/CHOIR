@@ -59,6 +59,8 @@ public class WeaponSlot : MonoBehaviour
         }
     }
 
+    private FMOD.Studio.EventInstance chargeInstance;
+
 
     private void Start()
     {
@@ -76,6 +78,8 @@ public class WeaponSlot : MonoBehaviour
             holder.position = wanderPoints[0].position;
             ActionMarker.Main.OnBeat += Wander;
         }
+
+        chargeInstance = AudioManager.Main.RequestInstance(FixedAudioEvent.Charge);
 
         StartCoroutine(ManageSelectableEffect());
     }
@@ -142,25 +146,33 @@ public class WeaponSlot : MonoBehaviour
                 {
                     inputManager.selectedSlot = this;
                     ShopManager.Main.OpenNewWeaponPanel();
+                    AudioManager.Main.RequestEvent(FixedAudioEvent.Build);
                 } else crystalManager.BlinkCost();
             break;
             case InteractionMode.Upgrade:
                 if(crystalManager.buildPoints >= weaponBase.level + 1)
                 {
-                    crystalManager.ExpendBuildPoints(weaponBase.level + 1);
-                    weaponBase.LevelUp();
-                    WeaponInfoPanel.Main.UpdateInfo();
-                    levelUpVFX.Play();
-                } else crystalManager.BlinkCost();
+                    UpgradeWeapon();
+                }
+                else crystalManager.BlinkCost();
             break;
             case InteractionMode.Sell:
                     Sell();
             break;
         }
 
-        inputManager.selectedButton.ChangeSelection(true);
+        inputManager.selectedButton.ChangeSelection(true, true);
         interacted = true;
         radialMat.SetFloat("_Fill", interactionTime / timeToSell);
+    }
+
+    private void UpgradeWeapon()
+    {
+        crystalManager.ExpendBuildPoints(weaponBase.level + 1);
+        weaponBase.LevelUp();
+        WeaponInfoPanel.Main.UpdateInfo();
+        levelUpVFX.Play();
+        AudioManager.Main.RequestEvent(FixedAudioEvent.Upgrade);
     }
 
     private void OnMouseDrag()
@@ -224,6 +236,8 @@ public class WeaponSlot : MonoBehaviour
             WeaponInfoPanel.Main.ReceiveWeapon(weaponBase);
             if(inputManager.interactionMode == InteractionMode.Default) dragIcon.SetActive(true);
         }
+
+        if(CanInteract()) AudioManager.Main.RequestEvent(FixedAudioEvent.HoverSlot);
     }
 
     private void OnMouseExit()
@@ -243,12 +257,19 @@ public class WeaponSlot : MonoBehaviour
             WeaponInfoPanel.Main.Clear();
             dragIcon.SetActive(false);
         }
+        
+        if(inputManager.draggingWeapon) AudioManager.Main.RequestEvent(FixedAudioEvent.TakeWeapon);
     }
 
     void Update()
     {
         if(pointerIsInside)
         {
+            if(Input.GetMouseButtonDown(0) && CanInteract() && !interacted)
+            {
+                chargeInstance.start();
+            }
+
             if(Input.GetMouseButton(0) && CanInteract() && !interacted)
             {
                 interactionTime += Time.deltaTime;
@@ -263,6 +284,7 @@ public class WeaponSlot : MonoBehaviour
             } else if(Input.GetMouseButtonUp(0))
             {
                 interactionTime = 0;
+                chargeInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
             }
 
             SetRotation(Mathf.RoundToInt(-Input.mouseScrollDelta.y));
@@ -336,6 +358,8 @@ public class WeaponSlot : MonoBehaviour
         weaponBase.Sell();
         weaponBase = null;
         weapon = null;
+        AudioManager.Main.RequestEvent(FixedAudioEvent.Sell);
+        ShopManager.Main.weaponsSold++;
     }
 
     public void ReceiveWeapon(WeaponBase receivedWeapon, bool setWeapon = true)
@@ -346,6 +370,7 @@ public class WeaponSlot : MonoBehaviour
         weapon.localPosition = Vector3.zero;
         weapon.rotation = holder.rotation;
         // SetRotation();
+        AudioManager.Main.RequestEvent(FixedAudioEvent.PlaceWeapon);
 
         receivedWeapon.Set(this, setWeapon);
     }

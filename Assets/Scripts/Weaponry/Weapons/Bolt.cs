@@ -6,7 +6,7 @@ public class Bolt : WeaponBase
 {
     [SerializeField] private ParticleSystem trail;
 
-    public override void LevelUp()
+    public override void LevelUpEffect()
     {
         level++;
 

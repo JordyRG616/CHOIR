@@ -9719,8 +9719,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapon: {fileID: 1946228433}
+  effectsCooldown: 0
   statuses: 04000000
   damageMultiplier: 0.01
+  bypassArmour: 0
 --- !u!114 &733006142
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14685,8 +14687,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapon: {fileID: 1946228433}
+  effectsCooldown: 0
   statuses: 04000000
   damageMultiplier: 0.01
+  bypassArmour: 0
 --- !u!114 &928889663
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24503,8 +24507,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapon: {fileID: 0}
+  effectsCooldown: 0
   statuses: 
   damageMultiplier: 1
+  bypassArmour: 0
 --- !u!1 &9087565895669605076
 GameObject:
   m_ObjectHideFlags: 0
@@ -24583,7 +24589,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1155032963
-  m_SortingLayer: 3
+  m_SortingLayer: 5
   m_SortingOrder: 30
   m_Sprite: {fileID: -510287987, guid: 8396fc9ce063fe94ba6b7cfb1e750f4c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -24683,6 +24689,7 @@ MonoBehaviour:
   weaponCost: 0
   waveform: {fileID: 21300000, guid: 2ff7c5027d09d204baddad5580dd6b22, type: 3}
   weaponClass: 4
+  surfaceWeapon: 0
   ClassPerkDesc: The explosion now leaves an radioactive zone behind.
   <perkReqClass>k__BackingField: 16
   <perkReqAmount>k__BackingField: 3
@@ -24775,7 +24782,7 @@ MonoBehaviour:
   damageRange: {x: 3, y: 12}
   criticalChance: 0.05
   criticalMultiplier: 1.5
-  exp: {fileID: 485098360858854784, guid: 18dc999ca60e81d40943d222f0a41d3d, type: 3}
+  exp: {fileID: 7144364404028238956, guid: ec6a1e52c5f50474e8d450d586159b65, type: 3}
   unlocked: 0
   zone: {fileID: 928889659}
   smoke: {fileID: 1326095909}

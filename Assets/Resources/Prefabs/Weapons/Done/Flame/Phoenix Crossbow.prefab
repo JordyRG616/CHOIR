@@ -106,7 +106,7 @@ ParticleSystem:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-  moveWithTransform: 0
+  moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
   randomSeed: 0
@@ -1667,7 +1667,7 @@ ParticleSystem:
     orbitalX:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 5
+      scalar: 0
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -2115,7 +2115,7 @@ ParticleSystem:
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
-    inWorldSpace: 0
+    inWorldSpace: 1
   InheritVelocityModule:
     enabled: 1
     m_Mode: 0
@@ -4961,7 +4961,7 @@ ParticleSystem:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-  moveWithTransform: 0
+  moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
   randomSeed: 0
@@ -6960,7 +6960,7 @@ ParticleSystem:
     speedModifier:
       serializedVersion: 2
       minMaxState: 1
-      scalar: 1
+      scalar: 2
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -7019,7 +7019,7 @@ ParticleSystem:
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
-    inWorldSpace: 0
+    inWorldSpace: 1
   InheritVelocityModule:
     enabled: 0
     m_Mode: 0
@@ -8887,7 +8887,7 @@ ParticleSystem:
     lifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.06
+      scalar: 0.03
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -9024,19 +9024,28 @@ ParticleSystem:
           time: 0
           value: 0
           inSlope: -1.7946222
-          outSlope: 0
+          outSlope: 4.2973785
           tangentMode: 1
           weightedMode: 0
           inWeight: 0.6881123
-          outWeight: 0.33333334
+          outWeight: 0.36813208
         - serializedVersion: 3
-          time: 0.12167299
-          value: 0.1669466
-          inSlope: 0.0019391013
+          time: 0.15502608
+          value: 1
+          inSlope: 7.260348
+          outSlope: -7.8886633
+          tangentMode: 1
+          weightedMode: 0
+          inWeight: 0.38213342
+          outWeight: 0.5972971
+        - serializedVersion: 3
+          time: 0.20979509
+          value: 0.2153337
+          inSlope: -18.865324
           outSlope: 0.0019391013
           tangentMode: 1
           weightedMode: 0
-          inWeight: 0.33333334
+          inWeight: 0.332747
           outWeight: 0.33333334
         - serializedVersion: 3
           time: 0.882135
@@ -9755,7 +9764,7 @@ ParticleSystemRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_RenderMode: 0
+  m_RenderMode: 5
   m_MeshDistribution: 0
   m_SortMode: 0
   m_MinParticleSize: 0
@@ -9798,8 +9807,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapon: {fileID: 3337659900044350982}
+  effectsCooldown: 0
   statuses: 04000000
-  damageMultiplier: 0.01
+  damageMultiplier: 1
+  bypassArmour: 0
 --- !u!1 &2110965485
 GameObject:
   m_ObjectHideFlags: 0
@@ -14651,8 +14662,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapon: {fileID: 3337659900044350982}
+  effectsCooldown: 0
   statuses: 04000000
   damageMultiplier: 0
+  bypassArmour: 0
 --- !u!114 &2110965489
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14687,7 +14700,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4475318721707991201
 Transform:
   m_ObjectHideFlags: 0
@@ -14843,6 +14856,7 @@ MonoBehaviour:
   weaponCost: 0
   waveform: {fileID: 21300000, guid: 2550fc5a6a23b0c46ae0acaa7ecf126e, type: 3}
   weaponClass: 4
+  surfaceWeapon: 0
   ClassPerkDesc: Leaves a trail of fire behind that applies <color=red>burn</color>
     to enemies inside.
   <perkReqClass>k__BackingField: 4
@@ -14888,7 +14902,7 @@ MonoBehaviour:
   damageRange: {x: 7, y: 10}
   criticalChance: 0.05
   criticalMultiplier: 1.5
-  exp: {fileID: 485098360858854784, guid: 18dc999ca60e81d40943d222f0a41d3d, type: 3}
+  exp: {fileID: 7144364404028238956, guid: ec6a1e52c5f50474e8d450d586159b65, type: 3}
   unlocked: 0
   altTile: {fileID: 9038679812298400645, guid: 031babae093a0964f9c2dd325770e18b, type: 3}
   trail: {fileID: 2110965485}

@@ -138,7 +138,7 @@ public class EnemySpawner : MonoBehaviour
 
             for (int i = 0; i < count; i++)
             {
-                yield return new WaitForSeconds(.66f);
+                yield return new WaitForSeconds(1f);
                 SpawnEnemy();
             }
         }

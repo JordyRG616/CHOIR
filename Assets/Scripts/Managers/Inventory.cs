@@ -21,7 +21,7 @@ public class Inventory : MonoBehaviour
     public List<WeaponBase> ownedWeapons;
     private List<WeaponBase> placedWeapons = new List<WeaponBase>();
     [SerializeField] private float convertFactor;
-    public int currentMaxHealth {get; private set;}
+    public int currentMaxHealth {get; private set;} = 50;
     private int _credits;
     public int Credits
     {
@@ -31,6 +31,15 @@ public class Inventory : MonoBehaviour
             _credits = value;
         }
     }
+
+    public List<ModuleBase> installedModules {get; private set;} = new List<ModuleBase>();
+
+    [Header("Modules Parameters")]
+    [SerializeField] public int burnDamage; 
+    [SerializeField] public int extraStaticDuration;
+    [SerializeField] public int frailtyMultiplier;
+    public float GlobalExpMultiplier;
+
 
     void Awake()
     {
@@ -46,6 +55,16 @@ public class Inventory : MonoBehaviour
     {
         ownedWeapons.Remove(weapon);
         placedWeapons.Add(weapon);
+    }
+
+    public void InstallModule(ModuleBase module)
+    {
+        installedModules.Add(module);
+
+        if(module.trigger == ModuleTrigger.Immediate)
+        {
+            module.Apply();
+        }
     }
 
     public void ResetList()
@@ -71,5 +90,10 @@ public class Inventory : MonoBehaviour
     public void SetMaxHealth(int initialHealth)
     {
         currentMaxHealth = initialHealth;
+    }
+
+    public void RaiseMaxHealth(float percentage)
+    {
+        currentMaxHealth = Mathf.RoundToInt(currentMaxHealth * (1 + percentage));
     }
 }

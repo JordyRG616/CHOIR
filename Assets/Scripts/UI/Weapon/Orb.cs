@@ -11,13 +11,22 @@ public class Orb : MonoBehaviour
     {
         damageDealer.SetWeapon(warlock);
         aoe.SetWeapon(warlock);
-        if(warlock.levelFive) damageDealer.statuses.Add(StatusType.Static);
-        if(warlock.perkApplied) aoe.gameObject.SetActive(true);
-        warlock.OnStop.AddListener(() => Destroy(gameObject));
+        if (warlock.levelFive) damageDealer.statuses.Add(StatusType.Static);
+        if (warlock.perkApplied) aoe.gameObject.SetActive(true);
+        ActionMarker.Main.OnReset += DestroyOrb;
+
+        damageDealer.gameObject.SetActive(true);
+    }
+
+    private void DestroyOrb()
+    {
+        ActionMarker.Main.OnReset -= DestroyOrb;
+        Destroy(gameObject);
     }
 
     void OnCollisionEnter2D(Collision2D other)
     {
+        Debug.Log(other.gameObject.name);
         Destroy(gameObject);
     }
 }

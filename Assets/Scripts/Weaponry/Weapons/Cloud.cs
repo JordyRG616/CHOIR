@@ -8,7 +8,7 @@ public class Cloud : WeaponBase
     [SerializeField] private List<GameObject> flares;
     [SerializeField] private List<WeaponDamageDealer> damageDealers;
 
-    public override void LevelUp()
+    public override void LevelUpEffect()
     {
         level++;
 

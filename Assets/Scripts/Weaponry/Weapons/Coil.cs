@@ -7,21 +7,21 @@ public class Coil : WeaponBase
     [SerializeField] private GameObject zone;
 
 
-    public override void LevelUp()
+    public override void LevelUpEffect()
     {
         level++;
 
         switch(level)
         {
             case 2:
-                damageRange.x += 3;
+                damageRange.y += 1;
             break;
             case 3:
                 var main = MainShooter.main;
                 main.startSpeed = new ParticleSystem.MinMaxCurve(5, 35);
             break;
             case 4:
-                damageRange += Vector2.one * 4;
+                damageRange += Vector2.one;
             break;
             case 5:
                 var emission = MainShooter.emission;

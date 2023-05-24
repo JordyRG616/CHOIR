@@ -44,8 +44,11 @@ public class WorkshopWeaponOffer : MonoBehaviour, IPointerEnterHandler, IPointer
 
     public void PurchaseWeapon()
     {
-        WorkshopManager.Main.PurchaseWeapon(cachedWeapon);
-        Clear();
+        if(Inventory.Main.Credits >= cachedWeapon.weaponCost)
+        {
+            WorkshopManager.Main.PurchaseWeapon(cachedWeapon);
+            Clear();
+        }
     }
 
     public void OnPointerEnter(PointerEventData eventData)

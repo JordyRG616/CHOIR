@@ -6,7 +6,7 @@ public class Web : WeaponBase
 {
     [SerializeField] private GameObject extraWires;
 
-    public override void LevelUp()
+    public override void LevelUpEffect()
     {
         level++;
 

@@ -15,7 +15,7 @@ public class Beam : WeaponBase
         ogColor = coating.main.startColor.color;        
     }
 
-    public override void LevelUp()
+    public override void LevelUpEffect()
     {
         level++;
 

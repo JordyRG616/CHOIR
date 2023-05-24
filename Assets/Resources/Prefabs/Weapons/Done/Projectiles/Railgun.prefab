@@ -4951,8 +4951,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapon: {fileID: 3522596660736824121}
+  effectsCooldown: 0
   statuses: 
   damageMultiplier: 1
+  bypassArmour: 0
 --- !u!114 &3522596660736824119
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5095,6 +5097,7 @@ MonoBehaviour:
   weaponCost: 0
   waveform: {fileID: 21300000, guid: 2061bc0df76228e48a047eb7d91f2549, type: 3}
   weaponClass: 1
+  surfaceWeapon: 0
   ClassPerkDesc: The projectile now pierces enemies.
   <perkReqClass>k__BackingField: 2
   <perkReqAmount>k__BackingField: 4
@@ -5139,7 +5142,7 @@ MonoBehaviour:
   damageRange: {x: 5, y: 30}
   criticalChance: 0.1
   criticalMultiplier: 1.5
-  exp: {fileID: 485098360858854784, guid: 18dc999ca60e81d40943d222f0a41d3d, type: 3}
+  exp: {fileID: 7144364404028238956, guid: ec6a1e52c5f50474e8d450d586159b65, type: 3}
   unlocked: 0
 --- !u!114 &2262866901363076561
 MonoBehaviour:

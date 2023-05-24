@@ -21,7 +21,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &8460822432213314433
 Transform:
   m_ObjectHideFlags: 0
@@ -177,6 +177,7 @@ MonoBehaviour:
   weaponCost: 0
   waveform: {fileID: 21300000, guid: f836d018eb2631f45982d1430b96a813, type: 3}
   weaponClass: 16
+  surfaceWeapon: 0
   ClassPerkDesc: Drops a load of toxic material around the point of explosion that
     deals damage to enemies.
   <perkReqClass>k__BackingField: 16
@@ -188,22 +189,10 @@ MonoBehaviour:
   - Bigger radioactive zone
   perkApplied: 0
   MainShooter: {fileID: 8718258899921290628}
-  <tile>k__BackingField: {fileID: 9038679812298400645, guid: 6a98d3cb9eb7d9b40a4739acc635f00d, type: 3}
+  <tile>k__BackingField: {fileID: 9038679812298400645, guid: a16248b993caecb4cb4a73d9772c179f, type: 3}
   OnShoot:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8718258899921290628}
-        m_TargetAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
-        m_MethodName: Play
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 8460822432213314442}
         m_TargetAssemblyTypeName: FMODUnity.StudioEventEmitter, FMODUnity
         m_MethodName: Play
@@ -222,7 +211,7 @@ MonoBehaviour:
   damageRange: {x: 8, y: 14}
   criticalChance: 0.05
   criticalMultiplier: 1.5
-  exp: {fileID: 485098360858854784, guid: 18dc999ca60e81d40943d222f0a41d3d, type: 3}
+  exp: {fileID: 7144364404028238956, guid: ec6a1e52c5f50474e8d450d586159b65, type: 3}
   unlocked: 0
   zone: {fileID: 8718258899750570647}
   waste: {fileID: 8718258900696930318}
@@ -5148,8 +5137,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapon: {fileID: 8460822432213314435}
+  effectsCooldown: 0
   statuses: 
   damageMultiplier: 0.01
+  bypassArmour: 0
 --- !u!114 &8718258899635817158
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5281,7 +5272,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 5
+      scalar: 2
       minScalar: 0.3
       maxCurve:
         serializedVersion: 2
@@ -5766,7 +5757,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     randomizeRotationDirection: 0
-    maxNumParticles: 2
+    maxNumParticles: 25
     customEmitterVelocity: {x: 0, y: 0, z: 0}
     size3D: 0
     rotation3D: 0
@@ -10076,8 +10067,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapon: {fileID: 8460822432213314435}
+  effectsCooldown: 0
   statuses: 
   damageMultiplier: 0.01
+  bypassArmour: 0
 --- !u!114 &8718258899750570650
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10108,7 +10101,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8718258899921290635
 Transform:
   m_ObjectHideFlags: 0
@@ -10137,7 +10130,7 @@ ParticleSystem:
   serializedVersion: 8
   lengthInSec: 1
   simulationSpeed: 1.4
-  stopAction: 0
+  stopAction: 2
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
@@ -15101,7 +15094,7 @@ ParticleSystem:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-  moveWithTransform: 0
+  moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
   randomSeed: 0
@@ -19905,8 +19898,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapon: {fileID: 8460822432213314435}
+  effectsCooldown: 0
   statuses: 
   damageMultiplier: 1
+  bypassArmour: 0
 --- !u!114 &4120361932308780470
 MonoBehaviour:
   m_ObjectHideFlags: 0

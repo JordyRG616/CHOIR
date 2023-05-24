@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class EnemyStatusModule : MonoBehaviour, IEnemyModule
 {
-    private WeaponMasterController weaponMasterController;
+    private Inventory inventory;
     private ActionMarker actionMarker;
 
     private EnemyHealthModule healthModule;
@@ -21,18 +21,28 @@ public class EnemyStatusModule : MonoBehaviour, IEnemyModule
     private List<StatusHolder> effectsToRemove = new List<StatusHolder>();
 
 
-    void Start()
+    public void Initialize(Material material)
     {
         healthModule = GetComponent<EnemyHealthModule>();
         marchModule = GetComponent<EnemyMarchModule>();
 
         actionMarker = ActionMarker.Main;
-        weaponMasterController = WeaponMasterController.Main;
+        inventory = Inventory.Main;
 
-        mat = healthModule.materialInstance;
+        mat = material;
         GetComponent<SpriteRenderer>().material = mat;
 
         actionMarker.OnBeat += TickEffects;
+    }
+
+    void OnEnable()
+    {
+        for(int i = 0; i < appliedStatuses.Count; i++)
+        {
+            var holder = appliedStatuses[i];
+            RemoveEffect(holder);
+        }
+        appliedStatuses.Clear();
     }
 
     private void TickEffects()
@@ -57,9 +67,6 @@ public class EnemyStatusModule : MonoBehaviour, IEnemyModule
         effectsToRemove.Clear();
     }
 
-    void LateUpdate()
-    {
-    }
 
     public void ReceiveStatus(StatusType status)
     {
@@ -92,7 +99,7 @@ public class EnemyStatusModule : MonoBehaviour, IEnemyModule
                 mat.SetInt("_Burn", 1);
             break;
             case StatusType.Frailty:
-                healthModule.exposedMultiplier += weaponMasterController.exposedMultiplier;
+                healthModule.exposedMultiplier += inventory.frailtyMultiplier;
                 frailEffect.Play();
             break;
         }
@@ -117,7 +124,7 @@ public class EnemyStatusModule : MonoBehaviour, IEnemyModule
                 if(count == 0) mat.SetInt("_Burn", 0);
             break;
             case StatusType.Frailty:
-                healthModule.exposedMultiplier -= weaponMasterController.exposedMultiplier;
+                healthModule.exposedMultiplier -= inventory.frailtyMultiplier;
                 if(count == 0) frailEffect.Stop();
             break;
         }
@@ -128,12 +135,17 @@ public class EnemyStatusModule : MonoBehaviour, IEnemyModule
         if(status == StatusType.Burn)
         {
             burnEffect.Play();
-            healthModule.TakeDamage(weaponMasterController.burnDPS, 1, true);
+            healthModule.TakeDamage(inventory.burnDamage, 1, false, true);
         }
     }
 
     public void Terminate()
     {
+        for(int i = 0; i < appliedStatuses.Count; i++)
+        {
+            var holder = appliedStatuses[i];
+            RemoveEffect(holder);
+        }
         appliedStatuses.Clear();
     }
 }
@@ -148,6 +160,10 @@ public class StatusHolder
     {
         this.status = status;
         duration = (int)status;
+        if(status == StatusType.Static)
+        {
+            duration += Inventory.Main.extraStaticDuration;
+        }
     }
 }
 

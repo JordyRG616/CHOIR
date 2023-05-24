@@ -126,9 +126,10 @@ MonoBehaviour:
   weaponCost: 0
   waveform: {fileID: 21300000, guid: 79bc3f8d9057c914ab33c962e5d705c3, type: 3}
   weaponClass: 8
+  surfaceWeapon: 0
+  ClassPerkDesc: The bolt now pierces enemies.
   <perkReqClass>k__BackingField: 8
   <perkReqAmount>k__BackingField: 3
-  ClassPerkDesc: The bolt now pierces enemies.
   upgradeDescriptions:
   - +3 maximum damage
   - +3 general damage
@@ -167,10 +168,10 @@ MonoBehaviour:
   OnStop:
     m_PersistentCalls:
       m_Calls: []
-  damageRange: {x: 10, y: 12}
+  damageRange: {x: 12, y: 15}
   criticalChance: 0.05
   criticalMultiplier: 1.5
-  exp: {fileID: 485098360858854784, guid: 18dc999ca60e81d40943d222f0a41d3d, type: 3}
+  exp: {fileID: 7144364404028238956, guid: ec6a1e52c5f50474e8d450d586159b65, type: 3}
   unlocked: 0
   trail: {fileID: 186251943340602389}
 --- !u!114 &3699652990655043067
@@ -9981,8 +9982,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapon: {fileID: 3699652990655043070}
+  effectsCooldown: 0
   statuses: 02000000
   damageMultiplier: 0.1
+  bypassArmour: 0
 --- !u!114 &5944518598386265649
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14907,8 +14910,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapon: {fileID: 3699652990655043070}
+  effectsCooldown: 0
   statuses: 02000000
   damageMultiplier: 1
+  bypassArmour: 0
 --- !u!114 &8265030407922195480
 MonoBehaviour:
   m_ObjectHideFlags: 0

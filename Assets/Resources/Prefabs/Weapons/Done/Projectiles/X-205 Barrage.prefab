@@ -4882,7 +4882,6 @@ GameObject:
   - component: {fileID: 1926564049589579599}
   - component: {fileID: 1926564049589579598}
   - component: {fileID: 1926564049589579569}
-  - component: {fileID: 1926564049589579596}
   m_Layer: 0
   m_Name: Shot
   m_TagString: Untagged
@@ -5043,7 +5042,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 10
+      scalar: 17.5
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -8548,7 +8547,7 @@ ParticleSystem:
     serializedVersion: 4
     type: 1
     collisionMode: 1
-    colliderForce: 10
+    colliderForce: 150
     multiplyColliderForceByParticleSize: 0
     multiplyColliderForceByParticleSpeed: 0
     multiplyColliderForceByCollisionAngle: 0
@@ -9763,21 +9762,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapon: {fileID: 6287976724556135258}
+  effectsCooldown: 0
   statuses: 
   damageMultiplier: 1
---- !u!114 &1926564049589579596
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1926564049589579571}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d93e87a60c526c4d88ec926e6443993, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OnEmitSFX: {fileID: 1926564050633263376}
+  bypassArmour: 0
 --- !u!1 &1926564050083750673
 GameObject:
   m_ObjectHideFlags: 0
@@ -14774,6 +14762,7 @@ MonoBehaviour:
   weaponCost: 0
   waveform: {fileID: 21300000, guid: 85c5660785918e64eb3c426c27e175ac, type: 3}
   weaponClass: 1
+  surfaceWeapon: 0
   ClassPerkDesc: Doubles the fire rate of this weapon.
   <perkReqClass>k__BackingField: 1
   <perkReqAmount>k__BackingField: 3
@@ -14787,34 +14776,10 @@ MonoBehaviour:
   <tile>k__BackingField: {fileID: 9038679812298400645, guid: 6704c30efa05cc341b7f2fc1e68be07d, type: 3}
   OnShoot:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1926564049589579599}
-        m_TargetAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
-        m_MethodName: Play
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   OnStop:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1926564049589579599}
-        m_TargetAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
-        m_MethodName: Stop
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
       - m_Target: {fileID: 1926564050633263382}
         m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
         m_MethodName: SetTrigger
@@ -14827,11 +14792,13 @@ MonoBehaviour:
           m_StringArgument: Stop
           m_BoolArgument: 1
         m_CallState: 2
-  damageRange: {x: 5, y: 7}
+  damageRange: {x: 4, y: 6}
   criticalChance: 0.05
   criticalMultiplier: 1.5
-  exp: {fileID: 485098360858854784, guid: 18dc999ca60e81d40943d222f0a41d3d, type: 3}
+  exp: {fileID: 7144364404028238956, guid: ec6a1e52c5f50474e8d450d586159b65, type: 3}
   unlocked: 0
+  emitter: {fileID: 1926564050633263376}
+  firerate: 0.5
 --- !u!114 &1926564050633263377
 MonoBehaviour:
   m_ObjectHideFlags: 0

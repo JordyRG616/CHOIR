@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class WorkshopManager : MonoBehaviour
 {
@@ -48,9 +49,17 @@ public class WorkshopManager : MonoBehaviour
         }
     }
 
-    [Header("Weapon Offer")]
+    [Header("Module Grid")]
+    [SerializeField] private ModuleBox moduleBoxModel;
+    [SerializeField] private RectTransform modulePanel;
+
+    [Space]
     [SerializeField] private int rerollCost;
+
+    [Header("Weapon Offer")]
     [SerializeField] private List<WorkshopWeaponOffer> weaponOffers;
+    [Header("Module Offer")]
+    [SerializeField] private List<WorkshopModuleOffer> moduleOffers;
 
     private Inventory inventory;
 
@@ -72,13 +81,29 @@ public class WorkshopManager : MonoBehaviour
         }
     }
 
+    private void CreateModuleGrid()
+    {
+        foreach(var module in inventory.installedModules)
+        {
+            var box = Instantiate(moduleBoxModel, modulePanel);
+            box.SetModule(module);
+        }
+    }
+
     private IEnumerator CreateOffer()
     {
-        var list = database.GetRandomWeapons(weaponOffers.Count);
+        var weaponList = database.GetRandomWeapons(weaponOffers.Count);
+        var moduleList = database.GetRandomModules(moduleOffers.Count);
 
         for (int i = 0; i < weaponOffers.Count; i++)
         {
-            weaponOffers[i].ReceiveWeapon(list[i]);
+            weaponOffers[i].ReceiveWeapon(weaponList[i]);
+            yield return new WaitForSeconds(0.1f);
+        }
+
+        for (int i = 0; i < moduleOffers.Count;  i++)
+        {
+            moduleOffers[i].ReceiveModule(moduleList[i]);
             yield return new WaitForSeconds(0.1f);
         }
     }
@@ -96,15 +121,34 @@ public class WorkshopManager : MonoBehaviour
     public void PurchaseWeapon(WeaponBase weapon)
     {
         inventory.AddWeapon(weapon);
-        database.RemoveWeapon(weapon);
+        // database.RemoveWeapon(weapon);
 
         var box = Instantiate(weaponBoxModel, weaponPanel);
         box.ReceiveWeapon(weapon);
+
+        inventory.Credits -= weapon.weaponCost;
+    }
+
+    public void PurchaseModule(ModuleBase module)
+    {
+        inventory.InstallModule(module);
+
+        var box = Instantiate(moduleBoxModel, modulePanel);
+        box.SetModule(module);
+
+        if(!module.stackable) database.RemoveModule(module);
+        inventory.Credits -= module.cost;
     }
 
     void Update()
     {
         panelPosition -= Input.mouseScrollDelta.y * scrollSpeed;
         weaponPanel.anchoredPosition = new Vector2(weaponPanel.anchoredPosition.x, panelPosition);
+    }
+
+    public void Continue()
+    {
+        var name = AlbumManager.Main.GetNextLevelName();
+        SceneManager.LoadScene(name);
     }
 }

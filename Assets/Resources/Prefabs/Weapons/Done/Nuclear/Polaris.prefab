@@ -118,7 +118,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 8
+      scalar: 1.5
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -4913,7 +4913,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1155032963
-  m_SortingLayer: 3
+  m_SortingLayer: 5
   m_SortingOrder: -12
   m_RenderMode: 5
   m_MeshDistribution: 0
@@ -5062,7 +5062,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 8
+      scalar: 1.5
       minScalar: 3
       maxCurve:
         serializedVersion: 2
@@ -9857,7 +9857,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1155032963
-  m_SortingLayer: 3
+  m_SortingLayer: 5
   m_SortingOrder: -12
   m_RenderMode: 5
   m_MeshDistribution: 0
@@ -9910,7 +9910,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &90959507614168792
 Transform:
   m_ObjectHideFlags: 0
@@ -10066,6 +10066,7 @@ MonoBehaviour:
   weaponCost: 0
   waveform: {fileID: 21300000, guid: 2f0cb50ec6def4c43a424b06f03ab288, type: 3}
   weaponClass: 16
+  surfaceWeapon: 0
   ClassPerkDesc: The wires can now go through the walls.
   <perkReqClass>k__BackingField: 2
   <perkReqAmount>k__BackingField: 3
@@ -10076,7 +10077,7 @@ MonoBehaviour:
   - +5 wires created
   perkApplied: 0
   MainShooter: {fileID: 90959506818364217}
-  <tile>k__BackingField: {fileID: 9038679812298400645, guid: 976abbe7a3941b044a1d36269ec02a89, type: 3}
+  <tile>k__BackingField: {fileID: 9038679812298400645, guid: 5c8cfd42065c2f545bb6c60d5e3a5b27, type: 3}
   OnShoot:
     m_PersistentCalls:
       m_Calls:
@@ -10106,23 +10107,11 @@ MonoBehaviour:
         m_CallState: 2
   OnStop:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 90959506818364217}
-        m_TargetAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
-        m_MethodName: Clear
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-  damageRange: {x: 2, y: 5}
+      m_Calls: []
+  damageRange: {x: 0, y: 3}
   criticalChance: 0.05
   criticalMultiplier: 1.5
-  exp: {fileID: 485098360858854784, guid: 18dc999ca60e81d40943d222f0a41d3d, type: 3}
+  exp: {fileID: 7144364404028238956, guid: ec6a1e52c5f50474e8d450d586159b65, type: 3}
   unlocked: 0
   SecondShooter: {fileID: 90959507102080740}
 --- !u!1 &90959507792001341
@@ -10168,14 +10157,14 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 90959507792001341}
   serializedVersion: 8
-  lengthInSec: 5
+  lengthInSec: 0.5
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 1
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
@@ -10243,7 +10232,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 5
+      scalar: 1
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -14965,8 +14954,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapon: {fileID: 90959507614168787}
+  effectsCooldown: 0
   statuses: 
-  damageMultiplier: 0.05
+  damageMultiplier: 1
+  bypassArmour: 0
 --- !u!1 &90959508254165470
 GameObject:
   m_ObjectHideFlags: 0
@@ -15010,14 +15001,14 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 90959508254165470}
   serializedVersion: 8
-  lengthInSec: 5
+  lengthInSec: 0.5
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 1
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
@@ -15085,7 +15076,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 5
+      scalar: 1
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -19807,5 +19798,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapon: {fileID: 90959507614168787}
+  effectsCooldown: 0
   statuses: 
-  damageMultiplier: 0.05
+  damageMultiplier: 1
+  bypassArmour: 0

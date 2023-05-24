@@ -118,7 +118,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 5
+      scalar: 2
       minScalar: 0.3
       maxCurve:
         serializedVersion: 2
@@ -4913,8 +4913,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapon: {fileID: 4699824849886692915}
+  effectsCooldown: 0
   statuses: 
   damageMultiplier: 0.01
+  bypassArmour: 0
 --- !u!114 &4699824849166036449
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14751,8 +14753,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapon: {fileID: 4699824849886692915}
+  effectsCooldown: 0
   statuses: 
   damageMultiplier: 0.1
+  bypassArmour: 0
 --- !u!114 &2565704495966514776
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19688,8 +19692,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapon: {fileID: 4699824849886692915}
+  effectsCooldown: 0
   statuses: 
   damageMultiplier: 0.1
+  bypassArmour: 0
 --- !u!114 &6439595820567750938
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19821,7 +19827,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 5
+      scalar: 2
       minScalar: 0.3
       maxCurve:
         serializedVersion: 2
@@ -24606,8 +24612,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapon: {fileID: 4699824849886692915}
+  effectsCooldown: 0
   statuses: 
   damageMultiplier: 0.01
+  bypassArmour: 0
 --- !u!114 &4699824849671303439
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24642,7 +24650,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4699824849886692874
 Transform:
   m_ObjectHideFlags: 0
@@ -24799,6 +24807,7 @@ MonoBehaviour:
   weaponCost: 0
   waveform: {fileID: 21300000, guid: 17c9fa8d733814041862b48cd6277c53, type: 3}
   weaponClass: 16
+  surfaceWeapon: 0
   ClassPerkDesc: This weapon now launches 4 smaller nukes instead of 2.
   <perkReqClass>k__BackingField: 16
   <perkReqAmount>k__BackingField: 4
@@ -24809,7 +24818,7 @@ MonoBehaviour:
   - +25% critical chance
   perkApplied: 0
   MainShooter: {fileID: 4699824850021240197}
-  <tile>k__BackingField: {fileID: 9038679812298400645, guid: 00e42aec32113414483ac0146bff2ae7, type: 3}
+  <tile>k__BackingField: {fileID: 9038679812298400645, guid: 1dffde17969838c4d89028d789bc1158, type: 3}
   OnShoot:
     m_PersistentCalls:
       m_Calls:
@@ -24855,7 +24864,7 @@ MonoBehaviour:
   damageRange: {x: 3, y: 10}
   criticalChance: 0.05
   criticalMultiplier: 1.5
-  exp: {fileID: 485098360858854784, guid: 18dc999ca60e81d40943d222f0a41d3d, type: 3}
+  exp: {fileID: 7144364404028238956, guid: ec6a1e52c5f50474e8d450d586159b65, type: 3}
   unlocked: 0
   secondShooter: {fileID: 4699824849166360597}
 --- !u!1 &4699824850021240217
