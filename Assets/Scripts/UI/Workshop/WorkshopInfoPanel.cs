@@ -29,7 +29,6 @@ public class WorkshopInfoPanel : MonoBehaviour
     [SerializeField] private Image perkIcon;
     [SerializeField] private Image tile;
 
-    [SerializeField] private ClassToSpriteConverter converter;
 
 
     public void ReceiveWeapon(WeaponBase weapon)
@@ -42,15 +41,11 @@ public class WorkshopInfoPanel : MonoBehaviour
 
         weaponName.text = weapon.name;
         weaponDescription.text = weapon.WeaponDescription();
-        perkDescription.text = weapon.ClassPerkDesc;
-        perkAmount.text = weapon.perkReqAmount.ToString();
 
         classIcon.transform.parent.gameObject.SetActive(true);
         perkIcon.transform.parent.gameObject.SetActive(true);
         tile.transform.parent.gameObject.SetActive(true);
         
-        classIcon.sprite = converter.GetSprite(weapon.weaponClass);
-        perkIcon.sprite = converter.GetSprite(weapon.perkReqClass);
         tile.sprite = weapon.tile.sprite;
     }
 

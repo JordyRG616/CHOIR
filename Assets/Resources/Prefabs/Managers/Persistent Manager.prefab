@@ -46,30 +46,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ownedWeapons:
-  - {fileID: 300729188613039477, guid: 6ff7c5ed83676d34483616c32cb0f61a, type: 3}
-  - {fileID: 4699824849886692915, guid: 9b9c90525c04ed349a60befbcc59668e, type: 3}
-  - {fileID: 7742699432853824601, guid: 7cf8110e2f1fa3f458a9ffdcf21b64d4, type: 3}
-  - {fileID: 6860717028632198114, guid: d4455e048e944204982ee5ce0d0456af, type: 3}
-  - {fileID: 7010819176685251824, guid: 4f0b1d7e330625b41846cef3bd71392a, type: 3}
-  - {fileID: 6422405914037013302, guid: 373ea3617fac0f541887fe113d33cf19, type: 3}
-  - {fileID: 2037245947, guid: 81fbfb9fcf8ea24418af3be8c9417c5f, type: 3}
-  - {fileID: 1855876890798413358, guid: 3d40b6fc3213330458dc33f5111a6e3f, type: 3}
-  - {fileID: 8460822432213314435, guid: ed10630b0a2e87448bc4cf6069ba1844, type: 3}
-  - {fileID: 3699652990655043070, guid: 209f13fcb22009046933a9b427727627, type: 3}
-  - {fileID: 1627041366, guid: cfc98ab8dd7e8284baed49c66f6b1ee8, type: 3}
-  - {fileID: 8386180874023725567, guid: 4c626baaf72470e40aa8be70b8d1cd42, type: 3}
-  - {fileID: 6750947037888810302, guid: 86b454ebb160df24e98f5fcc2489ba74, type: 3}
-  - {fileID: 3337659900044350982, guid: cead99ad0cc723545885f76a955e7398, type: 3}
-  - {fileID: 90959507614168787, guid: 1e87218d45cf26d4aaaee047c9cc0f6a, type: 3}
-  - {fileID: 3243512912285616120, guid: 361cf556e775217419fab3bf3fef198a, type: 3}
-  - {fileID: 3522596660736824121, guid: c357f79ef37382845b873a985a571a40, type: 3}
-  - {fileID: 1160966324, guid: 339287511c97a4a4abd3a522050f96ef, type: 3}
-  - {fileID: 7063141423624797425, guid: 3e594d615213caf49986cee20ec3bc1d, type: 3}
-  - {fileID: 6287976724556135258, guid: d89920cead8790146b02479fed85e196, type: 3}
+  - {fileID: 3109746485551467537, guid: e4d9f5ab64985884e99707b0f260d5e4, type: 3}
+  - {fileID: 2129960627379222621, guid: 13ad8e90244acc449968d40f5758d4a4, type: 3}
+  - {fileID: 5275161002274872310, guid: 2fd1de45d2169a3439b2768acb998dec, type: 3}
+  - {fileID: 5283576085397093422, guid: 3be487a6c2c3faa44b0d33429d9fac13, type: 3}
+  - {fileID: 869781102042458110, guid: 673e58c372f0a114ebd7e1802dc17f4b, type: 3}
+  - {fileID: 7261428404545917716, guid: 7d4bdac12705eb74fbdb45a2dd59a4f8, type: 3}
+  - {fileID: 3913049608091815689, guid: 1c6078645de38ff4aafa3680b2d6bee7, type: 3}
+  - {fileID: 4376484621353801563, guid: e3eb7a59d62090742a3bd90e4f0c2a7b, type: 3}
+  - {fileID: 3834767185026755877, guid: 433c0112dfd55244bb63ca1cde6d76c3, type: 3}
+  - {fileID: 2867245281080150945, guid: 9babdc0ecdb53ca49ba5607bb311168b, type: 3}
+  - {fileID: 7718018584337206079, guid: b8cd93da7194cec4eb518aafae5d9b19, type: 3}
+  - {fileID: 816450785384125735, guid: 15f23b71cd746ff4db04207185667fb6, type: 3}
   convertFactor: 15
-  burnDamage: 2
+  burnDamage: 4
+  extraBurnDuration: 0
   extraStaticDuration: 0
   frailtyMultiplier: 1
+  GlobalExpMultiplier: 0
 --- !u!114 &1217763101143310524
 MonoBehaviour:
   m_ObjectHideFlags: 0

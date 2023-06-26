@@ -21,10 +21,10 @@ public class Barrel : MonoBehaviour
     {
         if (other.TryGetComponent<WeaponDamageDealer>(out var damageDealer))
         {
-            var _class = damageDealer.GetWeapon().weaponClass;
+            var _class = damageDealer.GetWeapon().weaponSource;
 
-            if(_class == WeaponClass.Flame || _class == WeaponClass.Flame) Explode();
-            if(_class == WeaponClass.Projectile) StartCoroutine(Tumble());
+            if(_class == WeaponSource.Flame || _class == WeaponSource.Flame) Explode();
+            if(_class == WeaponSource.Projectile) StartCoroutine(Tumble());
         }
     }
 

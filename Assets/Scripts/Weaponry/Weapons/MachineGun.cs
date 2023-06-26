@@ -42,6 +42,7 @@ public class MachineGun : WeaponBase
         base.Shoot(key);
         StopAllCoroutines();
         shooting = true;
+        anim.SetBool("Shooting", true);
         StartCoroutine(ManageShooting());
     }
 
@@ -59,6 +60,7 @@ public class MachineGun : WeaponBase
     public override void Stop()
     {
         shooting = false;
+        anim.SetBool("Shooting", false);
         base.Stop();
     }
 

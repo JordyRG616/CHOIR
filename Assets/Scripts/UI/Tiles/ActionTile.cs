@@ -10,6 +10,7 @@ public class ActionTile : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDr
 {
     public Sprite sprite;
     public int cost;
+    public int size;
     public WeaponBase weaponToActivate { get; private set; }
     private WeaponGraphicsController graphicsController;
     protected Image image;
@@ -17,13 +18,15 @@ public class ActionTile : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDr
     public bool draggable = true;
     public bool IsOverReseter { get; private set; }
     protected bool moving;
-    protected InputManager pointerHandler;
+    protected InputManager inputManager;
     protected RectTransform rect;
     protected GameObject tileBox;
     private WeaponKey key;
+    private int keyIndex;
     private ActionBox box;
 
     public bool unlockWeapon = true;
+    private bool pointerIsInside;
 
     public delegate void TileActivationEvent(WeaponBase weapon);
     public TileActivationEvent OnPreActivation;
@@ -32,7 +35,7 @@ public class ActionTile : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDr
     private void Awake()
     {
         rect = GetComponent<RectTransform>();
-        pointerHandler = InputManager.Main;
+        inputManager = InputManager.Main;
         image = GetComponent<Image>();
         image.raycastTarget = false;
         image.maskable = false;
@@ -51,13 +54,16 @@ public class ActionTile : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDr
         tileBox.tag = "FilledNode";
         this.box = tileBox.GetComponent<ActionBox>();
         this.box.ReceiveTile(this);
-        pointerHandler.currentHoveredBox = null;
+        inputManager.currentHoveredBox = null;
         if(draggable) image.raycastTarget = true;
 
         weaponToActivate.ReceiveTile(this);
 
         ActionMarker.Main.OnReset += ActivateTile;
         ActivateTile();
+        GeneralStatRegistry.Main.totalTiles++;
+        keyIndex = UnityEngine.Random.Range(0, 7);
+        SetKey(keyIndex);
     }
     
     protected virtual void ActivateTile()
@@ -116,12 +122,15 @@ public class ActionTile : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDr
         moving = true;
         image.raycastTarget = false;
         Cursor.visible = false;
+        box.RemoveTile();
     }
 
     public virtual void OnDrag(PointerEventData eventData)
     {
         if (!draggable) return;
         rect.anchoredPosition = CalculatePointerPosition();
+        if(inputManager.CanPlaceTile()) image.color = Color.white;
+        else image.color = Color.red;
     }
 
     public virtual void OnEndDrag(PointerEventData eventData)
@@ -130,12 +139,11 @@ public class ActionTile : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDr
         image.raycastTarget = true;
         moving = false;
         Cursor.visible = true;
-        if (pointerHandler.currentHoveredBox != null && !pointerHandler.currentTileInstance.IsOverReseter)
+        if (inputManager.CanPlaceTile())
         {
-            rect.SetParent(pointerHandler.currentHoveredBox.transform);
+            rect.SetParent(inputManager.currentHoveredBox.transform);
             rect.anchoredPosition = Vector2.zero;
-            box.RemoveTile();
-            tileBox = pointerHandler.currentHoveredBox;
+            tileBox = inputManager.currentHoveredBox;
             box = tileBox.GetComponent<ActionBox>();
             box.ReceiveTile(this);
         } else if(InputManager.Main.IsOverTrash)
@@ -147,7 +155,9 @@ public class ActionTile : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDr
         {
             rect.SetParent(tileBox.transform);
             rect.anchoredPosition = Vector2.zero;
+            box.ReceiveTile(this);
         }
+        image.color = Color.white;
     }
 
     private Vector2 CalculatePointerPosition()
@@ -170,11 +180,26 @@ public class ActionTile : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDr
     public void OnPointerEnter(PointerEventData eventData)
     {
         graphicsController.SetHighlighted(true);
+        pointerIsInside = true;
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         graphicsController.SetHighlighted(false);
+        pointerIsInside = false;
+    }
+
+    void Update()
+    {
+        if(pointerIsInside)
+        {
+            keyIndex += Mathf.RoundToInt(-Input.mouseScrollDelta.y);
+
+            if(keyIndex > 6) keyIndex -= 7;
+            if(keyIndex < 0) keyIndex += 7;
+
+            SetKey(keyIndex);
+        }
     }
 
 }

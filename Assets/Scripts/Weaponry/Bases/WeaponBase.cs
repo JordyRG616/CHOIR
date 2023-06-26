@@ -7,37 +7,40 @@ using System;
 
 public abstract class WeaponBase : MonoBehaviour
 {
-    [Header("Workshop info")]
+    [Header("Sprites")]
     public Sprite weaponSprite;
-    public int weaponCost;
     public Sprite waveform;
+    public Sprite classSprite;
+    public Sprite sourceSprite;
+
+    [Header("Stats")]
+    public int weaponCost;
     public WeaponClass weaponClass;
-    public bool surfaceWeapon;
-
-    [Space]
-    [TextArea] public string ClassPerkDesc;
-    [field:SerializeField] public WeaponClass perkReqClass { get; private set; }
-    [field:SerializeField] public int perkReqAmount { get; private set; }
-
-    [SerializeField] protected List<string> upgradeDescriptions;
-    public string nextLevelDescription => upgradeDescriptions[level - 1];
-    [HideInInspector] public bool perkApplied;
-    private WeaponClassInfo perkInfo;
-
-    [SerializeField] protected ParticleSystem MainShooter;
-    [field:SerializeField] public ActionTile tile { get; protected set; }
-    private List<ActionTile> placedTiles = new List<ActionTile>();
-
-    [Space]
-    [SerializeField] public UnityEvent OnShoot, OnStop;
+    public WeaponSource weaponSource;
     public Vector2 damageRange;
     public float criticalChance = 0.05f;
     public float criticalMultiplier = 1.5f;
+
+
+    [Header("Upgrades")]
+    [SerializeField] protected List<string> upgradeDescriptions;
+    public string nextLevelDescription => upgradeDescriptions[level - 1];
+
+    [Header("References")]
+    [SerializeField] protected ParticleSystem MainShooter;
+    [field:SerializeField] public ActionTile tile { get; protected set; }
     [SerializeField] private DeathExperienceSpawn exp;
+
+    [Header("Events")]
+    public UnityEvent OnShoot;
+    public UnityEvent OnStop;
+
+
+    [Header("Internal")]
+    private List<ActionTile> placedTiles = new List<ActionTile>();
     protected Animator anim;
     protected WeaponAudioController audioController;
     public WeaponGraphicsController graphicsController { get; protected set; }
-    public bool unlocked = false;
     protected WeaponSlot slot;
     protected bool shooting;
 
@@ -57,29 +60,9 @@ public abstract class WeaponBase : MonoBehaviour
         this.slot = slot;
         if(!fullSet) return;
 
-        WeaponMasterController.Main.RegisterWeaponClass(weaponClass, perkReqClass, out perkInfo);
-        perkInfo.OnLevelChange += HandlePerk;
-        if(perkInfo.classLevel >= perkReqAmount && !perkApplied) 
-        {
-            ApplyPerk();
-            perkApplied = true;
-        }
         gameObject.SetActive(true);
-    }
-
-    protected virtual void HandlePerk(int currentLevel)
-    {
-        if(currentLevel >= perkReqAmount && !perkApplied) 
-        {
-            perkApplied = true;
-            ApplyPerk();
-        }
-
-        if(currentLevel < perkReqAmount && perkApplied) 
-        {
-            perkApplied = false;
-            RemovePerk();
-        }
+        WeaponMasterController.Main.RegisterWeapon(this);
+        GeneralStatRegistry.Main.totalWeapons++;
     }
 
     public void ReceiveTile(ActionTile tile)
@@ -107,8 +90,8 @@ public abstract class WeaponBase : MonoBehaviour
 
     public virtual void Stop()
     {
+        if(shooting) OnStop?.Invoke();
         shooting = false;
-        OnStop?.Invoke();
     }
 
     public void Sell()
@@ -121,14 +104,14 @@ public abstract class WeaponBase : MonoBehaviour
 
         placedTiles.ForEach(x => x.DestroyTile());
 
-        WeaponMasterController.Main.RemoveWeaponClass(weaponClass);
-        perkInfo.OnLevelChange -= HandlePerk;
         Stop();
 
         Inventory.Main.AddWeapon(this);
         
         transform.position = Vector3.one * 1000;
         gameObject.SetActive(false);
+        WeaponMasterController.Main.RemoveWeapon(this);
+        GeneralStatRegistry.Main.totalWeapons--;
     }
 
     public virtual void LevelUp()
@@ -147,18 +130,31 @@ public abstract class WeaponBase : MonoBehaviour
 
     public abstract string WeaponDescription();
     
+    // REMOVER ESTAS FUNÇÕES
+    protected virtual void ApplyPerk()
+    {
 
-    protected abstract void ApplyPerk();
+    }
     
-    protected abstract void RemovePerk();
+    protected virtual void RemovePerk()
+    {
+
+    }
 }
 
-public enum WeaponClass 
+public enum WeaponSource 
 { 
     Default = 0,
     Projectile = 1,
     Laser = 2, 
     Flame = 4,
     Electric = 8,
-    Nuclear = 16
+}
+
+public enum WeaponClass
+{
+    Default = 0,
+    Strings = 1,
+    Percussion = 2,
+    Winds = 4
 }

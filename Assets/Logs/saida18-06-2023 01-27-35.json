@@ -1,0 +1,185 @@
+[
+{
+"objeto" : "GameObject----GeneralStatRegistry",
+"tempo" : "1687051650561",
+"estado" : [
+{
+"nomeVariavel" : "totalDamageDealt",
+"valor" : "0"
+}
+,
+{
+"nomeVariavel" : "totalDamageTaken",
+"valor" : "0"
+}
+,
+{
+"nomeVariavel" : "currentCash",
+"valor" : "0"
+}
+,
+{
+"nomeVariavel" : "currentWave",
+"valor" : "0"
+}
+,
+{
+"nomeVariavel" : "spawnedEnemies",
+"valor" : "0"
+}
+,
+{
+"nomeVariavel" : "activeEnemies",
+"valor" : "0"
+}
+,
+{
+"nomeVariavel" : "totalWeapons",
+"valor" : "0"
+}
+,
+{
+"nomeVariavel" : "totalTiles",
+"valor" : "0"
+}
+]
+}
+,
+{
+"objeto" : "GameObject----GeneralStatRegistry",
+"tempo" : "1687051653374",
+"estado" : [
+{
+"nomeVariavel" : "totalDamageDealt",
+"valor" : "0"
+}
+,
+{
+"nomeVariavel" : "totalDamageTaken",
+"valor" : "0"
+}
+,
+{
+"nomeVariavel" : "currentCash",
+"valor" : "7"
+}
+,
+{
+"nomeVariavel" : "currentWave",
+"valor" : "0"
+}
+,
+{
+"nomeVariavel" : "spawnedEnemies",
+"valor" : "0"
+}
+,
+{
+"nomeVariavel" : "activeEnemies",
+"valor" : "0"
+}
+,
+{
+"nomeVariavel" : "totalWeapons",
+"valor" : "0"
+}
+,
+{
+"nomeVariavel" : "totalTiles",
+"valor" : "0"
+}
+]
+}
+,
+{
+"objeto" : "GameObject----GeneralStatRegistry",
+"tempo" : "1687051654390",
+"estado" : [
+{
+"nomeVariavel" : "totalDamageDealt",
+"valor" : "0"
+}
+,
+{
+"nomeVariavel" : "totalDamageTaken",
+"valor" : "0"
+}
+,
+{
+"nomeVariavel" : "currentCash",
+"valor" : "7"
+}
+,
+{
+"nomeVariavel" : "currentWave",
+"valor" : "0"
+}
+,
+{
+"nomeVariavel" : "spawnedEnemies",
+"valor" : "0"
+}
+,
+{
+"nomeVariavel" : "activeEnemies",
+"valor" : "0"
+}
+,
+{
+"nomeVariavel" : "totalWeapons",
+"valor" : "0"
+}
+,
+{
+"nomeVariavel" : "totalTiles",
+"valor" : "0"
+}
+]
+}
+,
+{
+"objeto" : "GameObject----GeneralStatRegistry",
+"tempo" : "1687051655402",
+"estado" : [
+{
+"nomeVariavel" : "totalDamageDealt",
+"valor" : "0"
+}
+,
+{
+"nomeVariavel" : "totalDamageTaken",
+"valor" : "0"
+}
+,
+{
+"nomeVariavel" : "currentCash",
+"valor" : "7"
+}
+,
+{
+"nomeVariavel" : "currentWave",
+"valor" : "0"
+}
+,
+{
+"nomeVariavel" : "spawnedEnemies",
+"valor" : "0"
+}
+,
+{
+"nomeVariavel" : "activeEnemies",
+"valor" : "0"
+}
+,
+{
+"nomeVariavel" : "totalWeapons",
+"valor" : "0"
+}
+,
+{
+"nomeVariavel" : "totalTiles",
+"valor" : "0"
+}
+]
+}
+]

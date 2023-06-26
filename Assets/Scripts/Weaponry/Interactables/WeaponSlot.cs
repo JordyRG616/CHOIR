@@ -14,6 +14,7 @@ public class WeaponSlot : MonoBehaviour
 
     [Header("Effects")]
     [SerializeField] private ParticleSystem selectableVFX;
+    [SerializeField] private Animator visualAnimator;
     [SerializeField] private ParticleSystem levelUpVFX;
     public ParticleSystem buildVFX;
 
@@ -90,11 +91,13 @@ public class WeaponSlot : MonoBehaviour
         {
             yield return new WaitUntil(() => HighlightCursor(out var c, out var d));
 
-            selectableVFX.Play();
+            // selectableVFX.Play();
+            visualAnimator.SetBool("Open", true);
 
             yield return new WaitUntil(() => !HighlightCursor(out var c, out var d));
 
-            selectableVFX.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+            // selectableVFX.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+            visualAnimator.SetBool("Open", false);
         }
     }
 
@@ -103,7 +106,7 @@ public class WeaponSlot : MonoBehaviour
         if(draggingTile)
         {
             Cursor.visible = true;
-            if (inputManager.currentHoveredBox != null && !inputManager.currentTileInstance.IsOverReseter)
+            if (inputManager.CanPlaceTile())
             {
                 inputManager.SetActionTile();
                 CrystalManager.Main.ExpendBuildPoints(weaponBase.tile.cost);
@@ -196,6 +199,9 @@ public class WeaponSlot : MonoBehaviour
         if (draggingTile)
         {
             tile.anchoredPosition = GlobalFunctions.CalculatePointerPosition();
+            var image = tile.GetComponent<UnityEngine.UI.Image>();
+            if(inputManager.CanPlaceTile()) image.color = Color.white;
+            else image.color = Color.red;
         }
         if(inputManager.draggingWeapon)
         {
@@ -225,7 +231,7 @@ public class WeaponSlot : MonoBehaviour
     {
         pointerIsInside = true;
         SpecialCursor.Main.SetAvailable(HighlightCursor(out var cost, out var desc), cost, desc);
-        selectableVFX.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+        // selectableVFX.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
 
         if (inputManager.draggingWeapon && weaponBase == null)
         {
@@ -246,7 +252,7 @@ public class WeaponSlot : MonoBehaviour
         interactionTime = 0;
         interacted = false;
         SpecialCursor.Main.SetAvailable(false);
-        if(CanInteract()) selectableVFX.Play();
+        // if(CanInteract()) selectableVFX.Play();
 
         if (inputManager.hoveredSlot == gameObject)
         {

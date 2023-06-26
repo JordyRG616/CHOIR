@@ -1,0 +1,277 @@
+[
+{
+"objeto" : "GameObject----GeneralStatRegistry",
+"tempo" : "1687051406798",
+"estado" : [
+{
+"nomeVariavel" : "totalDamageDealt",
+"valor" : "0"
+}
+,
+{
+"nomeVariavel" : "totalDamageTaken",
+"valor" : "0"
+}
+,
+{
+"nomeVariavel" : "currentCash",
+"valor" : "7"
+}
+,
+{
+"nomeVariavel" : "currentWave",
+"valor" : "0"
+}
+,
+{
+"nomeVariavel" : "spawnedEnemies",
+"valor" : "2"
+}
+,
+{
+"nomeVariavel" : "activeEnemies",
+"valor" : "2"
+}
+,
+{
+"nomeVariavel" : "totalWeapons",
+"valor" : "0"
+}
+,
+{
+"nomeVariavel" : "totalTiles",
+"valor" : "0"
+}
+]
+}
+,
+{
+"objeto" : "GameObject----GeneralStatRegistry",
+"tempo" : "1687051407805",
+"estado" : [
+{
+"nomeVariavel" : "totalDamageDealt",
+"valor" : "0"
+}
+,
+{
+"nomeVariavel" : "totalDamageTaken",
+"valor" : "0"
+}
+,
+{
+"nomeVariavel" : "currentCash",
+"valor" : "7"
+}
+,
+{
+"nomeVariavel" : "currentWave",
+"valor" : "0"
+}
+,
+{
+"nomeVariavel" : "spawnedEnemies",
+"valor" : "2"
+}
+,
+{
+"nomeVariavel" : "activeEnemies",
+"valor" : "2"
+}
+,
+{
+"nomeVariavel" : "totalWeapons",
+"valor" : "0"
+}
+,
+{
+"nomeVariavel" : "totalTiles",
+"valor" : "0"
+}
+]
+}
+,
+{
+"objeto" : "GameObject----GeneralStatRegistry",
+"tempo" : "1687051408808",
+"estado" : [
+{
+"nomeVariavel" : "totalDamageDealt",
+"valor" : "0"
+}
+,
+{
+"nomeVariavel" : "totalDamageTaken",
+"valor" : "0"
+}
+,
+{
+"nomeVariavel" : "currentCash",
+"valor" : "7"
+}
+,
+{
+"nomeVariavel" : "currentWave",
+"valor" : "0"
+}
+,
+{
+"nomeVariavel" : "spawnedEnemies",
+"valor" : "2"
+}
+,
+{
+"nomeVariavel" : "activeEnemies",
+"valor" : "2"
+}
+,
+{
+"nomeVariavel" : "totalWeapons",
+"valor" : "0"
+}
+,
+{
+"nomeVariavel" : "totalTiles",
+"valor" : "0"
+}
+]
+}
+,
+{
+"objeto" : "GameObject----GeneralStatRegistry",
+"tempo" : "1687051409831",
+"estado" : [
+{
+"nomeVariavel" : "totalDamageDealt",
+"valor" : "0"
+}
+,
+{
+"nomeVariavel" : "totalDamageTaken",
+"valor" : "0"
+}
+,
+{
+"nomeVariavel" : "currentCash",
+"valor" : "7"
+}
+,
+{
+"nomeVariavel" : "currentWave",
+"valor" : "0"
+}
+,
+{
+"nomeVariavel" : "spawnedEnemies",
+"valor" : "2"
+}
+,
+{
+"nomeVariavel" : "activeEnemies",
+"valor" : "2"
+}
+,
+{
+"nomeVariavel" : "totalWeapons",
+"valor" : "0"
+}
+,
+{
+"nomeVariavel" : "totalTiles",
+"valor" : "0"
+}
+]
+}
+,
+{
+"objeto" : "GameObject----GeneralStatRegistry",
+"tempo" : "1687051410846",
+"estado" : [
+{
+"nomeVariavel" : "totalDamageDealt",
+"valor" : "0"
+}
+,
+{
+"nomeVariavel" : "totalDamageTaken",
+"valor" : "0"
+}
+,
+{
+"nomeVariavel" : "currentCash",
+"valor" : "7"
+}
+,
+{
+"nomeVariavel" : "currentWave",
+"valor" : "0"
+}
+,
+{
+"nomeVariavel" : "spawnedEnemies",
+"valor" : "2"
+}
+,
+{
+"nomeVariavel" : "activeEnemies",
+"valor" : "2"
+}
+,
+{
+"nomeVariavel" : "totalWeapons",
+"valor" : "0"
+}
+,
+{
+"nomeVariavel" : "totalTiles",
+"valor" : "0"
+}
+]
+}
+,
+{
+"objeto" : "GameObject----GeneralStatRegistry",
+"tempo" : "1687051411849",
+"estado" : [
+{
+"nomeVariavel" : "totalDamageDealt",
+"valor" : "0"
+}
+,
+{
+"nomeVariavel" : "totalDamageTaken",
+"valor" : "0"
+}
+,
+{
+"nomeVariavel" : "currentCash",
+"valor" : "7"
+}
+,
+{
+"nomeVariavel" : "currentWave",
+"valor" : "0"
+}
+,
+{
+"nomeVariavel" : "spawnedEnemies",
+"valor" : "2"
+}
+,
+{
+"nomeVariavel" : "activeEnemies",
+"valor" : "2"
+}
+,
+{
+"nomeVariavel" : "totalWeapons",
+"valor" : "0"
+}
+,
+{
+"nomeVariavel" : "totalTiles",
+"valor" : "0"
+}
+]
+}
+]

@@ -39,6 +39,6 @@ Material:
     m_Ints: []
     m_Floats: []
     m_Colors:
-    - _AlphaBoundaries: {r: 0.1, g: 1, b: 0, a: 0}
-    - _BlinkColor: {r: 30.368639, g: 29.096655, b: 9.22189, a: 1}
+    - _AlphaBoundaries: {r: 0.1, g: 1.2, b: 0, a: 0}
+    - _BlinkColor: {r: 60.737278, g: 58.19331, b: 18.44378, a: 1}
   m_BuildTextureStacks: []

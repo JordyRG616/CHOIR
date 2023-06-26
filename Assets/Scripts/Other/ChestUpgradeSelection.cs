@@ -24,8 +24,8 @@ public class ChestUpgradeSelection : MonoBehaviour
     {
         transform.localScale = bigSize;
         infoPanel.SetActive(true);
-        upgradeName.text = storedUpgrade.name;
-        upgradeDescription.text = storedUpgrade.description;
+        // upgradeName.text = storedUpgrade.name;
+        // upgradeDescription.text = storedUpgrade.description;
 
         // mutationPanel.SetActive(true);
         // mutationName.text = storedMutation.name;
@@ -54,7 +54,7 @@ public class ChestUpgradeSelection : MonoBehaviour
     public void ReceiveUpgrade(UpgradeBase upgrade, MutationBase mutation)
     {
         storedUpgrade = upgrade;
-        icon.sprite = storedUpgrade.icon;
+        // icon.sprite = storedUpgrade.icon;
 
         storedMutation = mutation;
     }

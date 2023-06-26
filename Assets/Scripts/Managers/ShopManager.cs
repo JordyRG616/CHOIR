@@ -36,15 +36,25 @@ public class ShopManager : MonoBehaviour
     {
         crystalManager = CrystalManager.Main;
         inventory = Inventory.Main;
+        Time.timeScale = 1;
     }
 
     public void OpenNewWeaponPanel()
     {
         var slot = InputManager.Main.selectedSlot;
-        weapons = inventory.ownedWeapons.FindAll(x => x.surfaceWeapon == slot.surface);
+        weapons = new List<WeaponBase>(inventory.ownedWeapons);
 
         slot.buildVFX.Play();
-        WeaponList.Main.Open(weapons);
+
+        var _weapons = new List<WeaponBase>();
+        for (int i = 0; i < 3; i++)
+        {
+            var weapon = weapons[Random.Range(0, weapons.Count)];
+            _weapons.Add(weapon);
+            weapons.Remove(weapon);
+        }
+
+        WeaponList.Main.Open(_weapons);
         panelOpen = true;
     }
 

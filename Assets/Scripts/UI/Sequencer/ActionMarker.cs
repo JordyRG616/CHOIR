@@ -20,12 +20,9 @@ public class ActionMarker : MonoBehaviour
     
     [SerializeField] private float speed;
     [SerializeField] private RectTransform anchor;
-    [SerializeField] private List<float> bpmSpeeds;
-    private int bpmIndex = 0;
     private Vector2 originalPosition;
     private RectTransform rect;
     public bool On;
-    public bool MainMenu;
 
     public delegate void ActionMarkerEvent();
     public ActionMarkerEvent OnReset;
@@ -35,6 +32,8 @@ public class ActionMarker : MonoBehaviour
 
     public delegate void BeatEvent();
     public BeatEvent OnBeat;
+
+    public int bpm = 120;
 
 
     private void Awake()
@@ -48,7 +47,6 @@ public class ActionMarker : MonoBehaviour
         if (On)
         {
             rect.anchoredPosition += Vector2.right * speed * Time.fixedDeltaTime;
-
         }
 
     }
@@ -84,7 +82,6 @@ public class ActionMarker : MonoBehaviour
 
     public void Reset()
     {
-        // var pos = new Vector2(anchor.anchoredPosition.x, originalPosition);
         rect.anchoredPosition = originalPosition;
         OnReset?.Invoke();
     }
@@ -101,11 +98,16 @@ public class ActionMarker : MonoBehaviour
             cTile.Stop();
         }
     }
+
+    public void ChangeBPM(int amount)
+    {
+        bpm += amount;
+        OnReset += RaiseSpeed;
+    }
+    
     public void RaiseSpeed()
     {
-        bpmIndex++;
-        FMODUnity.RuntimeManager.StudioSystem.setParameterByName("BPM", bpmIndex);
-        speed = bpmSpeeds[bpmIndex];
+        speed = (bpm/120f) * 32f;
         OnReset -= RaiseSpeed;
     }
 }

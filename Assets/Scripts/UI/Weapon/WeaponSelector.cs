@@ -12,7 +12,7 @@ public class WeaponSelector : MonoBehaviour, IPointerClickHandler, IPointerEnter
     [SerializeField] private TextMeshProUGUI weaponName;
     [SerializeField] private Image waveform;
     [SerializeField] private Image weaponClass;
-    public ClassToSpriteConverter converter;
+    [SerializeField] private Image weaponSource;
     private WeaponBase storedWeapon = null;
 
     public void ReceiveWeapon(WeaponBase weapon)
@@ -22,7 +22,9 @@ public class WeaponSelector : MonoBehaviour, IPointerClickHandler, IPointerEnter
         weaponIcon.sprite = weapon.weaponSprite;
         weaponName.text = weapon.name;
         waveform.sprite = weapon.waveform;
-        weaponClass.sprite = converter.GetSprite(weapon.weaponClass);
+
+        weaponClass.sprite = weapon.classSprite;
+        weaponSource.sprite = weapon.sourceSprite;
     }
 
     public void OnPointerClick(PointerEventData eventData)

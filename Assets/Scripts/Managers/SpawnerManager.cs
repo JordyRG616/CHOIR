@@ -138,6 +138,8 @@ public class SpawnerManager : MonoBehaviour
         waveTime.text = "00:00/" + GetTimeInMinutes(currentDuration);
         upperText.text = "Next:";
         waveIndicator.text = "WAVE " +  waveNumber;
+        GeneralStatRegistry.Main.currentWave = waveNumber;
+        GeneralStatRegistry.Main.spawnedEnemies = 0;
     }
 
     private void ProcessNewAdds()

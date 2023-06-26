@@ -81,14 +81,14 @@ public class SpecialCursor : MonoBehaviour
             costBox.SetActive(false);
         }
 
-        if(desc != "")
-        {
-            upgradeDescription.gameObject.SetActive(true);
-            upgradeDescription.text = desc;
-        } else
-        {
-            upgradeDescription.gameObject.SetActive(false);
-        }
+        // if(desc != "")
+        // {
+        //     upgradeDescription.gameObject.SetActive(true);
+        //     upgradeDescription.text = desc;
+        // } else
+        // {
+        //     upgradeDescription.gameObject.SetActive(false);
+        // }
     }
 
     void Update()

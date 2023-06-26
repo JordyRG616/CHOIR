@@ -9762,7 +9762,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7031f11eaf37224ca1a08aede1ccf4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weapon: {fileID: 300729188613039477}
+  weapon: {fileID: 0}
   effectsCooldown: 0
   statuses: 
   damageMultiplier: 0.25
@@ -14678,7 +14678,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7031f11eaf37224ca1a08aede1ccf4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weapon: {fileID: 300729188613039477}
+  weapon: {fileID: 0}
   effectsCooldown: 0
   statuses: 
   damageMultiplier: 0.25
@@ -14806,8 +14806,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponSprite: {fileID: 304528797, guid: 076c2eb68795edb49b6ddbbbbb725eb3, type: 3}
-  weaponCost: 0
   waveform: {fileID: 21300000, guid: 22f712c51b650594d898835a4c03a4ec, type: 3}
+  mainClassSprite: {fileID: 0}
+  secClassSprite: {fileID: 0}
+  weaponCost: 0
   weaponClass: 2
   surfaceWeapon: 0
   ClassPerkDesc: The ray now splits in two smaller rays when it hits a surface.
@@ -24671,7 +24673,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7031f11eaf37224ca1a08aede1ccf4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weapon: {fileID: 300729188613039477}
+  weapon: {fileID: 0}
   effectsCooldown: 0
   statuses: 
   damageMultiplier: 1

@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class Bolt : WeaponBase
 {
-    [SerializeField] private ParticleSystem trail;
-
     public override void LevelUpEffect()
     {
         level++;
@@ -31,23 +29,5 @@ public class Bolt : WeaponBase
     public override string WeaponDescription()
     {
         return "Discharges an electric bolt that hits one enemy, dealing " + damageRange.x + " - " + damageRange.y + " damage and applying <color=yellow>static</color>.";
-    }
-
-    protected override void ApplyPerk()
-    {
-        var trigger = MainShooter.trigger;
-        trigger.enabled = true;
-
-        var trr = trail.trigger;
-        trr.enabled = true;
-    }
-
-    protected override void RemovePerk()
-    {
-        var trigger = MainShooter.trigger;
-        trigger.enabled = false;
-        
-        var trr = trail.trigger;
-        trr.enabled = false;
     }
 }

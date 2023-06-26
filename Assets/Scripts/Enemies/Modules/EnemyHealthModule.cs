@@ -111,6 +111,7 @@ public class EnemyHealthModule : MonoBehaviour, IEnemyModule
         if(armoured && !bypassArmour) damage /= 2;
         damage *= 1 + exposedMultiplier;
         currentHealth -= Mathf.CeilToInt(damage);
+        GeneralStatRegistry.Main.totalDamageDealt += Mathf.CeilToInt(damage);
         onDamageTaken?.Invoke(Mathf.CeilToInt(damage), crit);
         if (!blinking) StartCoroutine(Blink());
 
@@ -157,6 +158,7 @@ public class EnemyHealthModule : MonoBehaviour, IEnemyModule
         }
 
         onEnemyDeath?.Invoke(this, destroyOnDeath);
+        GeneralStatRegistry.Main.activeEnemies--;
     }
 
     private void DropStuff()

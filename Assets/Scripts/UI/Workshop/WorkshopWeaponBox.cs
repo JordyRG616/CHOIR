@@ -12,7 +12,6 @@ public class WorkshopWeaponBox : MonoBehaviour, IPointerEnterHandler, IPointerEx
     [SerializeField] private Image classIcon;
     [SerializeField] private TextMeshProUGUI weaponName;
     [Space]
-    [SerializeField] private ClassToSpriteConverter converter;
 
     private WeaponBase cachedWeapon;
 
@@ -24,9 +23,8 @@ public class WorkshopWeaponBox : MonoBehaviour, IPointerEnterHandler, IPointerEx
         weaponIcon.sprite = weapon.weaponSprite;
         waveform.sprite = weapon.waveform;
         weaponName.text = weapon.name;
-
-        classIcon.sprite = converter.GetSprite(weapon.weaponClass);
     }        
+    
     public void OnPointerEnter(PointerEventData eventData)
     {
         WorkshopInfoPanel.Main.ReceiveWeapon(cachedWeapon);

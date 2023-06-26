@@ -50,7 +50,6 @@ public class Polaris : WeaponBase
     private void ChangeCollision(ParticleSystem system)
     {
         var coll = system.collision;
-        coll.enabled = !perkApplied;
     }
 
     private void RaiseWires(ParticleSystem system, int value)

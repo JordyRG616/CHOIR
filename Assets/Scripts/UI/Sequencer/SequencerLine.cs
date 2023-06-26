@@ -7,27 +7,27 @@ public class SequencerLine : MonoBehaviour
     public WeaponKey key;
     [SerializeField] private List<ActionBox> nodesInLine;
 
-    public ActionBox.TilePlacementeEvent OnNewTilePlaced;
-    public ActionBox.TilePlacementeEvent OnTileRemoved;
-    
 
     private void Start()
     {
-        nodesInLine.ForEach(x =>
+        nodesInLine.ForEach(x => x.line = this);
+    }
+
+    public void FillExtraNodes(ActionBox box, int size, WeaponBase weapon)
+    {
+        var index = nodesInLine.IndexOf(box);
+        for (int i = 1; i < size; i++)
         {
-            x.OnTilePlaced += SetTileInfo;
-            x.OnTileRemoval += RemoveTile;
-        });
+            nodesInLine[index - i].SetWeaponInColumn(weapon);
+        }
     }
 
-    private void SetTileInfo(ActionTile tile)
+    public void EmptyExtraNodes(ActionBox box, int size, WeaponBase weapon)
     {
-        tile.SetKey((int)key);
-        OnNewTilePlaced?.Invoke(tile);
-    }
-
-    private void RemoveTile(ActionTile tile)
-    {
-        OnTileRemoved?.Invoke(tile);
+        var index = nodesInLine.IndexOf(box);
+        for (int i = 1; i < size; i++)
+        {
+            nodesInLine[index - i].RemoveWeaponInColumn(weapon);
+        }
     }
 }

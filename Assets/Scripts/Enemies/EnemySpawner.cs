@@ -78,6 +78,8 @@ public class EnemySpawner : MonoBehaviour
         enemy.GetComponent<EnemyHealthModule>().onEnemyDeath += AddEnemyToPool;
         enemy.GetComponent<EnemyMarchModule>().SetDirection(directionModifier);
         enemy.transform.position = transform.position;
+        GeneralStatRegistry.Main.spawnedEnemies++;
+        GeneralStatRegistry.Main.activeEnemies++;
     }
 
     private void AddEnemyToPool(EnemyHealthModule healthController, bool destroy)

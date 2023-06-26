@@ -20,13 +20,13 @@ public class WeaponDamageDealer : MonoBehaviour
     public float Damage(out bool crit)
     {
         var rdmDamage = UnityEngine.Random.Range(weapon.damageRange.x, weapon.damageRange.y);
-        rdmDamage *= damageMultiplier;
+        rdmDamage *= damageMultiplier + Inventory.Main.globalDamageMultiplier;
 
         var rdm = UnityEngine.Random.Range(0, 1f);
-        if(rdm < weapon.criticalChance)
+        if(rdm < Mathf.Clamp01(weapon.criticalChance + Inventory.Main.extraCritChance))
         {
             rdmDamage = weapon.damageRange.y; 
-            rdmDamage *= weapon.criticalMultiplier;
+            rdmDamage *= weapon.criticalMultiplier + Inventory.Main.extraCritDamage;
             crit = true;
         } else crit = false;
 

@@ -20556,7 +20556,7 @@ SpriteRenderer:
   m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 114709948, guid: 1c4878b1ba81f2d4db02057bd272e8ab, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.8352941}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -20640,7 +20640,7 @@ SpriteRenderer:
   m_SortingLayer: 3
   m_SortingOrder: -32
   m_Sprite: {fileID: 269204369, guid: 1c4878b1ba81f2d4db02057bd272e8ab, type: 3}
-  m_Color: {r: 0.3301887, g: 0.3301887, b: 0.3301887, a: 1}
+  m_Color: {r: 0.3301887, g: 0.3301887, b: 0.3301887, a: 0.70980394}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -21016,20 +21016,20 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 7
-      inSlope: 5.1061335
-      outSlope: 5.1061335
+      inSlope: 3.7909203
+      outSlope: 3.7909203
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.060945272
+      outWeight: 0.059701495
     - serializedVersion: 3
       time: 100
-      value: 997.16284
-      inSlope: 14.474387
-      outSlope: 14.474387
+      value: 800
+      inSlope: 11.057674
+      outSlope: 11.057674
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.054726332
+      inWeight: 0.062189028
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2

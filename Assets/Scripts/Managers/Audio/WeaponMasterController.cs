@@ -21,8 +21,8 @@ public class WeaponMasterController : MonoBehaviour
     #endregion
 
     [SerializeField] private int initialKitIndex;
-    [Space]
-    [SerializeField] private List<WeaponClassInfo> classInfo;
+    [SerializeField] private Dictionary<WeaponClass, SetManager> classSets = new Dictionary<WeaponClass, SetManager>();
+    [SerializeField] private Dictionary<WeaponSource, SetManager> sourceSets = new Dictionary<WeaponSource, SetManager>();
 
 
     private void Start()
@@ -30,56 +30,33 @@ public class WeaponMasterController : MonoBehaviour
         RuntimeManager.StudioSystem.setParameterByName("Kit", initialKitIndex);
     }
 
-    public void RegisterWeaponClass(WeaponClass weaponClass, WeaponClass perkClass, out WeaponClassInfo perkInfo)
+    public void ReceiveSet(SetManager set)
     {
-        perkInfo = classInfo.Find(x => x._class == perkClass); 
-
-        var mainInfo = classInfo.Find(x => x._class == weaponClass);
-        mainInfo.UpdateLevel(1);
-    } 
-
-    public void RemoveWeaponClass(WeaponClass weaponClass)
-    {
-        var mainInfo = classInfo.Find(x => x._class == weaponClass);
-        mainInfo.UpdateLevel(-1);
-    } 
-}
-
-[System.Serializable]
-public class WeaponClassInfo
-{
-    public WeaponClass _class;
-    public GameObject panel;
-    public Slider slider;
-    public List<TMPro.TextMeshProUGUI> indexes;
-    public int classLevel { get; private set; } = 0;
-
-    public delegate void LevelChangeEvent(int currentLevel);
-    public LevelChangeEvent OnLevelChange;
-
-    public void UpdateLevel(int value)
-    {
-        classLevel += value;
-        OnLevelChange?.Invoke(classLevel);
-        UpdateUI();
-        WeaponInfoPanel.Main.UpdateInfo();
-    }
-
-    public void UpdateUI()
-    {
-        if(classLevel == 0)
+        if(set.classSet)
         {
-            panel.SetActive(false);
-        } 
-        else if(classLevel > 0)
+            classSets.Add(set._class, set);
+        } else
         {
-            if(!panel.activeSelf) panel.SetActive(true);
-
-            slider.value = classLevel - 1;
-
-            indexes.ForEach(x => x.alpha = 0.1f);
-            indexes[classLevel - 1].alpha = 1;
+            sourceSets.Add(set._source, set);
         }
     }
+
+    public void RegisterWeapon(WeaponBase weapon)
+    {
+        var cSet = classSets[weapon.weaponClass];
+        cSet.ReceiveWeapon();
+
+        var sSet = sourceSets[weapon.weaponSource];
+        sSet.ReceiveWeapon();
+    } 
+
+    public void RemoveWeapon(WeaponBase weapon)
+    {
+        var cSet = classSets[weapon.weaponClass];
+        cSet.RemoveWeapon();
+
+        var sSet = sourceSets[weapon.weaponSource];
+        sSet.RemoveWeapon();
+    } 
 }
 

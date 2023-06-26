@@ -15,8 +15,6 @@ public class WorkshopWeaponOffer : MonoBehaviour, IPointerEnterHandler, IPointer
     [SerializeField] private GameObject bgLight;
     private WeaponBase cachedWeapon;
 
-    [SerializeField] private ClassToSpriteConverter converter;
-
 
     public void ReceiveWeapon(WeaponBase weapon)
     {
@@ -29,7 +27,6 @@ public class WorkshopWeaponOffer : MonoBehaviour, IPointerEnterHandler, IPointer
 
         weaponIcon.sprite = weapon.weaponSprite;
         cost.text = weapon.weaponCost.ToString();
-        classIcon.sprite = converter.GetSprite(weapon.weaponClass);
     }
 
     public void Clear()

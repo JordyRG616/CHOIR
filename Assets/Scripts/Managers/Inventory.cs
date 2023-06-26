@@ -35,9 +35,14 @@ public class Inventory : MonoBehaviour
     public List<ModuleBase> installedModules {get; private set;} = new List<ModuleBase>();
 
     [Header("Modules Parameters")]
-    [SerializeField] public int burnDamage; 
-    [SerializeField] public int extraStaticDuration;
-    [SerializeField] public int frailtyMultiplier;
+    public int burnDamage; 
+    public int extraBurnDuration;
+    public float staticChance = 0.3f;
+    public int extraStaticDuration;
+    public int frailtyMultiplier;
+    public float extraCritChance;
+    public float extraCritDamage;
+    public float globalDamageMultiplier;
     public float GlobalExpMultiplier;
 
 

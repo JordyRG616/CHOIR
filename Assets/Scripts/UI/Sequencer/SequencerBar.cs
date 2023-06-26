@@ -11,7 +11,7 @@ public class SequencerBar : MonoBehaviour
 
     private void Start()
     {
-        GenerateChord();
+        // GenerateChord();
     }
 
     private void GenerateChord()

@@ -871,6 +871,69 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Elements_36
+      rect:
+        serializedVersion: 2
+        x: 178
+        y: 164
+        width: 13
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 34c6998d90280754eb96601be0871b3a
+      internalID: 904705926
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Elements_37
+      rect:
+        serializedVersion: 2
+        x: 178
+        y: 152
+        width: 13
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ab09f067877f70e4db1fcb6bbe92df8f
+      internalID: -1924601512
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Elements_38
+      rect:
+        serializedVersion: 2
+        x: 178
+        y: 140
+        width: 13
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3a1be12efb5dd2f4bb7da6d8cecae57d
+      internalID: 1839531307
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -889,7 +952,9 @@ TextureImporter:
       Elements_18: -1641190842
       Elements_2: -915897696
       Elements_31: -406686233
+      Elements_38: 1839531307
       Elements_32: -192044664
+      Elements_36: 904705926
       Elements_6: -1064886891
       Elements_0: -1708698707
       Elements_4: -1885788340
@@ -900,6 +965,7 @@ TextureImporter:
       Elements_1: 1221125538
       Elements_21: 1714158510
       Elements_7: 2018143219
+      Elements_37: -1924601512
       Elements_22: -66887075
       Elements_29: -1116671224
       Elements_9: -198537562

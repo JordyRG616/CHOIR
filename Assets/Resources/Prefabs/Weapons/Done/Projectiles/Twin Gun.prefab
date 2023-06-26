@@ -9738,7 +9738,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3727637832136250960
 Transform:
   m_ObjectHideFlags: 0
@@ -19532,7 +19532,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4248227030274679451
 Transform:
   m_ObjectHideFlags: 0
@@ -19685,19 +19685,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponSprite: {fileID: -743970092, guid: 076c2eb68795edb49b6ddbbbbb725eb3, type: 3}
-  weaponCost: 0
   waveform: {fileID: 21300000, guid: 74feb993cd156a84b8de82e3be8ddd73, type: 3}
+  mainClassSprite: {fileID: 0}
+  secClassSprite: {fileID: 0}
+  weaponCost: 0
   weaponClass: 1
   surfaceWeapon: 0
-  ClassPerkDesc: The pellets now leave electric sparks on the surface.
-  <perkReqClass>k__BackingField: 8
-  <perkReqAmount>k__BackingField: 4
   upgradeDescriptions:
   - +2 general damage
   - Increased range
   - Increased knockback
   - + pellets per shot
-  perkApplied: 0
   MainShooter: {fileID: 7134425118989564655}
   <tile>k__BackingField: {fileID: 9038679812298400645, guid: c0d5adf2654ec614e9e33f95ca4bc557, type: 3}
   OnShoot:

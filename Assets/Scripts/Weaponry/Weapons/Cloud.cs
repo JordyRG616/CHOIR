@@ -35,18 +35,6 @@ public class Cloud : WeaponBase
 
     public override string WeaponDescription()
     {
-        return "Releases a burst of short electric rays that deals " + damageRange.x + " - " + damageRange.y + " damage on contact and applies <color=yellow>static</color>.";
-    }
-
-    protected override void ApplyPerk()
-    {
-        flares.ForEach(x => x.SetActive(true));
-        damageDealers.ForEach(x => x.statuses.Add(StatusType.Burn));
-    }
-
-    protected override void RemovePerk()
-    {
-        flares.ForEach(x => x.SetActive(false));
-        damageDealers.ForEach(x => x.statuses.Remove(StatusType.Burn));
+        return "While active, shoots a burst of short electric rays that deals " + damageRange.x + " - " + damageRange.y + " damage on contact and applies <color=yellow>static</color>.";
     }
 }

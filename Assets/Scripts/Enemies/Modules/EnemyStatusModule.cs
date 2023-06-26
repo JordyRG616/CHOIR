@@ -73,6 +73,12 @@ public class EnemyStatusModule : MonoBehaviour, IEnemyModule
         if(!status.IsStackable() && HasStatus(status)) return;
         if(HasStatus(status) && appliedStatuses.StackCount(status) >= status.MaxStack()) return;
 
+        if(status == StatusType.Static)
+        {
+            var rdm = UnityEngine.Random.Range(0, 1f);
+            if(rdm > inventory.staticChance) return;
+        }
+
         appliedStatuses.Add(new StatusHolder(status));
         InitiateEffect(status);
     }
@@ -163,6 +169,9 @@ public class StatusHolder
         if(status == StatusType.Static)
         {
             duration += Inventory.Main.extraStaticDuration;
+        } else if (status == StatusType.Burn)
+        {
+            duration += Inventory.Main.extraBurnDuration;
         }
     }
 }

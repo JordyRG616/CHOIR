@@ -20,12 +20,39 @@ public class WeaponInfoPanel : MonoBehaviour
     }
     #endregion
 
-    [SerializeField] private Image classSprite, perkClassSprite, tileSprite;
-    [SerializeField] private TextMeshProUGUI weaponName, description, perk, perkReqAmount, level;
-    [SerializeField] private ClassToSpriteConverter converter;
+    [Header("Weapon Panel")]
+    [SerializeField] private GameObject weaponPanel;
+    [SerializeField] private GameObject upgradePanel;
+    [SerializeField] private Image classSprite;
+    [SerializeField] private Image sourceSprite;
+    [SerializeField] private Image tileSprite;
+    [SerializeField] private TextMeshProUGUI weaponName;
+    [SerializeField] private TextMeshProUGUI description;
+    [SerializeField] private TextMeshProUGUI perk;
+    [SerializeField] private TextMeshProUGUI perkReqAmount;
+    [SerializeField] private TextMeshProUGUI level;
+    [SerializeField] private TextMeshProUGUI nextLevelInfo;
+    [SerializeField] private TextMeshProUGUI nextLevelCost;
+
+    [Header("Set Panel")]
+    [SerializeField] private GameObject setPanel;
+    [SerializeField] private CanvasGroup firstGroup;
+    [SerializeField] private TextMeshProUGUI firstRequirement;
+    [SerializeField] private TextMeshProUGUI firstDescription;
+    [SerializeField] private CanvasGroup secondGroup;
+    [SerializeField] private TextMeshProUGUI secondRequirement;
+    [SerializeField] private TextMeshProUGUI secondDescription;
+
     private WeaponBase selectedWeapon;
     private WeaponBox selectedBox;
     private InputManager pointerHandler;
+    private RectTransform rect;
+
+
+    void Awake()
+    {
+        rect = GetComponent<RectTransform>();
+    }
 
     private void Start()
     {
@@ -35,15 +62,18 @@ public class WeaponInfoPanel : MonoBehaviour
 
     public void ReceiveWeapon(WeaponBase weapon, WeaponBox box = null)
     {
+        setPanel.SetActive(false);
+        weaponPanel.SetActive(true);
+
+
         selectedWeapon = weapon;
         weaponName.text = weapon.name;
 
         classSprite.color = Color.white;
-        classSprite.sprite = converter.GetSprite(weapon.weaponClass);
+        classSprite.sprite = weapon.classSprite;
 
-        perkClassSprite.color = Color.white;
-        perkClassSprite.sprite = converter.GetSprite(weapon.perkReqClass);
-        perkReqAmount.text = weapon.perkReqAmount.ToString();
+        sourceSprite.color = Color.white;
+        sourceSprite.sprite = weapon.sourceSprite;
 
         var tile = weapon.tile;
         tileSprite.color = Color.white;
@@ -61,59 +91,79 @@ public class WeaponInfoPanel : MonoBehaviour
 
         level.text = "LEVEL " + selectedWeapon.level;
         description.text = selectedWeapon.WeaponDescription();
-        perk.text = selectedWeapon.ClassPerkDesc;
 
-        if(selectedWeapon.perkApplied)
+        if(InputManager.Main.interactionMode == InteractionMode.Upgrade)
         {
-            perk.alpha = 1f;
-            perkReqAmount.color = Color.green;
-        } else
-        {
-            perk.alpha = .7f;
-            perkReqAmount.color = Color.red;
-        }
+            upgradePanel.SetActive(true);
+            nextLevelInfo.text = selectedWeapon.nextLevelDescription;
+            var cost = selectedWeapon.level + 1;
+            nextLevelCost.text = cost + "$";
+            if(CrystalManager.Main.buildPoints >= cost) nextLevelCost.color = Color.green;
+            else nextLevelCost.color = Color.red;
+        } 
+        else upgradePanel.SetActive(false);
+    }
+
+    public void ReceiveSet(SetBonus firstBonus, SetBonus secondBonus)
+    {
+        weaponPanel.SetActive(false);
+        setPanel.SetActive(true);
+
+        firstRequirement.text = firstBonus.requiredCount + "+";
+        firstDescription.text = firstBonus.upgrade.description;
+        firstGroup.alpha = firstBonus.applied ? 1 : 0.3f;
+
+        secondRequirement.text = secondBonus.requiredCount + "+";
+        secondDescription.text = secondBonus.upgrade.description;
+        secondGroup.alpha = secondBonus.applied ? 1 : 0.3f;
+
+        gameObject.SetActive(true);
     }
 
     public void Clear()
     {
-        weaponName.text = "";
-        description.text = "";
-        perk.text = "";
-        level.text = "";
-        perkReqAmount.text = "";
+        weaponPanel.SetActive(false);
+        setPanel.SetActive(false);
 
-        classSprite.sprite = null;
-        classSprite.color = Color.clear;
-        perkClassSprite.sprite = null;
-        perkClassSprite.color = Color.clear;
-        tileSprite.sprite = null;
-        tileSprite.color = Color.clear;
+        // weaponName.text = "";
+        // description.text = "";
+        // perk.text = "";
+        // level.text = "";
+        // perkReqAmount.text = "";
+
+        // classSprite.sprite = null;
+        // classSprite.color = Color.clear;
+        // sourceSprite.sprite = null;
+        // sourceSprite.color = Color.clear;
+        // tileSprite.sprite = null;
+        // tileSprite.color = Color.clear;
 
         gameObject.SetActive(false);
     }
-}
 
-[System.Serializable]
-public class ClassToSpriteConverter
-{
-    public Sprite flameIcon, bulletIcon, electricIcon, laserIcon, nuclearIcon;
-
-    public Sprite GetSprite(WeaponClass _class)
+    void Update()
     {
-        switch(_class)
-        {
-            case WeaponClass.Projectile:
-            return bulletIcon;
-            case WeaponClass.Laser:
-            return laserIcon;
-            case WeaponClass.Electric:
-            return electricIcon;
-            case WeaponClass.Flame:
-            return flameIcon;
-            case WeaponClass.Nuclear:
-            return nuclearIcon;
-        }
+        CalculatePivot();
+        rect.anchoredPosition = CalculatePointerPosition();
+    }
 
-        return null;
+    private void CalculatePivot()
+    {
+        if(rect.anchoredPosition.x + rect.sizeDelta.x > 320) rect.pivot = new Vector2(1.05f, rect.pivot.y);
+        else rect.pivot = new Vector2(-0.05f, rect.pivot.y);
+
+        if(rect.anchoredPosition.y + rect.sizeDelta.y > 180) rect.pivot = new Vector2(rect.pivot.x, 1.05f);
+        else rect.pivot = new Vector2(rect.pivot.x, -0.05f);
+    }
+
+    private Vector2 CalculatePointerPosition()
+    {
+        var position = Camera.main.ScreenToViewportPoint(Input.mousePosition);
+        position -= Vector3.one * 0.5f;
+
+        position.x *= 640;
+        position.y *= 360;
+
+        return position;
     }
 }

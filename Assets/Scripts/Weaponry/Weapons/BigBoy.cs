@@ -51,9 +51,6 @@ public class BigBoy : WeaponBase
         var emission = system.emission;
         var burst = emission.GetBurst(0);
         
-        main.startSize = perkApplied ? (.84f / 1.5f) : .84f;
-        var count = perkApplied ? 2 : 1;
-        burst.count = new ParticleSystem.MinMaxCurve(count);
 
         emission.SetBurst(0, burst);
     }

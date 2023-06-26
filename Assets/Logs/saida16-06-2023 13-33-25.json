@@ -1,0 +1,47 @@
+[
+{
+"objeto" : "GameObject----GeneralStatRegistry",
+"tempo" : "1686922404617",
+"estado" : [
+{
+"nomeVariavel" : "totalDamageDealt",
+"valor" : "117"
+}
+,
+{
+"nomeVariavel" : "totalDamageTaken",
+"valor" : "0"
+}
+,
+{
+"nomeVariavel" : "currentCash",
+"valor" : "4"
+}
+,
+{
+"nomeVariavel" : "currentWave",
+"valor" : "2"
+}
+,
+{
+"nomeVariavel" : "spawnedEnemies",
+"valor" : "0"
+}
+,
+{
+"nomeVariavel" : "activeEnemies",
+"valor" : "0"
+}
+,
+{
+"nomeVariavel" : "totalWeapons",
+"valor" : "1"
+}
+,
+{
+"nomeVariavel" : "totalTiles",
+"valor" : "2"
+}
+]
+}
+]

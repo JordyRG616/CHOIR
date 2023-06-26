@@ -12,7 +12,6 @@ public class Orb : MonoBehaviour
         damageDealer.SetWeapon(warlock);
         aoe.SetWeapon(warlock);
         if (warlock.levelFive) damageDealer.statuses.Add(StatusType.Static);
-        if (warlock.perkApplied) aoe.gameObject.SetActive(true);
         ActionMarker.Main.OnReset += DestroyOrb;
 
         damageDealer.gameObject.SetActive(true);

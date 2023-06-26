@@ -5081,19 +5081,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponSprite: {fileID: -1075506846, guid: 076c2eb68795edb49b6ddbbbbb725eb3, type: 3}
-  weaponCost: 0
   waveform: {fileID: 0}
+  mainClassSprite: {fileID: 0}
+  secClassSprite: {fileID: 0}
+  weaponCost: 0
   weaponClass: 8
   surfaceWeapon: 0
-  ClassPerkDesc: Releases an initial burst of bigger electric rays.
-  <perkReqClass>k__BackingField: 8
-  <perkReqAmount>k__BackingField: 3
   upgradeDescriptions:
   - +3 maximum damage
   - Slightly raises area of effect
   - +5 minimum damage
   - Greatly raises area of effect
-  perkApplied: 0
   MainShooter: {fileID: 8137512621674900541}
   <tile>k__BackingField: {fileID: 9038679812298400645, guid: 046319f59b845134db37e4ab4a744f35, type: 3}
   OnShoot:

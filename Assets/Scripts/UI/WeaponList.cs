@@ -44,7 +44,7 @@ public class WeaponList : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
             if(panel.childCount <= 3) return 0;
             else 
             {
-                var count = panel.childCount - 4;
+                var count = panel.childCount - 3;
                 return ((count * 40) + 10f) + (count * 6);
             }
         }

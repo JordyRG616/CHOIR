@@ -39,6 +39,7 @@ public class CameraManager : MonoBehaviour
         }
     }
     private Camera cam;
+    public Vector2 NormalizedPosition => new Vector2(posX, posY);
 
 
     private void Start()

@@ -30,7 +30,7 @@ public class InputManager : MonoBehaviour
     public WeaponSlot selectedSlot = null;
     public WeaponBase weaponToPlace;
     public ModeButton selectedButton;
-    public InteractionMode _mode;
+    private InteractionMode _mode;
     public InteractionMode interactionMode
     {
         get => _mode;
@@ -91,6 +91,13 @@ public class InputManager : MonoBehaviour
         rect.SetParent(currentHoveredBox.transform);
         rect.anchoredPosition = Vector2.zero;
         currentTileInstance.Initialize(currentHoveredBox);
+    }
+
+    public bool CanPlaceTile()
+    {
+        if(currentHoveredBox == null || currentTileInstance.IsOverReseter) return false;
+        if(!currentHoveredBox.GetComponent<ActionBox>().CanReceiveTile(currentTileInstance.weaponToActivate)) return false;
+        return true;
     }
 
     private void Update()

@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class Twingun : WeaponBase
 {
-    [SerializeField] private ParticleSystem subShooter;
-    [SerializeField] private List<GameObject> sparks;
     private string knockback = " moderately";
 
     public override void LevelUpEffect()
@@ -20,9 +18,6 @@ public class Twingun : WeaponBase
             case 3:
                 var main = MainShooter.main;
                 main.startSpeed = new ParticleSystem.MinMaxCurve(25, 30);
-
-                var _main = subShooter.main;
-                _main.startSpeed = new ParticleSystem.MinMaxCurve(25, 30);
             break;
             case 4:
                 IncreaseKnockback(15);
@@ -31,9 +26,6 @@ public class Twingun : WeaponBase
             case 5:
                 var emission = MainShooter.emission;
                 emission.rateOverTime = new ParticleSystem.MinMaxCurve(9);
-
-                var _emission = subShooter.emission;
-                _emission.rateOverTime = new ParticleSystem.MinMaxCurve(9);
             break;
         }
     }
@@ -42,23 +34,10 @@ public class Twingun : WeaponBase
     {
         var coll = MainShooter.collision;
         coll.colliderForce += amount;
-
-        var _coll = subShooter.collision;
-        _coll.colliderForce += amount;
     }
 
     public override string WeaponDescription()
     {
-        return "Shoots 6 pellets in both directions, each dealing " + damageRange.x + " - " + damageRange.y + " damage to the enemy hit and knocking it back" + knockback + ".";
-    }
-
-    protected override void ApplyPerk()
-    {
-        sparks.ForEach(x => x.SetActive(true));
-    }
-
-    protected override void RemovePerk()
-    {
-        sparks.ForEach(x => x.SetActive(false));
+        return "Shoots 10 pellets, each dealing " + damageRange.x + " - " + damageRange.y + " damage to the enemy hit and knocking it back" + knockback + ".";
     }
 }
